@@ -1,45 +1,163 @@
-%% Import the data
-[~, ~, raw] = xlsread('/Users/magdadubois/MF/load_db/id1.xls','id1');
-raw = raw(end,:);
-raw(cellfun(@(x) ~isempty(x) && isnumeric(x) && isnan(x),raw)) = {''};
-cellVectors = raw(:,[4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]);
-raw = raw(:,[1,2,3]);
+clear
 
-%% Create output variable
-data = reshape([raw{:}],size(raw));
+n_trials = 100;
+userID = 1;
 
-%% Allocate imported array to column variable names
-id = data(:,1);
-UserNo = data(:,2);
-BlockNo = data(:,3);
-BlockStartTime = cellVectors(:,1);
-BlockFinishTime = cellVectors(:,2);
-TreeColours = str2mat(cellVectors(:,3));
-ChosenTree = cellVectors(:,4);
-ChosenAppleSize = cellVectors(:,5);
-AllKeyPressed = cellVectors(:,6);
-ReactionTimes = cellVectors(:,7);
-Horizon = cellVectors(:,8);
-ItemNo = cellVectors(:,9);
-TrialNo = cellVectors(:,10);
-UnusedTree = cellVectors(:,11);
-InitialSamplesNb = cellVectors(:,12);
-InitialSamplesTree = cellVectors(:,13);
-InitialSamplesSize = cellVectors(:,14);
-TreePositions = cellVectors(:,15);
+task_folder = strcat('../data/raw/user_',int2str(userID),'/task/*.xls');
+FolderInfo = dir(task_folder);
+file_names = {};
+for block_i = 1:size(FolderInfo,1)
+    file_names{end+1}=FolderInfo(block_i).name;
+end
 
-%% Clear temporary variables
-clearvars data raw cellVectors;
+if size(file_names,2)~=4
+    disp('Problem ! Not 4 blocks !')
+    
+else
+    user_log = [];
+    user_log_desc = {'Block', 'Blocktrial', 'Horizon', 'Item', 'Sample', ...
+                        'TreeA', 'TreeB', 'TreeC', 'TreeD', ...
+                            'Size', 'RT', 'PressedKey', 'UnusedTree',...
+                                'TreeColGroup', 'AppleCol1', 'AppleCol2', 'AppleCol3', ...
+                                    'BlockDuration'};
+                                
+    ItemMatAllBlocks = [];
+    InitialSamplesSizeMatAllBlocks = [];
+    InitialSamplesTreeMatAllBlocks = [];
+    UnusedTreeMatAllBlocks = [];
+                    
+    for block_i = 1:4
+        
+        file_ = strcat('../data/raw/user_',int2str(userID),'/task/',string(file_names(block_i)));
+        
+        T = readtable(char(file_));
 
-%%
-a = str2mat(ChosenTree);
-ChosenTreeMat = nan(2,6);
-ChosenTreeMat(1,:) = [str2double(a(3)), str2double(a(6)), str2double(a(9)), str2double(a(12)) , str2double(a(15)) , str2double(a(18))];
-ChosenTreeMat(2,:) = [str2double(a(23)), str2double(a(26)), str2double(a(29)), str2double(a(32)) , str2double(a(35)) , str2double(a(38))];
+        % Convert
+        TrialMat=convert2num(T.TrialNo);
+        HorizonMat=convert2num(T.Horizon);
+        ItemMat=convert2num(T.ItemNo);
+        InitialSamplesNbMat=convert2num(T.InitialSamplesNb);
+        TreeColoursMat=convert2num(T.TreeColours);
+        UnusedTreeMat=convert2num(T.UnusedTree);
+        
+        pressedMat = make_mat(n_trials, T.AllKeyPressed, 6);    
+        InitialSamplesSizeMat = make_mat(n_trials, T.InitialSamplesSize, 5);
+        InitialSamplesTreeMat = make_mat(n_trials, T.InitialSamplesTree, 5);
+        ChosenTreeMat = make_mat(n_trials, T.ChosenTree, 6); 
+        ChosenAppleSizeMat = make_mat(n_trials, T.ChosenAppleSize, 6); 
+        
+        for i = 1:100
+            ItemMatAllBlocks(end+1) = ItemMat(i);
+            UnusedTreeMatAllBlocks(end+1) = UnusedTreeMat(i);
+            InitialSamplesSizeMatAllBlocks(end+1,:) = InitialSamplesSizeMat(i,:);
+            InitialSamplesTreeMatAllBlocks(end+1,:) = InitialSamplesTreeMat(i,:);
+        end
+        
+        % reaction times
+        tmp_RTMat = make_mat(n_trials, T.ReactionTimes, 7);      
+        for trial = 1:n_trials
+            for hor = 1:HorizonMat(trial)
+                RTMat(trial, hor) = tmp_RTMat(trial, hor+1)-tmp_RTMat(trial, hor);
+            end
+        end
+       
+        % Elapsed time (in sec) per block
+        tmpStart=str2mat(T.BlockStartTime);
+        tmpFinish=str2mat(T.BlockFinishTime);
+        Start=tmpStart(1:8);
+        Finish=tmpFinish(1:8);
 
-disp(ChosenTree)
-disp(ChosenTreeMat)
+        % Date is default, only works if it was done in the same day !!!
+        t1={strcat('01-Oct-2011',32, mat2str(Start))};
+        t2={strcat('01-Oct-2011',32, mat2str(Finish))};
+        t11=datevec(datenum(t1));
+        t22=datevec(datenum(t2));
+        elapsed_time_s = etime(t22,t11);
 
-%% TODO faire une fonction du truc above et le faire pour tous les autres string
-%% pour le trucs genre itemNo, le mettre dans l'autre sense
-%% voir aussi comment on veut data pour les scripts. Peut etre que comme ca pas ideal 
+        for trial = 1:n_trials
+
+            % displayed
+            for sample = 1:InitialSamplesNbMat(trial)
+                                
+                if ~find(InitialSamplesTreeMat(trial,:)==UnusedTreeMat(trial))
+                    disp('MISMATCH ! UNUSED TREE IS DISPLAYED')
+                end
+                
+                trees = nan(1,4);
+                tree = InitialSamplesTreeMat(trial,sample);
+                trees(tree)=1;
+                
+                size = InitialSamplesSizeMat(trial,sample);
+                
+                rt = nan;
+                pressed = nan;
+                
+                % TODO
+                apple_col = nan(1,3);
+
+                user_log(end+1, :) = [T.BlockNo, TrialMat(trial), HorizonMat(trial)+5, ItemMat(trial), sample,...
+                                      trees, size, rt, pressed, ...
+                                      UnusedTreeMat(trial), TreeColoursMat(trial), ...
+                                      apple_col, ...
+                                      elapsed_time_s];
+            end
+            
+            % selected
+            for choice = 1:HorizonMat(trial)
+                
+                rt = RTMat(trial,choice);
+                pressed = pressedMat(trial,choice);
+                size = ChosenAppleSizeMat(trial,choice);
+                
+                if ~find(ChosenTreeMat(trial,:)==UnusedTreeMat(trial))
+                    disp('MISMATCH ! UNUSED TREE IS CHOSEN')
+                end
+                
+                trees = nan(1,4);
+                tree = ChosenTreeMat(trial,choice);
+                trees(tree)=1;
+                
+                user_log(end+1, :) = [T.BlockNo, TrialMat(trial), HorizonMat(trial)+5, ItemMat(trial), InitialSamplesNbMat(trial)+choice,...
+                      trees, size, rt, pressed, ...
+                      UnusedTreeMat(trial), TreeColoursMat(trial), ...
+                      apple_col, ...
+                      elapsed_time_s];
+                
+            end
+        end
+    end
+end
+
+
+user.log = user_log;
+user.log_desc = user_log_desc;
+
+[v, ind] = sort(ItemMatAllBlocks);
+[fin, fin_ind] = unique(v);
+tmp_unused_trees = UnusedTreeMatAllBlocks([ind(fin_ind)]);
+tmp_initial_apples_sizes = InitialSamplesSizeMatAllBlocks([ind(fin_ind)],:);
+tmp_initial_apples_trees = InitialSamplesTreeMatAllBlocks([ind(fin_ind)],:);
+
+user.unused_tree = tmp_unused_trees;
+
+for it_ = 1:100    
+    for app = 1:5
+        
+        size = tmp_initial_apples_sizes(it_, app);
+        if size > 0
+            user.item(1,it_).initial_apples.size(app) = size;
+            user.item(2,it_).initial_apples.size(app) = size;
+        end
+        
+        tree = tmp_initial_apples_trees(it_, app);
+        if tree > 0
+            user.item(1,it_).initial_apples.tree(app) = tree;
+            user.item(2,it_).initial_apples.tree(app) = tree;
+        end
+    end    
+end
+
+save(strcat('../data/concat_data/user_',int2str(userID),'.mat'), 'user')
+
+
+
