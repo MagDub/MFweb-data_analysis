@@ -24,8 +24,17 @@ end
 
 SDS_mat_desc = {'Item', 'Response'};
 SDS_mat = [1:n_items; answer]';
+
+% reverse scoring
+items_to_reverse = [2, 5, 6, 11, 12, 14, 16, 17, 18, 20];
+
+for i = 1:size(items_to_reverse,2)
+    tmp = SDS_mat(items_to_reverse(i),2);
+    SDS_mat(items_to_reverse(i),2) = 5 - tmp;
+end
+
 SDS_score_desc = {'TotalScore'};
-SDS_score = sum(answer);
+SDS_score = sum(SDS_mat(:,2));
 
 
 end

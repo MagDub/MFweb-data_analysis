@@ -1,5 +1,7 @@
 function [BIS11_mat_desc, BIS11_mat, BIS11_score_desc, BIS11_score] = concat_BIS11(quest)
 
+% Score: sum (52-71: normal; more: impulsive; less: over-controlled)
+
 n_items = 30; % number of items in the questionnaire
 n_lett = 5; % number of letters of questionnaire name
 
