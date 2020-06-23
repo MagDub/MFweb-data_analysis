@@ -72,6 +72,7 @@ title('Number of trials')
 
 title(strcat('Participant', 32, part_num))    
 savefig(strcat(direc, '/histograms.fig'))
+saveas(gcf, strcat(direc, '/histograms.png'))
 
 %%% SAVE
 

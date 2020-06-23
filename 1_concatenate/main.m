@@ -1,16 +1,23 @@
-clear
 
-n_trials = 100;
 
-for userID = 6
+usermat = [2,4,5,6];
+
+for i=1:length(usermat)
+        
+    userID = usermat(i);
+    
+    disp(['userID:', 32, num2str(userID)])
 
     path_ = strcat('../../data/raw/user_',int2str(userID),'/task/');
     task_folder = strcat(path_,'*.xls');
     FolderInfo = dir(task_folder);
     file_names = {};
+    
     for block_i = 1:size(FolderInfo,1)
         file_names{end+1}=FolderInfo(block_i).name;
     end
+    
+    n_trials = 100;
 
     if size(file_names,2)~=4
         disp('Problem ! Not 4 blocks !')
@@ -21,7 +28,7 @@ for userID = 6
                             'TreeA', 'TreeB', 'TreeC', 'TreeD', ...
                                 'Size', 'RT', 'PressedKey', 'UnusedTree',...
                                     'TreeColGroup', 'AppleCol1', 'AppleCol2', 'AppleCol3', ...
-                                        'BlockDuration'};
+                                        'BlockDuration', 'InfoRequestNo'};
 
         ItemMatAllBlocks = [];
         InitialSamplesSizeMatAllBlocks = [];
@@ -41,6 +48,15 @@ for userID = 6
             InitialSamplesNbMat=convert2num(T.InitialSamplesNb);
             TreeColoursMat=convert2num(T.TreeColours);
             UnusedTreeMat=convert2num(T.UnusedTree);
+            
+            % Check if column name exists
+            Exist_Column = strcmp('InfoRequestNo',T.Properties.VariableNames);
+            val = Exist_Column(Exist_Column==1);
+            if val
+                InfoRequestNo=str2double(T.InfoRequestNo);
+            else
+                InfoRequestNo=nan;
+            end
 
             pressedMat = make_mat(n_trials, T.AllKeyPressed, 6);    
             InitialSamplesSizeMat = make_mat(n_trials, T.InitialSamplesSize, 5);
@@ -89,7 +105,7 @@ for userID = 6
                     tree = InitialSamplesTreeMat(trial,sample);
                     trees(tree)=1;
 
-                    size = InitialSamplesSizeMat(trial,sample);
+                    init_samp = InitialSamplesSizeMat(trial,sample);
 
                     rt = nan;
                     pressed = nan;
@@ -98,10 +114,11 @@ for userID = 6
                     apple_col = nan(1,3);
 
                     user_log(end+1, :) = [T.BlockNo, TrialMat(trial), HorizonMat(trial)+5, ItemMat(trial), sample,...
-                                          trees, size, rt, pressed, ...
+                                          trees, init_samp, rt, pressed, ...
                                           UnusedTreeMat(trial), TreeColoursMat(trial), ...
                                           apple_col, ...
-                                          elapsed_time_s];
+                                          elapsed_time_s,...
+                                          InfoRequestNo];
                 end
 
                 % selected
@@ -109,7 +126,7 @@ for userID = 6
 
                     rt = RTMat(trial,choice);
                     pressed = pressedMat(trial,choice);
-                    size = ChosenAppleSizeMat(trial,choice);
+                    init_samp = ChosenAppleSizeMat(trial,choice);
 
                     if ~find(ChosenTreeMat(trial,:)==UnusedTreeMat(trial))
                         disp('MISMATCH ! UNUSED TREE IS CHOSEN')
@@ -120,17 +137,18 @@ for userID = 6
                     trees(tree)=1;
 
                     user_log(end+1, :) = [T.BlockNo, TrialMat(trial), HorizonMat(trial)+5, ItemMat(trial), InitialSamplesNbMat(trial)+choice,...
-                          trees, size, rt, pressed, ...
+                          trees, init_samp, rt, pressed, ...
                           UnusedTreeMat(trial), TreeColoursMat(trial), ...
                           apple_col, ...
-                          elapsed_time_s];
+                          elapsed_time_s, ...
+                          InfoRequestNo];
 
                 end
             end
         end
     end
 
-
+    user = [];
     user.log = user_log;
     user.log_desc = user_log_desc;
 
@@ -145,10 +163,10 @@ for userID = 6
     for it_ = 1:100    
         for app = 1:5
 
-            size = tmp_initial_apples_sizes(it_, app);
-            if size > 0
-                user.item(1,it_).initial_apples.size(app) = size;
-                user.item(2,it_).initial_apples.size(app) = size;
+            init_samp = tmp_initial_apples_sizes(it_, app);
+            if init_samp > 0
+                user.item(1,it_).initial_apples.size(app) = init_samp;
+                user.item(2,it_).initial_apples.size(app) = init_samp;
             end
 
             tree = tmp_initial_apples_trees(it_, app);
@@ -160,7 +178,7 @@ for userID = 6
     end
 
     save(strcat('../../data/concat_data/user_',int2str(userID),'.mat'), 'user')
-    
+          
 end
 
 

@@ -1,34 +1,33 @@
 
-clear
+addpath('./func_aggregate/')
+addpath('./func_plot/')
 
-%% Load
+usermat = [2,4,5,6];
 
-for userID = 5:6
+% Initiate
+number_particip = length(usermat);
 
+matBD = initiate_mat(number_particip);
+matAD = initiate_mat(number_particip);
+matAB = initiate_mat(number_particip);
+matABD = initiate_mat(number_particip);
+matAB_fromABD = initiate_mat(number_particip);
+
+for part_ind=1:length(usermat)
+        
+    userID = usermat(part_ind);
     user_num = num2str(userID);
+    
+    disp(['userID:', 32, num2str(userID)])
 
     part_file = strcat('../../data/concat_data/user_',user_num,'.mat');
 
     load(part_file, 'user');  
-
     direc = strcat('../../data/sanity_check/user_', user_num);
 
     if ~exist(direc)
         mkdir(direc)
     end
-
-    addpath('./func_aggregate/')
-    addpath('./func_plot/')
-
-    %% Initiate
-    part_ind = 1;
-    number_particip = 1;
-
-    matBD = initiate_mat(number_particip);
-    matAD = initiate_mat(number_particip);
-    matAB = initiate_mat(number_particip);
-    matABD = initiate_mat(number_particip);
-    matAB_fromABD = initiate_mat(number_particip);
 
     rejected=[];
 
@@ -51,7 +50,7 @@ for userID = 5:6
     rejected_AB = [];
     gameID_AB = [];
 
-    %%
+    %
     for i=1:size(user.unused_tree,2)
 
         %%%%% A is the unused tree %%%%%
@@ -151,22 +150,22 @@ for userID = 5:6
     save(strcat(fol_log, '/logADshort_all'), 'logADshort_all')
     save(strcat(fol_log, '/logADlong_all'), 'logADlong_all')
 
-    %%% mat_ABD %%%
-    %1 : ind_block 
-    %2 : ind_block_trial 
-    %3 : ind_horizon 
-    %4 : ind_gameID
-    %5 : size A
-    %6 : size A
-    %7 : size A
-    %8 : size B
-    %9 : size D
-    %10 : chosen_tree
-    %11 : size of chosen apple
-    %12 : RT
+    %% mat_ABD %%%
+%     1 : ind_block 
+%     2 : ind_block_trial 
+%     3 : ind_horizon 
+%     4 : ind_gameID
+%     5 : size A
+%     6 : size A
+%     7 : size A
+%     8 : size B
+%     9 : size D
+%     10 : chosen_tree
+%     11 : size of chosen apple
+%     12 : RT
 
     tmp_ABD = mat_ABD;
-    %%%%% Plot and store the important things %%%%%
+    %%%% Plot and store the important things %%%%%
     matBD = plot_all_BD(user_num, mat_BD, direc);
     matAD = plot_all_AD(user_num, mat_AD, direc);
     matABD = plot_all_ABD(user_num, tmp_ABD, direc);
@@ -180,20 +179,15 @@ for userID = 5:6
     save(strcat(direc, '/matAB'), 'matAB')
     save(strcat(direc, '/matAB_ABD'), 'matAB_ABD')
 
-
-    part_ind = part_ind+1;
-
-    % number of trials rejected because apple D was not the smallest
     rejected(end+1,:) = [size(rejected_BD,2), size(rejected_DB,2), size(rejected_AD,2), size(rejected_ABD,2), size(rejected_AB,2)];
 
     make_hist_figure(mat_AB, mat_ABD, mat_AD, mat_BD, user_num, direc);    
 
     average_rej_trials_per_part = mean(sum(rejected,2));
-    disp('Average rejected trials per participant: ')
-    disp(average_rej_trials_per_part)
+    
+    disp(['Average rejected trials per participant:', 32, num2str(average_rej_trials_per_part)])
+    disp('---------------------------------')
 
-
-    %Do the same for RT but mean not difference of apples
     
 end
 
