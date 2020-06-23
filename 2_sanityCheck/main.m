@@ -2,7 +2,7 @@
 addpath('./func_aggregate/')
 addpath('./func_plot/')
 
-usermat = [2,4,5,6];
+usermat = [2,4,5,6,9];
 
 % Initiate
 number_particip = length(usermat);
@@ -13,7 +13,7 @@ matAB = initiate_mat(number_particip);
 matABD = initiate_mat(number_particip);
 matAB_fromABD = initiate_mat(number_particip);
 
-for part_ind=1:length(usermat)
+for part_ind=1%:length(usermat)
         
     userID = usermat(part_ind);
     user_num = num2str(userID);

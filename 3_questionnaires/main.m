@@ -1,7 +1,9 @@
 
 % General
 
-usermat = [2,4,5,6];
+usermat = [2,4,5,6,9];
+
+res_fold = '../../data/questionnaire/';
 
 for i=1:length(usermat)
         
@@ -17,6 +19,11 @@ for i=1:length(usermat)
     
     if length(list_q)~=1
         disp('many questionnaire file: PROBLEM')
+    end
+    
+    user_fol = strcat(res_fold,'user_',num2str(userID));
+    if ~exist(user_fol)
+        mkdir(user_fol)
     end
     
     T = readtable(strcat(path_quest,list_q.name));
@@ -35,8 +42,6 @@ for i=1:length(usermat)
     
     RT_quest_desc={'ASRS', 'BIS11', 'OCIR', 'IUS', 'SDS', 'STAI', 'IQ', 'IQim'};
     
-    RT_quest_mat(i,:) = RT_quest; % All participants
-
     % ASRS: Adult ADHD self-report scale 
     % Problem with items: Order of items does not match theory
     % score: sum (higher: more ADHD)
@@ -63,7 +68,7 @@ for i=1:length(usermat)
     [SDS_mat_desc, SDS_mat, SDS_score_desc, SDS_score] = concat_SDS(T.SDS{1});
 
     % IQ
-    [score, percentage] = concat_IQ(T);
+    [IQscore, IQpercentage] = concat_IQ(T);
 
     % Checks
     [~, check_mat_ASRS, ~] = concat_checks(T.ASRS{1}, 1);
@@ -91,9 +96,7 @@ for i=1:length(usermat)
         end
     end
 
-    passed_perc = passed / (size(check_mat,1)+2);
-
-    disp(['passed_perc:', 32, num2str(passed_perc*100), '%'])
+    CheckPassedPerc = passed / (size(check_mat,1)+2);
     
     % Compute total time spend
     start_time = T.UserStartTime{1};
@@ -106,32 +109,49 @@ for i=1:length(usermat)
         t2={strcat('02-Oct-2011',32,finish_time(1:8))};
     end
 
-    time_interval_in_seconds = etime(datevec(datenum(t2)),datevec(datenum(t1)));
-    time_interval_in_hours = time_interval_in_seconds/3600;
-
-    disp(['hours spent:', 32, num2str(time_interval_in_hours)])
+    TotTimeSec = etime(datevec(datenum(t2)),datevec(datenum(t1)));
     
-    % task check
-    load(strcat('../../data/concat_data/user_',num2str(userID),'.mat'))
+    save(strcat(user_fol,'/RT_quest.mat'), 'RT_quest')
+    save(strcat(user_fol,'/RT_quest_desc.mat'), 'RT_quest_desc')
+    save(strcat(user_fol,'/ASRS_mat_desc.mat'), 'ASRS_mat_desc')
+    save(strcat(user_fol,'/ASRS_mat.mat'), 'ASRS_mat')
+    save(strcat(user_fol,'/OCIR_mat_desc.mat'), 'OCIR_mat_desc')
+    save(strcat(user_fol,'/OCIR_mat.mat'), 'OCIR_mat')
+    save(strcat(user_fol,'/STAI_mat_desc.mat'), 'STAI_mat_desc')
+    save(strcat(user_fol,'/STAI_mat.mat'), 'STAI_mat')
+    save(strcat(user_fol,'/BIS11_mat_desc.mat'), 'BIS11_mat_desc')
+    save(strcat(user_fol,'/BIS11_mat_desc.mat'), 'BIS11_mat_desc')
+    save(strcat(user_fol,'/IUS_mat_desc.mat'), 'IUS_mat_desc')
+    save(strcat(user_fol,'/IUS_mat_desc.mat'), 'IUS_mat_desc')
+    save(strcat(user_fol,'/SDS_mat_desc.mat'), 'SDS_mat_desc')
+    save(strcat(user_fol,'/SDS_mat.mat'), 'SDS_mat')
+    save(strcat(user_fol,'/TotTimeSec.mat'), 'TotTimeSec')
+    save(strcat(user_fol,'/CheckPassedPerc.mat'), 'CheckPassedPerc')
     
-    disp(['task info request:', 32, num2str(user.log(1,19))])
-    
-    task_InfoRequestNo_mat(i) = user.log(1,19);
-    
-    disp('----------------------')
+    % Allparticipants
+    RT_quest_all(i,:) = RT_quest; % All participants
+    ASRS_all(i,:) = ASRS_score;
+    OCIR_all(i,:) = OCIR_score;
+    STAI_all(i,:) = STAI_score;
+    BIS11_all(i,:) = BIS11_score;
+    IUS_all(i,:) = IUS_score;
+    IQscore_all(i,:) = IQscore;
+    CheckPassedPerc_all(i,:) = CheckPassedPerc;
+    TotTimeSec_all(i,:) = TotTimeSec;
 
 end
 
-for q_num = 1:8
-    subplot(4,2,q_num)
-    plot(RT_quest_mat(:,q_num)/(1000*60), 'o')
-    grid on;
-    xlim([0 length(usermat)+1])
-    xticks(1:1:length(usermat))
-    xticklabels(usermat)
-    xlabel('user')
-    ylabel('time (min)')
-    title(RT_quest_desc(q_num))
-end
+fol_all = strcat(res_fold,'all');
+save(strcat(fol_all,'/RT_quest_all.mat'), 'RT_quest_all')
+save(strcat(fol_all,'/RT_quest_desc.mat'), 'RT_quest_desc')
+save(strcat(fol_all,'/ASRS_all.mat'), 'ASRS_all')
+save(strcat(fol_all,'/OCIR_all.mat'), 'OCIR_all')
+save(strcat(fol_all,'/STAI_all.mat'), 'STAI_all')
+save(strcat(fol_all,'/BIS11_all.mat'), 'BIS11_all')
+save(strcat(fol_all,'/IUS_all.mat'), 'IUS_all')
+save(strcat(fol_all,'/IQscore_all.mat'), 'IQscore_all')
+save(strcat(fol_all,'/CheckPassedPerc_all.mat'), 'CheckPassedPerc_all')
+save(strcat(fol_all,'/TotTimeSec_all.mat'), 'TotTimeSec_all')
+
 
 
