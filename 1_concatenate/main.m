@@ -1,6 +1,7 @@
 
+% User 12 did not do last block !!
 
-usermat = [2,4,5,6,9];
+usermat = [2,4:6,9,11,13,14];
 
 for i=1:length(usermat)
         

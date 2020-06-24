@@ -1,5 +1,5 @@
 
-usermat = [2,4,5,6,9];
+usermat = [2,4:6,9,11,13,14];
 
 load('../../data/questionnaire/all/RT_quest_all.mat');
 load('../../data/questionnaire/all/RT_quest_desc.mat');
@@ -21,8 +21,8 @@ for i=1:length(usermat)
     disp(['Checks:', 32, num2str(CheckPassedPerc_all(i)*100), '%'])
     
     % total time
-    time_interval_in_hours = TotTimeSec_all(i)/3600;
-    disp(['Time (h):', 32, num2str(time_interval_in_hours)])
+    time_interval_in_hours(i) = TotTimeSec_all(i)/3600;
+    disp(['Time (h):', 32, num2str(time_interval_in_hours(i))])
     
     % questions no
     questionsfolder = dir(strcat(raw_fol, 'user_', num2str(userID), '/questions/*.xls'));
@@ -59,3 +59,27 @@ for q_num = 1:8
     ylabel('time (min)')
     title(RT_quest_desc(q_num))
 end
+
+
+%%%%% Time plot
+
+time_interval_in_hours = time_interval_in_hours(2:end); % remove user 2
+
+figure();
+n = size(time_interval_in_hours,2);
+
+% mean
+bar_plot = bar(1,nanmean(time_interval_in_hours), 'FaceAlpha', 0.3, 'BarWidth',.3); hold on;
+
+% individual dots
+plot(rand(1,n)/10+ones(1,n), time_interval_in_hours,'.','MarkerSize',10);
+
+% variance
+h = errorbar(1,[nanmean(time_interval_in_hours)],...
+    [nanstd(time_interval_in_hours)./sqrt(n)],'.','color','k');
+set(h,'Marker','none')
+
+% parameters
+ylim([0 3])
+ylabel('Time (hours)')
+xlim([0 2])

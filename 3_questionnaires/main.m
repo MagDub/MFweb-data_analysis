@@ -1,7 +1,7 @@
 
 % General
 
-usermat = [2,4,5,6,9];
+usermat = [2,4:6,9,11,13,14];
 
 res_fold = '../../data/questionnaire/';
 
@@ -111,6 +111,12 @@ for i=1:length(usermat)
 
     TotTimeSec = etime(datevec(datenum(t2)),datevec(datenum(t1)));
     
+    % Change of Time Zone
+    hours_diff=6;
+    if userID==13
+        TotTimeSec = TotTimeSec-hours_diff*3600;
+    end
+    
     save(strcat(user_fol,'/RT_quest.mat'), 'RT_quest')
     save(strcat(user_fol,'/RT_quest_desc.mat'), 'RT_quest_desc')
     save(strcat(user_fol,'/ASRS_mat_desc.mat'), 'ASRS_mat_desc')
@@ -152,6 +158,4 @@ save(strcat(fol_all,'/IUS_all.mat'), 'IUS_all')
 save(strcat(fol_all,'/IQscore_all.mat'), 'IQscore_all')
 save(strcat(fol_all,'/CheckPassedPerc_all.mat'), 'CheckPassedPerc_all')
 save(strcat(fol_all,'/TotTimeSec_all.mat'), 'TotTimeSec_all')
-
-
 
