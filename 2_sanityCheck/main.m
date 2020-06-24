@@ -2,7 +2,7 @@
 addpath('./func_aggregate/')
 addpath('./func_plot/')
 
-usermat = [11,13,14];
+usermat = [2,4:6,9,11,13,14];
 
 % Initiate
 number_particip = length(usermat);
@@ -118,7 +118,6 @@ for part_ind=1:length(usermat)
     end
 
     %%%%% Split data by category and aggregate it %%%%%
-    %[log_BD_, log_DB_, mat_BD_]= aggregate_choices_BD(user, gameID_BD, gameID_DB);
     [log_BD, mat_BD, logBDlong, logBDshort, logdesc, logBDlong_all, logBDshort_all]= aggregate_choices_BD_new(user, sort([gameID_BD gameID_DB]));
     [log_AD, mat_AD, logADlong, logADshort, ~, logADlong_all, logADshort_all] = aggregate_choices_AD(user, gameID_AD);
     [log_ABD, mat_ABD, logABDlong, logABDshort, ~, logABDlong_all, logABDshort_all] = aggregate_choices_ABD(user, gameID_ABD);
@@ -178,6 +177,11 @@ for part_ind=1:length(usermat)
     save(strcat(direc, '/matABD'), 'matABD')
     save(strcat(direc, '/matAB'), 'matAB')
     save(strcat(direc, '/matAB_ABD'), 'matAB_ABD')
+    
+    save(strcat(direc, '/mat_BD'), 'mat_BD')
+    save(strcat(direc, '/mat_AD'), 'mat_AD')
+    save(strcat(direc, '/mat_ABD'), 'mat_ABD')
+    save(strcat(direc, '/mat_AB'), 'mat_AB')
 
     rejected(end+1,:) = [size(rejected_BD,2), size(rejected_DB,2), size(rejected_AD,2), size(rejected_ABD,2), size(rejected_AB,2)];
 
