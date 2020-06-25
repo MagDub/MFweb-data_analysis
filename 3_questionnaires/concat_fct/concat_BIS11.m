@@ -13,18 +13,22 @@ question = {};
 answer = [];
 
 for n = 1:n_items
-    if n < 10
+    if isnan(str2double(quest(start(n)+n_lett+2)))
        fin = start(n)+n_lett+1;
     else
        fin = start(n)+n_lett+2;
     end
-    question{end+1} = quest(start(n):fin);
+    tmp = quest(start(n):fin);
+    item_no(n) = str2double(tmp(n_lett+2:end));
     fin = fin + space1;
     answer(end+1) = str2double(quest(fin));
 end
 
 BIS11_mat_desc = {'Item', 'Response'};
-BIS11_mat = [1:n_items; answer]';
+
+BIS11_mat = [item_no; answer]';
+BIS11_mat = sortrows(BIS11_mat,1);
+
 BIS11_score_desc = {'TotalScore'};
 BIS11_score = sum(answer);
 

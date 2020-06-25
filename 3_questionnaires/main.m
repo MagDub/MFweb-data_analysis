@@ -1,7 +1,9 @@
 
 % General
 
-usermat = [2,4:6,9,11,13,14];
+% Problem user ID 15: factor mismatch
+
+load('../usermat.mat')
 
 res_fold = '../../data/questionnaire/';
 

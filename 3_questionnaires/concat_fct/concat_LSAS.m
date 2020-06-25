@@ -3,6 +3,8 @@ function [LSAS_mat_desc, LSAS_mat, LSAS_score_desc, LSAS_score] = concat_LSAS(qu
 % score: sum (fear and avoidance subscales; higher: more anxiety)
 % 4 subscores (performance anxiety, performacne avoidance, social anxiety, social avoidance)
 
+n_lett = 4;
+
 space1 = 13;
 space2 = 16;
 
@@ -15,12 +17,13 @@ answer_fear = [];
 answer_avoidance = [];
 
 for n = 1:n_items
-    if n < 10
-       fin = start(n)+5;
+    if isnan(str2double(quest(start(n)+n_lett+2)))
+       fin = start(n)+n_lett+1;
     else
-       fin = start(n)+5+1;
+       fin = start(n)+n_lett+2;
     end
-    question{end+1} = quest(start(n):fin);
+    tmp = quest(start(n):fin);
+    item_no(n) = str2double(tmp(n_lett+2:end));
     fin = fin + space1;
     answer_fear(end+1) = str2double(quest(fin));
     fin = fin + space2;
@@ -28,7 +31,9 @@ for n = 1:n_items
 end
 
 LSAS_mat_desc = {'Item', 'FearResponse', 'AvoidanceResponse'};
-LSAS_mat = [1:n_items; answer_fear; answer_avoidance]';
+LSAS_mat = [item_no; answer_fear; answer_avoidance]';
+LSAS_mat = sortrows(LSAS_mat,1);
+
 
 % fear
 performance_fear = LSAS_mat([1:4 6 8 9 13 14 16 17 20 21],2);

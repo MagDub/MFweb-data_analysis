@@ -1,7 +1,14 @@
 
-% User 12 did not do last block !!
+% Take all the ones that completed questionnaires
+tmp_completed = dir('../../data/raw/user_*/questionnaires/*.xls');
 
-usermat = [2,4:6,9,11,13,14];
+for i=1:size(tmp_completed,1)
+    usermat(i) = str2double(tmp_completed(i).folder(37:end-15));
+end
+
+usermat = sort(usermat);
+
+save('../usermat.mat', 'usermat')
 
 for i=1:length(usermat)
         

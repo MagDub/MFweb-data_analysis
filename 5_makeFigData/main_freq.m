@@ -5,13 +5,13 @@ data_fold = ('../../data/');
 dir_data = (strcat(data_fold,'sanity_check/'));
 dir_save = (strcat(data_fold,'data_for_figs/'));
 
-ID_mat = [2,4:6,9,11,13,14];
+load('../usermat.mat')
 
 cond_mat = [];
 
-for ID_n = 1:size(ID_mat,2)
+for ID_n = 1:size(usermat,2)
     
-    ID = ID_mat(ID_n);
+    ID = usermat(ID_n);
     
         %%% cond AB
 
@@ -80,9 +80,9 @@ for ID_n = 1:size(ID_mat,2)
 
 end
 
-for ID_n = 1:size(ID_mat,2)
+for ID_n = 1:size(usermat,2)
     
-    ID = ID_mat(ID_n);
+    ID = usermat(ID_n);
     
        cond_mat(ID_n, 1:8) = cond{ID_n}.AB; 
        cond_mat(ID_n, 9:16) = cond{ID_n}.BD; 

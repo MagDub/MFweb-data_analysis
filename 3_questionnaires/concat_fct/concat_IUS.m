@@ -18,18 +18,20 @@ question = {};
 answer = [];
 
 for n = 1:n_items
-    if n < 10
+    if isnan(str2double(quest(start(n)+n_lett+2)))
        fin = start(n)+n_lett+1;
     else
        fin = start(n)+n_lett+2;
     end
-    question{end+1} = quest(start(n):fin);
+    tmp = quest(start(n):fin);
+    item_no(n) = str2double(tmp(n_lett+2:end));
     fin = fin + space1;
     answer(end+1) = str2double(quest(fin));
 end
 
 IUS_mat_desc = {'Item', 'Response'};
-IUS_mat = [1:n_items; answer]';
+IUS_mat = [item_no; answer]';
+IUS_mat = sortrows(IUS_mat,1);
 
 factor1 = IUS_mat([1:3 9 12:17 20 22 23 24 25],2);
 factor2 = IUS_mat([4:8 10 11 18 19 21 26 27],2);
@@ -38,7 +40,7 @@ IUS_score_desc = {'TotalScore', 'FactorNegative', 'FactorUnfair'};
 IUS_score = [sum(answer),sum(factor1), sum(factor2)];
 
 if sum(answer)~=(sum(factor1)+sum(factor2))
-    disp('factor mismatch')
+    disp('IUS: factor mismatch')
 end
 
 

@@ -1,5 +1,5 @@
 
-usermat = [2,4:6,9,11,13,14];
+load('../usermat.mat')
 
 load('../../data/questionnaire/all/RT_quest_all.mat');
 load('../../data/questionnaire/all/RT_quest_desc.mat');

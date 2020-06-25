@@ -12,18 +12,20 @@ question = {};
 answer = [];
 
 for n = 1:n_items
-    if n < 10
+    if isnan(str2double(quest(start(n)+n_lett+2)))
        fin = start(n)+n_lett+1;
     else
        fin = start(n)+n_lett+2;
     end
-    question{end+1} = quest(start(n):fin);
+    tmp = quest(start(n):fin);
+    item_no(n) = str2double(tmp(n_lett+2:end));
     fin = fin + space1;
     answer(end+1) = str2double(quest(fin));
 end
 
 SDS_mat_desc = {'Item', 'Response'};
-SDS_mat = [1:n_items; answer]';
+SDS_mat = [item_no; answer]';
+SDS_mat = sortrows(SDS_mat,1);
 
 % reverse scoring
 items_to_reverse = [2, 5, 6, 11, 12, 14, 16, 17, 18, 20];

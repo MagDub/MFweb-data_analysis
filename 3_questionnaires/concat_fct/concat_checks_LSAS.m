@@ -16,7 +16,8 @@ checkID_avoidance = [];
 for n = 1:n_items
     
     fin = start(n)+n_lett+1;
-    question{end+1} = quest(start(n):fin);
+    tmp = quest(start(n):fin);
+    item_no(n) = str2double(tmp(n_lett+2:end));
     checkID_quest(end+1) = str2double(quest(fin));
     fin = fin + space1;
     checkID_fear(end+1) = str2double(quest(fin));

@@ -11,13 +11,13 @@ col_pickedtree=6;
 consistency_mat_desc = {'gameID' 'LHisConsistent' 'SHisConsistent'};
 consistency_freq_desc = {'LH_Consistent' 'SH_Consistent', 'ID'};
 
-ID_mat = [2,4:6,9,11,13,14];
+load('../usermat.mat')
 
-consistency_freq = nan(size(ID_mat,2),2);
+consistency_freq = nan(size(usermat,2),2);
 
-for ID_i=1:size(ID_mat,2)
+for ID_i=1:size(usermat,2)
     
-    ID = ID_mat(ID_i);
+    ID = usermat(ID_i);
         
     % AB
 
@@ -107,7 +107,7 @@ for ID_i=1:size(ID_mat,2)
             
 end
 
-consistency_freq = [consistency_freq ID_mat'];
+consistency_freq = [consistency_freq usermat'];
 
 save(strcat(data_fold, 'data_for_figs/consistency_freq.mat'), 'consistency_freq')
 save(strcat(data_fold, 'data_for_figs/consistency_freq_desc.mat'), 'consistency_freq_desc')

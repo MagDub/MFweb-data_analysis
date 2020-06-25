@@ -12,18 +12,21 @@ question = {};
 answer = [];
 
 for n = 1:n_items
-    if n < 10
+    if isnan(str2double(quest(start(n)+n_lett+2)))
        fin = start(n)+n_lett+1;
     else
        fin = start(n)+n_lett+2;
     end
-    question{end+1} = quest(start(n):fin);
+    tmp = quest(start(n):fin);
+    item_no(n) = str2double(tmp(n_lett+2:end));
     fin = fin + space1;
     answer(end+1) = str2double(quest(fin));
 end
 
 STAI_mat_desc = {'Item', 'Response'};
-STAI_mat = [1:n_items; answer]';
+STAI_mat = [item_no; answer]';
+STAI_mat = sortrows(STAI_mat,1);
+
 STAI_score_desc = {'TotalScore'};
 STAI_score = sum(answer);
 
