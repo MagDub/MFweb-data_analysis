@@ -4,8 +4,8 @@ data_fold = ('../../data/');
 % Data
 load(strcat(data_fold, 'data_for_figs/consistency_freq_desc.mat'))
 load(strcat(data_fold, 'data_for_figs/consistency_freq.mat'))
-consist_SH = consistency_freq(:,2);
 consist_LH = consistency_freq(:,1);
+consist_SH = consistency_freq(:,2);
 
 % Figure
 figure('Color','w');
@@ -40,10 +40,10 @@ set(gca,'XTick',[mean(x_ax)])
 set(gca,'XTickLabel',{''});
 
 ylabel('Proportion of same choices [%]','FontName','Arial','Fontweight','bold','FontSize',12,'Interpreter','tex');
-set(gca,'YTick',0:10:100)
+set(gca,'YTick',0:20:100)
 ylim([0 100])
 
-legend([b2S b2L],{'Short horizon', 'Long horizon'});
+legend([b2S b2L],{'Short horizon', 'Long horizon'}, 'Location', 'NorthWest');
 legend boxoff  
 
 % Export

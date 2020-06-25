@@ -131,7 +131,7 @@ for ID_i=1:size(usermat,2)
     consistency_D_mat = [picked_tree_mat(:,1) consistentLH_D' consistentSH_D'];
     
     % LH / SH
-    consistency_freq(ID_i,:) = [sum(consistency_A_mat(:,2:3),1)./size(consistency_mat,1)*100];
+    consistency_freq(ID_i,:) = [sum(consistency_mat(:,2:3),1)./size(consistency_mat,1)*100];
     consistency_A_freq(ID_i,:) = [sum(consistency_A_mat(:,2:3),1)./size(consistency_A_mat,1)*100];
     consistency_B_freq(ID_i,:) = [sum(consistency_B_mat(:,2:3),1)./size(consistency_B_mat,1)*100];
     consistency_C_freq(ID_i,:) = [sum(consistency_C_mat(:,2:3),1)./size(consistency_C_mat,1)*100];
@@ -139,6 +139,13 @@ for ID_i=1:size(usermat,2)
     
     picked_tree_mat = [];
             
+end
+
+sum_LH = consistency_A_freq(:,1)+consistency_B_freq(:,1)+consistency_C_freq(:,1)+consistency_D_freq(:,1);
+
+tmp = (sum_LH == round(consistency_freq(:,1)));
+if sum(double(sum_LH == round(consistency_freq(:,1))))~=size(consistency_freq(:,1),1)
+    disp('consistency mismatch')
 end
 
 consistency_freq = [consistency_freq usermat'];
