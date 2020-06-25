@@ -42,6 +42,15 @@ for i=1:length(usermat)
     picked_D_LH = size(find(hist_all_mat(2,:)==4),2);
     picked_D = picked_D_SH + picked_D_LH;
     disp(['D picked:', 32, num2str(picked_D/400*100), '%'])
+    picked_D_mat(i) = picked_D/400*100;
+    
+    % task picked D
+    load(strcat('../../data/sanity_check/user_',num2str(userID),'/hist_all.mat'))
+    picked_C_SH = size(find(hist_all_mat(1,:)==3),2);
+    picked_C_LH = size(find(hist_all_mat(2,:)==3),2);
+    picked_C = picked_C_SH + picked_C_LH;
+    disp(['D picked:', 32, num2str(picked_C/400*100), '%'])
+    picked_C_mat(i) = picked_C/400*100;
     
     disp('----------------------')
     
@@ -83,3 +92,7 @@ set(h,'Marker','none')
 ylim([0 3])
 ylabel('Time (hours)')
 xlim([0 2])
+
+%%
+ mean(picked_C_mat)
+ mean(picked_D_mat)

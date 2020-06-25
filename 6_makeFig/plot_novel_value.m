@@ -1,12 +1,15 @@
 
 data_fold = ('../../data/');
 
-n_trials = 400;
+n_trials_perhor = 200;
 
 % Data
 load(strcat(data_fold, 'data_for_figs/frequencies.mat'))
-pickedC_SH = frequencies(:,3)*100/n_trials;
-pickedC_LH = frequencies(:,7)*100/n_trials;
+pickedC_SH = frequencies(:,3)*100/n_trials_perhor;
+pickedC_LH = frequencies(:,7)*100/n_trials_perhor;
+
+save('./frequencies/pickedC_SH.mat', 'pickedC_SH')
+save('./frequencies/pickedC_LH.mat', 'pickedC_LH')
 
 % Figure
 figure('Color','w');
@@ -41,7 +44,7 @@ set(gca,'XTick',[mean(x_ax)])
 set(gca,'XTickLabel',{''});
 
 ylabel('Choice frequency [%]','FontName','Arial','Fontweight','bold','FontSize',12);
-set(gca,'YTick',0:5:80)
+set(gca,'YTick',0:15:80)
 ylim([0 max(max(pickedC_SH),max(pickedC_LH))])
 
 legend([b2S b2L],{'Short horizon', 'Long horizon'});

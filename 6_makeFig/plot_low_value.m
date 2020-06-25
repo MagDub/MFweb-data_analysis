@@ -1,12 +1,15 @@
 
 data_fold = ('../../data/');
 
-n_trials = 400;
+n_trials_perhor = 200;
 
 % Data
 load(strcat(data_fold, 'data_for_figs/frequencies.mat'))
-pickedD_SH = frequencies(:,4)*100/n_trials;
-pickedD_LH = frequencies(:,8)*100/n_trials;
+pickedD_SH = frequencies(:,4)*100/n_trials_perhor;
+pickedD_LH = frequencies(:,8)*100/n_trials_perhor;
+
+save('./frequencies/pickedD_SH.mat', 'pickedD_SH')
+save('./frequencies/pickedD_LH.mat', 'pickedD_LH')
 
 % Figure
 figure('Color','w');

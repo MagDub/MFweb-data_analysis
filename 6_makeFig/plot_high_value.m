@@ -1,12 +1,15 @@
 
 data_fold = ('../../data/');
 
-n_trials = 400;
+n_trials_perhor = 200;
 
 % Data
 load(strcat(data_fold, 'data_for_figs/chosenOption.mat'))
-pickedhigh_SH = (chosenOption.ABD.freq(:,1)+chosenOption.AB.freq(:,1)+chosenOption.BD.freq(:,1)+chosenOption.AD.freq(:,1))*100/n_trials;
-pickedhigh_LH = (chosenOption.ABD.freq(:,4)+chosenOption.AB.freq(:,4)+chosenOption.BD.freq(:,4)+chosenOption.AD.freq(:,4))*100/n_trials;
+pickedhigh_SH = (chosenOption.ABD.freq(:,1)+chosenOption.AB.freq(:,1)+chosenOption.BD.freq(:,1)+chosenOption.AD.freq(:,1))*100/n_trials_perhor;
+pickedhigh_LH = (chosenOption.ABD.freq(:,4)+chosenOption.AB.freq(:,4)+chosenOption.BD.freq(:,4)+chosenOption.AD.freq(:,4))*100/n_trials_perhor;
+
+save('./frequencies/pickedhigh_SH.mat', 'pickedhigh_SH')
+save('./frequencies/pickedhigh_LH.mat', 'pickedhigh_LH')
 
 % Figure
 figure('Color','w');
@@ -41,7 +44,7 @@ set(gca,'XTick',[mean(x_ax)])
 set(gca,'XTickLabel',{''});
 
 ylabel('Choice frequency [%]','FontName','Arial','Fontweight','bold','FontSize',12);
-set(gca,'YTick',0:5:80)
+set(gca,'YTick',0:15:80)
 ylim([0 max(max(pickedhigh_SH),max(pickedhigh_LH))])
 
 legend([b2S b2L],{'Short horizon', 'Long horizon'});

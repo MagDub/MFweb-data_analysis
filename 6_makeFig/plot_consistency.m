@@ -2,6 +2,7 @@
 data_fold = ('../../data/');
 
 % Data
+load(strcat(data_fold, 'data_for_figs/consistency_freq_desc.mat'))
 load(strcat(data_fold, 'data_for_figs/consistency_freq.mat'))
 consist_SH = consistency_freq(:,2);
 consist_LH = consistency_freq(:,1);
