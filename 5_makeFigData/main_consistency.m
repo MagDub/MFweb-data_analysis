@@ -1,3 +1,4 @@
+addpath('./functions/')
 
 picked_tree_mat = [];
 picked_tree_mat_desc = {'gameIDs', 'PickedLH_1', 'PickedLH_2', 'PickedSH_1', 'PickedSH_2'};

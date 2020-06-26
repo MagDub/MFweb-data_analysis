@@ -49,14 +49,21 @@ for i=1:length(usermat)
     picked_C_SH = size(find(hist_all_mat(1,:)==3),2);
     picked_C_LH = size(find(hist_all_mat(2,:)==3),2);
     picked_C = picked_C_SH + picked_C_LH;
-    disp(['D picked:', 32, num2str(picked_C/400*100), '%'])
+    disp(['C picked:', 32, num2str(picked_C/400*100), '%'])
     picked_C_mat(i) = picked_C/400*100;
     
     disp('----------------------')
     
 end
 
+addpath('../../figures/export_fig')
+
 % RT on quetionnaires
+figure('Color','w');
+set(gcf,'Unit','centimeters','OuterPosition',[0 0 20 20]);
+set(gca,'FontName','Arial','FontSize',10)
+hold on
+
 for q_num = 1:8
     subplot(4,2,q_num)
     plot(RT_quest_all(:,q_num)/(1000*60), 'o')
@@ -69,12 +76,17 @@ for q_num = 1:8
     title(RT_quest_desc(q_num))
 end
 
+export_fig(['Fig_time_questionnaires.tif'],'-nocrop','-r200')
 
 %%%%% Time plot
 
 time_interval_in_hours = time_interval_in_hours(2:end); % remove user 2
 
-figure();
+figure('Color','w');
+set(gcf,'Unit','centimeters','OuterPosition',[0 0 10 10]);
+set(gca,'FontName','Arial','FontSize',10)
+hold on
+
 n = size(time_interval_in_hours,2);
 
 % mean
@@ -93,6 +105,5 @@ ylim([0 3])
 ylabel('Time (hours)')
 xlim([0 2])
 
-%%
- mean(picked_C_mat)
- mean(picked_D_mat)
+export_fig(['Fig_time_all.tif'],'-nocrop','-r200')
+ 

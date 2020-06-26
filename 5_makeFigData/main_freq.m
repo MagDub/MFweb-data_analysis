@@ -1,5 +1,7 @@
 cond = [];
 
+addpath('./functions/')
+
 data_fold = ('../../data/');
 
 dir_data = (strcat(data_fold,'sanity_check/'));

@@ -118,4 +118,4 @@ legend boxoff
 
 % Export
 addpath('../../figures/export_fig')
-export_fig(['Fig_behaviour_consistency_per_tree.tif'],'-nocrop','-r200')
+export_fig(['./fig/Fig_behaviour_consistency_per_tree.tif'],'-nocrop','-r200')

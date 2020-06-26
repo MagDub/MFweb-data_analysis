@@ -45,11 +45,11 @@ set(gca,'XTickLabel',{''});
 
 ylabel('Choice frequency [%]','FontName','Arial','Fontweight','bold','FontSize',12);
 set(gca,'YTick',0:15:80)
-ylim([0 max(max(pickedhigh_SH),max(pickedhigh_LH))])
+ylim([0 80])
 
 legend([b2S b2L],{'Short horizon', 'Long horizon'});
 legend boxoff  
 
 % Export
 addpath('../../figures/export_fig')
-export_fig(['Fig_behaviour_high_value.tif'],'-nocrop','-r200')
+export_fig(['./fig/Fig_behaviour_high_value.tif'],'-nocrop','-r200')

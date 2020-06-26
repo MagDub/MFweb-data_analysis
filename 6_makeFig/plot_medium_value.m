@@ -52,4 +52,4 @@ legend boxoff
 
 % Export
 addpath('../../figures/export_fig')
-export_fig(['Fig_behaviour_medium_value.tif'],'-nocrop','-r200')
+export_fig(['./fig/Fig_behaviour_medium_value.tif'],'-nocrop','-r200')
