@@ -1,4 +1,5 @@
 
+data_fold = ('../../data/');
 load('../usermat.mat')
 numel = size(usermat,2);
 
