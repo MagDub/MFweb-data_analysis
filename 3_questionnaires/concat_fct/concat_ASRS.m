@@ -22,14 +22,10 @@ for n = 1:n_items
     answer(end+1) = str2double(quest(fin));
 end
 
-ASRS_mat_desc = {'Item', 'Response'};
-
 ASRS_mat = [item_no; answer]';
 ASRS_mat = sortrows(ASRS_mat,1);
 
-ASRS_score_desc = {'TotalScore'};
-ASRS_score = sum(answer);
-
+[ASRS_mat_desc, ASRS_mat, ASRS_score_desc, ASRS_score] = compute_ASRS_score(ASRS_mat);
 
 end
 

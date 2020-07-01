@@ -1,16 +1,26 @@
 
 % General
 
-% Problem user ID 15: factor mismatch
+% Check si demographics ca joue (voir dans un user, son age, gender et
+% score et voir si fit quand on regarde manuellement sur database)
+
+% ASRS DATA NADA
+
+% Correlation power simulation 
 
 load('../usermat.mat')
 
 res_fold = '../../data/questionnaire/';
 
+% load demographics
+load(strcat(res_fold, 'demographics/raw/p_ID.mat'))
+load(strcat(res_fold, 'demographics/raw/demo.mat'))
+load(strcat(res_fold, 'demographics/raw/demo_desc.mat'))
+
 for i=1:length(usermat)
         
     userID = usermat(i);
-    
+        
     disp(['userID:', 32, num2str(userID)])
     
     addpath('./concat_fct/')
@@ -29,7 +39,7 @@ for i=1:length(usermat)
     end
     
     T = readtable(strcat(path_quest,list_q.name));
-
+        
     % Compute reaction times: RT in milliseconds (divide by 1000 -> seconds)
     tmp = [str2double(T.PageNo0), str2double(T.PageNo1), str2double(T.PageNo2)...
         str2double(T.PageNo3), str2double(T.PageNo4), str2double(T.PageNo5),...
@@ -44,11 +54,11 @@ for i=1:length(usermat)
     
     RT_quest_desc={'ASRS', 'BIS11', 'OCIR', 'IUS', 'SDS', 'STAI', 'IQ', 'IQim'};
     
-    % ASRS: Adult ADHD self-report scale 
-    % Problem with items: Order of items does not match theory
-    % score: sum (higher: more ADHD)
-    [ASRS_mat_desc, ASRS_mat, ASRS_score_desc, ASRS_score] = concat_ASRS(T.ASRS{1});
-
+    
+    %%%%%%%%
+    % TODO %
+    %%%%%%%%
+    
     % OCIR: OCD
     % Score: Sum (recommended cutoff: 21)
     [OCIR_mat_desc, OCIR_mat, OCIR_score_desc, OCIR_score] = concat_OCIR(T.OCIR{1});
@@ -56,6 +66,12 @@ for i=1:length(usermat)
     % STAI: State-Trait Anxiety Inventory (we only do trait)
     % Score: Need to reverse some. See PDF. 
     [STAI_mat_desc, STAI_mat, STAI_score_desc, STAI_score] = concat_STAI(T.STAI{1});
+    
+    %%%%%%%%
+    
+    
+    % ASRS: Adult ADHD self-report scale 
+    [ASRS_mat_desc, ASRS_mat, ASRS_score_desc, ASRS_score] = concat_ASRS(T.ASRS{1});
 
     % BIS11
     [BIS11_mat_desc, BIS11_mat, BIS11_score_desc, BIS11_score] = concat_BIS11(T.BIS11{1});
@@ -71,6 +87,21 @@ for i=1:length(usermat)
 
     % IQ
     [IQscore, IQpercentage] = concat_IQ(T);
+    
+    % Demo
+    tmp_dem = strfind(p_ID, T.ProlificID);
+            
+    for d_=1:size(tmp_dem,1)
+        tmp_d(d_) = ~isempty(tmp_dem{d_});
+    end
+    
+    d_ind = find(tmp_d,1);
+    if isempty(d_ind)
+        Demo_mat = nan(1,3);
+    else
+        Demo_mat = demo(d_ind, :);
+    end
+    Demo_mat_desc = demo_desc;
 
     % Checks
     [~, check_mat_ASRS, ~] = concat_checks(T.ASRS{1}, 1);
@@ -135,6 +166,8 @@ for i=1:length(usermat)
     save(strcat(user_fol,'/SDS_mat.mat'), 'SDS_mat')
     save(strcat(user_fol,'/TotTimeSec.mat'), 'TotTimeSec')
     save(strcat(user_fol,'/CheckPassedPerc.mat'), 'CheckPassedPerc')
+    save(strcat(user_fol,'/Demo_mat.mat'), 'Demo_mat')
+    save(strcat(user_fol,'/Demo_mat_desc.mat'), 'Demo_mat_desc')
     
     % Allparticipants
     RT_quest_all(i,:) = RT_quest; % All participants
@@ -146,6 +179,7 @@ for i=1:length(usermat)
     IQscore_all(i,:) = IQscore;
     CheckPassedPerc_all(i,:) = CheckPassedPerc;
     TotTimeSec_all(i,:) = TotTimeSec;
+    Demo_all(i,:) = Demo_mat;
 
 end
 
@@ -153,6 +187,7 @@ fol_all = strcat(res_fold,'all');
 save(strcat(fol_all,'/RT_quest_all.mat'), 'RT_quest_all')
 save(strcat(fol_all,'/RT_quest_desc.mat'), 'RT_quest_desc')
 save(strcat(fol_all,'/ASRS_all.mat'), 'ASRS_all')
+save(strcat(fol_all,'/ASRS_mat_desc.mat'), 'ASRS_mat_desc')
 save(strcat(fol_all,'/OCIR_all.mat'), 'OCIR_all')
 save(strcat(fol_all,'/STAI_all.mat'), 'STAI_all')
 save(strcat(fol_all,'/BIS11_all.mat'), 'BIS11_all')
@@ -160,4 +195,6 @@ save(strcat(fol_all,'/IUS_all.mat'), 'IUS_all')
 save(strcat(fol_all,'/IQscore_all.mat'), 'IQscore_all')
 save(strcat(fol_all,'/CheckPassedPerc_all.mat'), 'CheckPassedPerc_all')
 save(strcat(fol_all,'/TotTimeSec_all.mat'), 'TotTimeSec_all')
+save(strcat(fol_all,'/Demo_all.mat'), 'Demo_all')
+save(strcat(fol_all,'/Demo_desc.mat'), 'demo_desc')
 
