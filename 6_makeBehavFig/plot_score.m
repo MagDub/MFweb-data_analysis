@@ -7,6 +7,10 @@ score_SH = score(:,2);
 first_LH = score(:,3);
 score_LH = score(:,4);
 
+save('../../data/data_for_figs/score_SH.mat', 'score_SH')
+save('../../data/data_for_figs/score_LH.mat', 'score_LH')
+save('../../data/data_for_figs/first_LH.mat', 'first_LH')
+
 % Figure
 figure('Color','w');
 set(gcf,'Unit','centimeters','OuterPosition',[0 0 10 10]);

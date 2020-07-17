@@ -11,6 +11,9 @@ pickedhigh_LH = (chosenOption.ABD.freq(:,4)+chosenOption.AB.freq(:,4)+chosenOpti
 save('./frequencies/pickedhigh_SH.mat', 'pickedhigh_SH')
 save('./frequencies/pickedhigh_LH.mat', 'pickedhigh_LH')
 
+save('../../data/data_for_figs/pickedhigh_SH.mat', 'pickedhigh_SH')
+save('../../data/data_for_figs/pickedhigh_LH.mat', 'pickedhigh_LH')
+
 % Figure
 figure('Color','w');
 set(gcf,'Unit','centimeters','OuterPosition',[0 0 10 10]);

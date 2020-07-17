@@ -11,6 +11,9 @@ pickedC_LH = frequencies(:,7)*100/n_trials_perhor;
 save('./frequencies/pickedC_SH.mat', 'pickedC_SH')
 save('./frequencies/pickedC_LH.mat', 'pickedC_LH')
 
+save('../../data/data_for_figs/pickedC_SH.mat', 'pickedC_SH')
+save('../../data/data_for_figs/pickedC_LH.mat', 'pickedC_LH')
+
 % Figure
 figure('Color','w');
 set(gcf,'Unit','centimeters','OuterPosition',[0 0 10 10]);
