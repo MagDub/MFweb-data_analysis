@@ -9,7 +9,7 @@ corr_ = [1 R_corr
      
 sig_ = corr2cov(sigma_, corr_);
 
-n_sample = 500;
+n_sample = 100;
 pow = 0;
 
     while pow < 0.95

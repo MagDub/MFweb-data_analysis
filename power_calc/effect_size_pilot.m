@@ -31,6 +31,14 @@ load('../../data/data_for_figs/pickedC_LH.mat')
 % load('../../figures/NADA/data_for_figs/models_mean.mat');
 % load('../../figures/NADA/data_for_figs/models_std.mat');
 
+% % Epsilon
+% load('../../data/data_for_figs/xi_SH.mat');
+% load('../../data/data_for_figs/xi_LH.mat');
+% 
+% % Novelty bonus
+% load('../../data/data_for_figs/nov_SH.mat');
+% load('../../data/data_for_figs/nov_LH.mat');
+
 % Effect size: 0.2 = small; 0.5 = medium; 0.8 = large
 EF_EV = compute_ef(EV_SH_mat, EV_LH_mat);
 EF_IG = compute_ef(IS_SH_mat, IS_LH_mat);
@@ -39,6 +47,8 @@ EF_score = compute_ef(score_SH, score_LH);
 EF_high = compute_ef(pickedhigh_SH, pickedhigh_LH);
 EF_low = compute_ef(pickedD_SH, pickedD_LH);
 EF_novel = compute_ef(pickedC_SH, pickedC_LH);
+EF_epsilon = compute_ef(xi_SH, xi_LH);
+EF_novbonus = compute_ef(nov_SH, nov_LH);
 
 % Compute sample size for at least 95% power - t-tests
 %[n_sample_EV, pow_EV] = compute_sample_size(EV_SH_mat, EV_LH_mat);
@@ -48,6 +58,8 @@ EF_novel = compute_ef(pickedC_SH, pickedC_LH);
 [n_sample_high, pow_high] = compute_sample_size(pickedhigh_SH, pickedhigh_LH);
 %[n_sample_low, pow_low] = compute_sample_size(pickedD_SH, pickedD_LH);
 [n_sample_novel, pow_novel] = compute_sample_size(pickedC_SH, pickedC_LH);
+[n_sample_epsilon, pow_epsilon] = compute_sample_size(xi_SH, xi_LH);
+[n_sample_novbonus, pow_novbonus] = compute_sample_size(nov_SH, nov_LH);
 
 
 
