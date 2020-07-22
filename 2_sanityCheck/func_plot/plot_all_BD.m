@@ -1,7 +1,9 @@
-function [matBD] = plot_all_BD(part_num, mat_BD, direc)
+function [matBD, RT_BD_SH, RT_BD_LH] = plot_all_BD(part_num, mat_BD, direc)
 
 mat_BD_short = [];
 mat_BD_long = [];
+RT_BD_SH = [];
+RT_BD_LH = [];
 
 % mat_BD_DB: 
 % 1. block
@@ -17,8 +19,10 @@ mat_BD_long = [];
 for i = 1:size(mat_BD,1)
     if mat_BD(i,3) == 6
         mat_BD_short(end+1,:) = mat_BD(i,[5:7 9]);
+        RT_BD_SH(end+1,:) = mat_BD(i,9);
     elseif mat_BD(i,3) == 11
         mat_BD_long(end+1,:) = mat_BD(i,[5:7 9]);
+        RT_BD_LH(end+1,:) = mat_BD(i,9);
     end
 end
 

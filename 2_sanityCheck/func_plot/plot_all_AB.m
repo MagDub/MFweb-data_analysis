@@ -1,9 +1,11 @@
-function [matAB] = plot_all_AB(part_num, mat_AB, direc)
+function [matAB, RT_AB_SH, RT_AB_LH] = plot_all_AB(part_num, mat_AB, direc)
 
 mat_AB_short = [];
 mat_AB_long = [];
 tmp_short = [];
 tmp_long = [];
+RT_AB_SH = [];
+RT_AB_LH = [];
 
 % mat_AB: 
 % 1. block
@@ -21,8 +23,10 @@ tmp_long = [];
 for i = 1:size(mat_AB,1)
     if mat_AB(i,3) == 6
         tmp_short(end+1,:) = mat_AB(i,[5:9 11]);
+        RT_AB_SH(end+1,:) = mat_AB(i,11);
     elseif mat_AB(i,3) == 11
         tmp_long(end+1,:) = mat_AB(i,[5:9 11]);
+        RT_AB_LH(end+1,:) = mat_AB(i,11);
     end
 end
 

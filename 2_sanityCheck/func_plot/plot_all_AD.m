@@ -1,9 +1,11 @@
-function [matAD] = plot_all_AD(part_num, mat_AD,direc)
+function [matAD, RT_AD_SH, RT_AD_LH] = plot_all_AD(part_num, mat_AD,direc)
 
 mat_AD_short = [];
 mat_AD_long = [];
 tmp_short = [];
 tmp_long = [];
+RT_AD_SH = [];
+RT_AD_LH = [];
 
 % mat_AD: 
 % 1. block
@@ -21,8 +23,10 @@ tmp_long = [];
 for i = 1:size(mat_AD,1)
     if mat_AD(i,3) == 6
         tmp_short(end+1,:) = mat_AD(i,[5:9 11]);
+        RT_AD_SH(end+1,:) = mat_AD(i,11);
     elseif mat_AD(i,3) == 11
         tmp_long(end+1,:) = mat_AD(i,[5:9 11]);
+        RT_AD_LH(end+1,:) = mat_AD(i,11);
     end
 end
 
