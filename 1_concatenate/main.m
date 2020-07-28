@@ -1,18 +1,9 @@
 
-% Take all the ones that completed questionnaires
-tmp_completed = dir('../../data/raw/user_*/questionnaires/*.xls');
+load('../usermat_completed.mat')
 
-for i=1:size(tmp_completed,1)
-    usermat(i) = str2double(tmp_completed(i).folder(40:end-15));
-end
-
-usermat = sort(usermat);
-
-save('../usermat.mat', 'usermat')
-
-for i=1:length(usermat)
+for i=1:length(usermat_completed)
         
-    userID = usermat(i);
+    userID = usermat_completed(i);
     
     disp(['userID:', 32, num2str(userID)])
 

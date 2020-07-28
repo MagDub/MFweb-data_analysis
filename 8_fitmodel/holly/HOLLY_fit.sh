@@ -3,7 +3,7 @@
 #$ -N fit
 #$ -e /data/mdubois/logs/
 #$ -o /data/mdubois/logs/
-#$ -t 1-11
+#$ -t 5
 #$ -S /bin/sh
 
 # where to find basic custom functions

@@ -8,7 +8,7 @@
 
 % Correlation power simulation 
 
-load('../usermat.mat')
+load('../usermat_completed.mat')
 
 res_fold = '../../data/questionnaire/';
 
@@ -17,9 +17,9 @@ load(strcat(res_fold, 'demographics/raw/p_ID.mat'))
 load(strcat(res_fold, 'demographics/raw/demo.mat'))
 load(strcat(res_fold, 'demographics/raw/demo_desc.mat'))
 
-for i=1:length(usermat)
+for i=40%1:length(usermat_completed)
         
-    userID = usermat(i);
+    userID = usermat_completed(i)
         
     disp(['userID:', 32, num2str(userID)])
     

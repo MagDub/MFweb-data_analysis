@@ -13,13 +13,13 @@ col_pickedtree=6;
 consistency_mat_desc = {'gameID' 'LHisConsistent' 'SHisConsistent'};
 consistency_freq_desc = {'LH_Consistent' 'SH_Consistent', 'ID'};
 
-load('../usermat.mat')
+load('../usermat_completed_attentive.mat')
 
-consistency_freq = nan(size(usermat,2),2);
+consistency_freq = nan(size(usermat_completed_attentive,2),2);
 
-for ID_i=1:size(usermat,2)
+for ID_i=1:size(usermat_completed_attentive,2)
     
-    ID = usermat(ID_i);
+    ID = usermat_completed_attentive(ID_i);
         
     % AB
 
@@ -149,8 +149,8 @@ if sum(double(sum_LH == round(consistency_freq(:,1))))~=size(consistency_freq(:,
     disp('consistency mismatch')
 end
 
-consistency_freq = [consistency_freq usermat'];
-consistency_freq_per_tree = [consistency_A_freq consistency_B_freq consistency_C_freq consistency_D_freq usermat'];
+consistency_freq = [consistency_freq usermat_completed_attentive'];
+consistency_freq_per_tree = [consistency_A_freq consistency_B_freq consistency_C_freq consistency_D_freq usermat_completed_attentive'];
 consistency_freq_per_tree_desc = {'A_LH_Consistent', 'A_SH_Consistent', 'B_LH_Consistent', 'B_SH_Consistent', 'C_LH_Consistent', 'C_SH_Consistent', 'D_LH_Consistent', 'D_SH_Consistent', 'ID'};
 
 save(strcat(data_fold, 'data_for_figs/consistency_freq.mat'), 'consistency_freq')

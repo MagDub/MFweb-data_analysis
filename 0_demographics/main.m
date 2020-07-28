@@ -3,6 +3,8 @@ tmp = dir('prolific_export_*.csv');
 filename = tmp.name;
 T=readtable(tmp.name);
 
+%T = T(13:end,:); % remove the pre-pilot
+
 for i=1:size(T.Sex,1)
     if strcmp(T.Sex(i),'Female')
         gender(i) = 1;
@@ -13,19 +15,75 @@ for i=1:size(T.Sex,1)
     end
 end
 
-age = str2num(cell2mat(T.age));
+for i=1:size(T.status,1)
+    if strcmp(T.status(i),'RETURNED')
+        returned(i) = 1;
+    else
+        returned(i) = 0;
+    end
+end
+
+
+for i=1:size(T.age,1)
+    if ~isempty(cell2mat(T.age(i)))
+        age(i) = str2num(cell2mat(T.age(i)));
+    else
+        age(i) = nan;
+    end
+end
 
 for i=1:size(T.num_rejections,1)
     rej(i) = str2num(cell2mat(T.num_rejections(i)));
     app(i) = str2num(cell2mat(T.num_approvals(i)));
-    rejection_percetage(i) = rej(i) ./ (app(i) + rej(i))*100;
 end
 
+rejection_percetage = rej ./ (app + rej) * 100;
+
+userID = (1:size(T,1))';
+
+% Completed questionnaire
+for i=1:size(userID,1)
+    
+    tmp_completed = dir(strcat('../../data/raw/user_',int2str(userID(i)),'/questionnaires/*.xls'));
+    
+    if ~isempty(tmp_completed)
+        completed_quest(i) = 1;
+    else
+        completed_quest(i) = 0;
+    end
+end
+
+usermat_completed = find(completed_quest==1);
+
+demo_desc = {'User' 'Age', 'Gender', 'RejectionPercentage', 'Returned', 'CompletedQuest'};
+demo = [userID, age', gender', rejection_percetage', returned', completed_quest'];
 p_ID = T.participant_id;
 
-demo_desc = {'Age', 'Gender', 'RejectionPercentage'};
-demo = [age, gender', rejection_percetage'];
+started_datetime = T.started_datetime;
 
+
+for i=1:size(userID,1)
+    folder_path = '../../data/raw/';
+    oldName = strcat(folder_path,'prolific_id_',p_ID{i});
+    newName = strcat(folder_path,'user_',int2str(userID(i)));
+    if exist(oldName)
+        movefile(oldName,newName);
+    end
+end
+
+save('../usermat_completed.mat', 'usermat_completed')
+
+save('../../data/questionnaire/demographics/raw/started_datetime.mat','started_datetime')
 save('../../data/questionnaire/demographics/raw/p_ID.mat','p_ID')
+save('../../data/questionnaire/demographics/raw/userID.mat','userID')
+
 save('../../data/questionnaire/demographics/raw/demo_desc.mat','demo_desc')
 save('../../data/questionnaire/demographics/raw/demo.mat','demo')
+
+
+
+% save as users instead of prolific ID
+
+
+
+

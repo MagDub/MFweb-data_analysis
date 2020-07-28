@@ -7,13 +7,13 @@ data_fold = ('../../data/');
 dir_data = (strcat(data_fold,'sanity_check/'));
 dir_save = (strcat(data_fold,'data_for_figs/'));
 
-load('../usermat.mat')
+load('../usermat_completed_attentive.mat')
 
 cond_mat = [];
 
-for ID_n = 1:size(usermat,2)
+for ID_n = 1:size(usermat_completed_attentive,2)
     
-    ID = usermat(ID_n);
+    ID = usermat_completed_attentive(ID_n);
     
         %%% cond AB
 
@@ -82,9 +82,9 @@ for ID_n = 1:size(usermat,2)
 
 end
 
-for ID_n = 1:size(usermat,2)
+for ID_n = 1:size(usermat_completed_attentive,2)
     
-    ID = usermat(ID_n);
+    ID = usermat_completed_attentive(ID_n);
     
        cond_mat(ID_n, 1:8) = cond{ID_n}.AB; 
        cond_mat(ID_n, 9:16) = cond{ID_n}.BD; 

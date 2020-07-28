@@ -1,5 +1,5 @@
 
-load('../usermat.mat')
+load('../usermat_completed.mat')
 
 load('../../data/questionnaire/all/RT_quest_all.mat');
 load('../../data/questionnaire/all/RT_quest_desc.mat');
@@ -10,9 +10,9 @@ raw_fol = ('../../data/raw/');
 
 disp('----------------------')
 
-for i=1:length(usermat)
+for i=1:length(usermat_completed)
     
-    userID = usermat(i);
+    userID = usermat_completed(i);
     
     % user
     disp(['userID:', 32, num2str(userID)])
@@ -91,34 +91,47 @@ for i=1:length(usermat)
 end
 
 %%%%% Exclusion
-usermat_excluded(:,1) = usermat; 
+exclusion_criteria(:,1) = usermat_completed; 
 
-% Attention checks (less than 100%)
-usermat_excluded(:,2) = CheckPassedPerc_all<1;
+% Attention checks (less than 90%)
+exclusion_criteria(:,2) = CheckPassedPerc_all<0.9;
 
 % Total time (more than 2.5 hours)
-usermat_excluded(:,3) = time_interval_in_hours>2.5;
+exclusion_criteria(:,3) = time_interval_in_hours>2.5;
 
 % Questions repeated (more than 5 times)
-usermat_excluded(:,4) = questions_repeat_all>5;
+exclusion_criteria(:,4) = questions_repeat_all>5;
 
 % Training repeated (more than 5 times)
-usermat_excluded(:,5) = training_repeat_all>5;
+exclusion_criteria(:,5) = training_repeat_all>5;
 
 % RT on task (less than 1 second)
-usermat_excluded(:,6) = task_RT_all_in_sec<1;
+exclusion_criteria(:,6) = task_RT_all_in_sec<1;
 
 % Pressed key (one key pressed more than 50% of the time)
-usermat_excluded(:,7) = max(pressed_freq_all')'>0.5;
+exclusion_criteria(:,7) = max(pressed_freq_all')'>0.5;
 
 % Chosen bandit (A, B, C, D chosen between 20 and 30% of the time)
-usermat_excluded(:,8) = ((picked_B_mat>20) .* (picked_B_mat<30)) .* ...
+exclusion_criteria(:,8) = ((picked_B_mat>20) .* (picked_B_mat<30)) .* ...
                             ((picked_D_mat>20) .* (picked_D_mat<30)) .* ...
                                 ((picked_C_mat>20) .* (picked_C_mat<30)) .* ...
                                     ((picked_A_mat>20) .* (picked_A_mat<30));
 % Final excluded or not
-usermat_excluded(:,9) = sum(usermat_excluded(:,2:8),2);
+exclusion_criteria(:,9) = sum(exclusion_criteria(:,2:8),2);
 
+exclusion_criteria_desc = {'user', 'CheckPassedPerc_all<0.9', 'time_interval_in_hours>2.5'...
+                            'questions_repeat_all>5', 'training_repeat_all>5', 'task_RT_all_in_sec<1'...
+                            'max(pressed_freq_all)>0.5', 'bandit chosen 20-30% of time', 'sum'};
+
+% Save
+save('../../data/questionnaire/demographics/raw/exclusion_criteria_desc.mat', 'exclusion_criteria_desc')
+save('../../data/questionnaire/demographics/raw/exclusion_criteria.mat', 'exclusion_criteria')
+
+% Remove the ones that failed attention checks
+usermat_completed_attentive = exclusion_criteria(find(exclusion_criteria(:,2)==0),1)';
+save('../usermat_completed_attentive.mat', 'usermat_completed_attentive')
+
+% Figures
 addpath('../../figures/export_fig')
 
 % RT on questionnaires
@@ -131,9 +144,9 @@ for q_num = 1:8
     subplot(4,2,q_num)
     plot(RT_quest_all(:,q_num)/(1000*60), 'o')
     grid on;
-    xlim([0 length(usermat)+1])
-    xticks(1:1:length(usermat))
-    xticklabels(usermat)
+    xlim([0 length(usermat_completed)+1])
+    xticks(1:1:length(usermat_completed))
+    xticklabels(usermat_completed)
     xlabel('user')
     ylabel('time (min)')
     title(RT_quest_desc(q_num))
