@@ -55,6 +55,20 @@ end
 
 usermat_completed = find(completed_quest==1);
 
+% Completed task
+for i=1:size(userID,1)
+    
+    tmp_completed = dir(strcat('../../data/raw/user_',int2str(userID(i)),'/task/block_4_*.xls'));
+    
+    if ~isempty(tmp_completed)
+        completed_task(i) = 1;
+    else
+        completed_task(i) = 0;
+    end
+end
+
+usermat_completed_task = find(completed_task==1);
+
 demo_desc = {'User' 'Age', 'Gender', 'RejectionPercentage', 'Returned', 'CompletedQuest'};
 demo = [userID, age', gender', rejection_percetage', returned', completed_quest'];
 p_ID = T.participant_id;
@@ -72,6 +86,7 @@ for i=1:size(userID,1)
 end
 
 save('../usermat_completed.mat', 'usermat_completed')
+save('../usermat_completed_task.mat', 'usermat_completed_task')
 
 save('../../data/questionnaire/demographics/raw/started_datetime.mat','started_datetime')
 save('../../data/questionnaire/demographics/raw/p_ID.mat','p_ID')

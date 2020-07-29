@@ -1,7 +1,7 @@
 
-load('../usermat_completed_attentive.mat')
+load('../usermat_completed_task.mat')
 data_fold = ('../../data/');
-numel = size(usermat_completed_attentive,2);
+numel = size(usermat_completed_task,2);
 
 load(strcat(data_fold, 'data_for_figs/IS_SH_mat.mat'))
 load(strcat(data_fold, 'data_for_figs/IS_LH_mat.mat'))

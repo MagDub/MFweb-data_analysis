@@ -40,26 +40,26 @@ load('../../data/data_for_figs/pickedC_LH.mat')
 % load('../../data/data_for_figs/nov_LH.mat');
 
 % Effect size: 0.2 = small; 0.5 = medium; 0.8 = large
-EF_EV = compute_ef(EV_SH_mat, EV_LH_mat);
-EF_IG = compute_ef(IS_SH_mat, IS_LH_mat);
-EF_score_first = compute_ef(score_SH, first_LH);
-EF_score = compute_ef(score_SH, score_LH);
-EF_high = compute_ef(pickedhigh_SH, pickedhigh_LH);
-EF_low = compute_ef(pickedD_SH, pickedD_LH);
-EF_novel = compute_ef(pickedC_SH, pickedC_LH);
-EF_epsilon = compute_ef(xi_SH, xi_LH);
-EF_novbonus = compute_ef(nov_SH, nov_LH);
+EF_EV = compute_ef_paired(EV_SH_mat, EV_LH_mat);
+EF_IG = compute_ef_paired(IS_SH_mat, IS_LH_mat);
+EF_score_first = compute_ef_paired(score_SH, first_LH);
+EF_score = compute_ef_paired(score_SH, score_LH);
+EF_high = compute_ef_paired(pickedhigh_SH, pickedhigh_LH);
+EF_low = compute_ef_paired(pickedD_SH, pickedD_LH);
+EF_novel = compute_ef_paired(pickedC_SH, pickedC_LH);
+% EF_epsilon = compute_ef_paired(xi_SH, xi_LH);
+% EF_novbonus = compute_ef_paired(nov_SH, nov_LH);
 
 % Compute sample size for at least 95% power - t-tests
-%[n_sample_EV, pow_EV] = compute_sample_size(EV_SH_mat, EV_LH_mat);
-[n_sample_IG, pow_IG] = compute_sample_size(IS_SH_mat, IS_LH_mat);
-%[n_sample_score_first, pow_score_first] = compute_sample_size(score_SH, first_LH);
-[n_sample_score, pow_score] = compute_sample_size(score_SH, score_LH);
-[n_sample_high, pow_high] = compute_sample_size(pickedhigh_SH, pickedhigh_LH);
-%[n_sample_low, pow_low] = compute_sample_size(pickedD_SH, pickedD_LH);
-[n_sample_novel, pow_novel] = compute_sample_size(pickedC_SH, pickedC_LH);
-[n_sample_epsilon, pow_epsilon] = compute_sample_size(xi_SH, xi_LH);
-[n_sample_novbonus, pow_novbonus] = compute_sample_size(nov_SH, nov_LH);
+[n_sample_EV, pow_EV] = compute_sample_size_paired(EV_SH_mat-EV_LH_mat);
+[n_sample_IG, pow_IG] = compute_sample_size_paired(IS_SH_mat-IS_LH_mat);
+[n_sample_score_first, pow_score_first] = compute_sample_size_paired(score_SH-first_LH);
+[n_sample_score, pow_score] = compute_sample_size_paired(score_SH-score_LH);
+[n_sample_high, pow_high] = compute_sample_size_paired(pickedhigh_SH-pickedhigh_LH);
+[n_sample_low, pow_low] = compute_sample_size_paired(pickedD_SH-pickedD_LH);
+[n_sample_novel, pow_novel] = compute_sample_size_paired(pickedC_SH-pickedC_LH);
+% [n_sample_epsilon, pow_epsilon] = compute_sample_size_paired(xi_SH, xi_LH);
+% [n_sample_novbonus, pow_novbonus] = compute_sample_size_paired(nov_SH, nov_LH);
 
 
 

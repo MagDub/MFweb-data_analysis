@@ -2,10 +2,10 @@
 addpath('./func_aggregate/')
 addpath('./func_plot/')
 
-load('../usermat_completed.mat')
+load('../usermat_completed_task.mat')
 
 % Initiate
-number_particip = length(usermat_completed);
+number_particip = length(usermat_completed_task);
 
 matBD = initiate_mat(number_particip);
 matAD = initiate_mat(number_particip);
@@ -13,11 +13,11 @@ matAB = initiate_mat(number_particip);
 matABD = initiate_mat(number_particip);
 matAB_fromABD = initiate_mat(number_particip);
 
-for part_ind=1:length(usermat_completed)
+for part_ind=1:length(usermat_completed_task)
     
     close all;
         
-    userID = usermat_completed(part_ind);
+    userID = usermat_completed_task(part_ind);
     user_num = num2str(userID);
     
     disp(['userID:', 32, num2str(userID)])

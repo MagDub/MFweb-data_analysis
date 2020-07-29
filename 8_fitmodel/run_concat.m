@@ -1,6 +1,6 @@
 
 addpath('model_fct/')
-data_folder = '/Users/magdadubois/MF/data/modelfit/thompson_prior1normal/';
+data_folder = '../../data/modelfit/thompson_prior1normal/';
 
 % load
 [model_parameters, param_settings] = concatenate_all_params(strcat(data_folder,'results/'));

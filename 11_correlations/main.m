@@ -13,11 +13,6 @@ ind_SH = find(contains(model_parameters_desc,'xi_short'));
 ind_LH = find(contains(model_parameters_desc,'xi_long'));
 param_SH = model_parameters(:,ind_SH);
 param_LH = model_parameters(:,ind_LH);
-
-% Enleve Mam
-ASRS_all = ASRS_all(2:end,:);
-param_SH = param_SH(2:end,:);
-param_LH = param_LH(2:end,:);
 param_mean = (param_SH+param_LH)/2;
 
 % Correlations mean xi

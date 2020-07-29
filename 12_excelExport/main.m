@@ -5,8 +5,9 @@ load('../../data/questionnaire/demographics/raw/userID.mat')
 load('../../data/questionnaire/demographics/raw/started_datetime.mat')
 
 % Completed
-load('../usermat_completed.mat')
+load('../usermat_completed_task.mat')
 load('../usermat_completed_attentive.mat')
+load('../usermat_completed.mat')
 
 % Exclusion
 load('../../data/questionnaire/demographics/raw/exclusion_criteria_desc.mat')
@@ -60,12 +61,23 @@ load('../../data/data_for_figs/IS_LH_mat.mat')
 load('../../data/data_for_figs/consistency_freq_desc.mat')
 load('../../data/data_for_figs/consistency_freq.mat')
 
-check_ = (score(:,1) == usermat_completed_attentive');
+load('../../data/data_for_figs/model_parameters.mat')
+load('../../data/data_for_figs/model_parameters_desc.mat')
+
+xi_SH = model_parameters(:,find(contains(model_parameters_desc,'xi_short')));
+xi_LH = model_parameters(:,find(contains(model_parameters_desc,'xi_long')));
+eta_SH = model_parameters(:,find(contains(model_parameters_desc,'eta_short')));
+eta_LH = model_parameters(:,find(contains(model_parameters_desc,'eta_long')));
+sgm0_SH = model_parameters(:,find(contains(model_parameters_desc,'sgm0_short')));
+sgm0_LH = model_parameters(:,find(contains(model_parameters_desc,'sgm0_long')));
+Q0 = model_parameters(:,find(contains(model_parameters_desc,'Q0')));
+
+check_ = (score(:,1) == usermat_completed_task');
 if sum(check_)~=size(score,1)
     disp('ID mismatch')
 end
 
-summary(:,8:23) = nan(size(summary,1),16);
+summary(:,8:30) = nan(size(summary,1),23);
 
 summary_desc{8} = 'bonus_GBP';
 summary_desc{9} = 'average_first_apple_SH';
@@ -86,18 +98,30 @@ summary_desc{21} = 'IS_LH';
 summary_desc{22} = 'consistent_SH';
 summary_desc{23} = 'consistent_LH';
 
+summary_desc{24} = 'xi_SH';
+summary_desc{25} = 'xi_LH';
+summary_desc{26} = 'eta_SH';
+summary_desc{27} = 'eta_LH';
+summary_desc{28} = 'sgm0_SH';
+summary_desc{29} = 'sgm0_LH';
+summary_desc{30} = 'Q0';
+
 score_tot = (score(:,2)+score(:,4))/2;
 bonus_GBP = (score_tot-4)/2;
+    
 
-for i=1:size(usermat_completed_attentive,2)
+for i=1:size(userID)
     
-    user_no = usermat_completed_attentive(i);
+    user_no = userID(i);
     
-    ind = find(summary(:,1)==user_no);
+    ind = find(usermat_completed_task==user_no);
     
-    summary(ind,8:23) = [bonus_GBP(i), score(i,2:4)...
-                          pickedD_SH(i), pickedD_LH(i),pickedC_SH(i), pickedC_LH(i), pickedhigh_SH(i), pickedhigh_LH(i),...
-                                  EV_SH_mat(i), EV_LH_mat(i),IS_SH_mat(i), IS_LH_mat(i),consistency_freq(i,2), consistency_freq(i,1)];        
+    if ~isempty(ind)
+        summary(i,8:30) = [bonus_GBP(ind), score(ind,2:4), ...
+                              pickedD_SH(ind), pickedD_LH(ind),pickedC_SH(ind), pickedC_LH(ind), pickedhigh_SH(ind), pickedhigh_LH(ind),...
+                                      EV_SH_mat(ind), EV_LH_mat(ind),IS_SH_mat(ind), IS_LH_mat(ind),consistency_freq(ind,2), consistency_freq(ind,1)...
+                                        xi_SH(ind), xi_LH(ind), eta_SH(ind), eta_LH(ind), sgm0_SH(ind), sgm0_LH(ind), Q0(ind)];
+    end
 end
 
 summary_all_desc = ['prolific_id', 'started_datetime', summary_desc]; 
