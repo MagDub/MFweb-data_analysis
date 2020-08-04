@@ -1,12 +1,10 @@
-%function HOLLY_main(ID_n)
-    ID_n=1;
+function HOLLY_main(ID_n)
 
-    %load('usermat_completed_task.mat')
-    %data_fol = ('/home/mdubois/scripts/modeling_web/data/');
-    data_fol = ('../../data/');
-    load('../usermat_completed_task.mat')
-    addpath('../8_fitmodel/holly/')
-    addpath('./holly/')
+    load('usermat_completed_task.mat')
+    data_fol = ('/home/mdubois/scripts/modeling_web/data/');
+    
+%     data_fol = ('../../data/');
+%     load('../usermat_completed_task.mat')
     
     ID = usermat_completed_task(ID_n);
     
@@ -24,4 +22,4 @@
 
     HOLLY_cv_mod12_thompson_3param_nov_2Hor_2nov_Q01(ID, data_fol)
     
-%end
+end
