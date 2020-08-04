@@ -108,7 +108,7 @@ mean_all_pp=nan(length(participant_list),12);
 stderror_all=nan(1,12);
 number_par_all=zeros(1,12);
 
-for model = 1:size(mod.file_name,2)
+for model = %1:size(mod.file_name,2)
     
     dirData = dir(strcat(mod.file_name{model},'*.mat'));
     
@@ -119,10 +119,6 @@ for model = 1:size(mod.file_name,2)
     for i = 1:n_part_for_model
         if model<5 % thompson
             tmp_part(end+1) = str2num(dirData(i).name(20:end-4));
-        elseif model<9 %hybrid
-            tmp_part(end+1) = str2num(dirData(i).name(18:end-4));
-        else %UCB
-            tmp_part(end+1) = str2num(dirData(i).name(15:end-4));
         end
     end
             
@@ -162,16 +158,7 @@ for model = 1:size(mod.file_name,2)
 end
 
 for model = 1:12
-    
     legend_all{model} = mod.legend{model};
-    
-    for ID = 1:number_par_all(model)
-        
-        tmp_ = mod.mean_pp{model};
-        
-        mean_all_pp(ID, model) = tmp_(ID);
-        
-    end
 end
 
 % % Check that all models have the same number of participants
@@ -201,21 +188,24 @@ col_(1,:) = [0.925490200519562 0.839215695858002 0.839215695858002];
 col_(2,:) = [0.584313750267029 0.388235300779343 0.388235300779343];
 
 
+% 
+% % data points
+% plot(x_ax(3)*ones(1,size(EV_SH_mat,1)), EV_SH_mat','.','MarkerEdgeColor',col_(2,:), 'MarkerSize',3);
+
 x = [1:4 6:9 11:14];
 
 I = 1:1:size(mean_all,2); 
 
-bar(x,mean_all(I),'FaceColor',col_(1,:), 'FaceAlpha', 1); hold on;
+bar(x,mean_all(I),'FaceColor',col_(1,:), 'FaceAlpha', 1);                
 
-% data points
-plot(x.*ones(65,1), mean_all_pp,'.','MarkerEdgeColor',col_(2,:), 'MarkerSize',4); hold on;
+hold on
 
 er = errorbar(x,mean_all(I),stderror_all(I),stderror_all(I));    
 er.Color = [0 0 0];                            
 er.LineStyle = 'none';  
 title('10-fold crossvalidation performance per model')
 ylabel('Average perforamnce accuracy [%]')
-yrange = [min(min(mean_all_pp)) max(max(mean_all_pp))];
+yrange = [0.3 0.6];
 ylim(yrange)
 xticks(x)
 xticklabels(legend_all(I));
