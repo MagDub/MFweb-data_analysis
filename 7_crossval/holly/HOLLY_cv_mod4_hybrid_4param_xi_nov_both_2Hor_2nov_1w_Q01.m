@@ -1,4 +1,4 @@
-function HOLLY_cv_mod3_hybrid_4param_nov_both_2Hor_1w_2eta_Q01(ID, data_fol)
+function HOLLY_cv_mod4_hybrid_4param_xi_nov_both_2Hor_2nov_1w_Q01(ID, data_fol)
 
     %%%%%%% k-fold validation indexes %%%%%%%
     tot_trials = 200; %% CHANGED
@@ -29,18 +29,19 @@ function HOLLY_cv_mod3_hybrid_4param_nov_both_2Hor_1w_2eta_Q01(ID, data_fol)
         param_bounds_gamma = [10^-8,10]; % information bonus
         param_bounds_tau = [10^-8,7]; % inverse temperature
         param_bounds_sgm0 = [0.01,6];
+        param_bounds_xi = [10^-8,0.5];  % epsilon greedy
         param_bounds_w_hyb = [0,1]; % arbitrates between thompson and UCB
         param_bounds_eta = [0,5];
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-        algo = 'mod_3';
+        algo = 'mod_4';
         
         results_dir = strcat(data_fol, '/crossval/',algo,'/results/'); 
         
         if ~exist(results_dir)
             mkdir(results_dir) %% CHANGED
         end
-
+        
         %% settings
         settings = [];
         settings.task.N_games = 400;
@@ -53,9 +54,9 @@ function HOLLY_cv_mod3_hybrid_4param_nov_both_2Hor_1w_2eta_Q01(ID, data_fol)
         settings.funs.priorfun      = [];
         settings.funs.learningfun   = @kalman_filt;
         settings.desc = ['hybrid'];    % description of model (settings, etc)
-        settings.params.param_names = {'Q0' 'gamma' '' 'tau' '' 'sgm0' '' 'eta' '' 'w_hyb'};   % is same param name as prev, write ''
-        settings.params.lb          = [param_bounds_Q0(1) param_bounds_gamma(1) param_bounds_gamma(1) param_bounds_tau(1) param_bounds_tau(1) param_bounds_sgm0(1) param_bounds_sgm0(1) param_bounds_eta(1) param_bounds_eta(1) param_bounds_w_hyb(1)];    % lower bound
-        settings.params.ub          = [param_bounds_Q0(2) param_bounds_gamma(2) param_bounds_gamma(2) param_bounds_tau(2) param_bounds_tau(2) param_bounds_sgm0(2) param_bounds_sgm0(2) param_bounds_eta(2) param_bounds_eta(2) param_bounds_w_hyb(2)];    % upper bound
+        settings.params.param_names = {'Q0' 'gamma' '' 'tau' '' 'xi'  '' 'sgm0' '' 'eta' '' 'w_hyb'};   % is same param name as prev, write ''
+        settings.params.lb          = [param_bounds_Q0(1) param_bounds_gamma(1) param_bounds_gamma(1) param_bounds_tau(1) param_bounds_tau(1) param_bounds_xi(1) param_bounds_xi(1) param_bounds_sgm0(1) param_bounds_sgm0(1)  param_bounds_eta(1) param_bounds_eta(1) param_bounds_w_hyb(1)];    % lower bound
+        settings.params.ub          = [param_bounds_Q0(2) param_bounds_gamma(2) param_bounds_gamma(2) param_bounds_tau(2) param_bounds_tau(2) param_bounds_xi(2) param_bounds_xi(2) param_bounds_sgm0(2) param_bounds_sgm0(2)  param_bounds_eta(2) param_bounds_eta(2) param_bounds_w_hyb(2)];    % upper bound
 
         %% get data
         data_dir = strcat(data_fol, 'concat_data/'); %CHANGED
@@ -73,7 +74,7 @@ function HOLLY_cv_mod3_hybrid_4param_nov_both_2Hor_1w_2eta_Q01(ID, data_fol)
         a = settings.params.lb;
         b = settings.params.ub;
 
-        mEmatparams = nan(8,10);
+        mEmatparams = nan(8,12);
         mEmatmle = nan(8,1);
         mEexitflag = nan(8,1);
 
@@ -96,9 +97,6 @@ function HOLLY_cv_mod3_hybrid_4param_nov_both_2Hor_1w_2eta_Q01(ID, data_fol)
         [mEmle, ind]= min(mEmatmle);
         mEparams  = mEmatparams(ind,:);
         mEexitflag = mEexitflag(ind);
-        if ~exist(results_dir)
-            mkdir(results_dir)
-        end
 
         % save
         save_func_data(ID+k*1000, settings, results_dir, mEparams, mEmle, [], mEexitflag, mEsubj, [], [], mEmatparams, mEmatmle,[])
