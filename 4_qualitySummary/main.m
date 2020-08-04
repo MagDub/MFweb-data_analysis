@@ -1,5 +1,5 @@
 
-load('../usermat_completed.mat')
+load('../usermat_completed_task.mat')
 
 load('../../data/questionnaire/all/RT_quest_all.mat');
 load('../../data/questionnaire/all/RT_quest_desc.mat');
@@ -10,9 +10,9 @@ raw_fol = ('../../data/raw/');
 
 disp('----------------------')
 
-for i=1:length(usermat_completed)
+for i=1:length(usermat_completed_task)
     
-    userID = usermat_completed(i);
+    userID = usermat_completed_task(i);
     
     % user
     disp(['userID:', 32, num2str(userID)])
@@ -45,7 +45,7 @@ for i=1:length(usermat_completed)
     task_RT = [RT_all_1st_trial_SH, RT_all_1st_trial_LH];
     mean_RT = mean([RT_all_1st_trial_SH; RT_all_1st_trial_LH]);
     disp(['task_RT:', 32, num2str(mean_RT), 'ms'])
-    task_RT_all_in_sec(i) = mean_RT/1000;
+    task_RT_1st_in_sec(i) = mean_RT/1000;
 
     % pressed key
     load(strcat('../../data/sanity_check/user_',num2str(userID),'/pressed_key_all.mat'))
@@ -91,7 +91,7 @@ for i=1:length(usermat_completed)
 end
 
 %%%%% Exclusion
-exclusion_criteria(:,1) = usermat_completed; 
+exclusion_criteria(:,1) = usermat_completed_task; 
 
 % Attention checks (less than 90%)
 exclusion_criteria(:,2) = CheckPassedPerc_all<0.9;
@@ -106,7 +106,7 @@ exclusion_criteria(:,4) = questions_repeat_all>5;
 exclusion_criteria(:,5) = training_repeat_all>5;
 
 % RT on task (less than 1 second)
-exclusion_criteria(:,6) = task_RT_all_in_sec<1;
+exclusion_criteria(:,6) = task_RT_1st_in_sec<1;
 
 % Pressed key (one key pressed more than 50% of the time)
 exclusion_criteria(:,7) = max(pressed_freq_all')'>0.5;
@@ -120,7 +120,7 @@ exclusion_criteria(:,8) = ((picked_B_mat>20) .* (picked_B_mat<30)) .* ...
 exclusion_criteria(:,9) = sum(exclusion_criteria(:,2:8),2);
 
 exclusion_criteria_desc = {'user', 'CheckPassedPerc_all<0.9', 'time_interval_in_hours>2.5'...
-                            'questions_repeat_all>5', 'training_repeat_all>5', 'task_RT_all_in_sec<1'...
+                            'questions_repeat_all>5', 'training_repeat_all>5', 'task_RT_1st_in_sec<1'...
                             'max(pressed_freq_all)>0.5', 'bandit chosen 20-30% of time', 'sum'};
 
 % Save
@@ -128,8 +128,8 @@ save('../../data/questionnaire/demographics/raw/exclusion_criteria_desc.mat', 'e
 save('../../data/questionnaire/demographics/raw/exclusion_criteria.mat', 'exclusion_criteria')
 
 % Remove the ones that failed attention checks
-usermat_completed_attentive = exclusion_criteria(find(exclusion_criteria(:,2)==0),1)';
-save('../usermat_completed_attentive.mat', 'usermat_completed_attentive')
+usermat_completed_task_attentive = exclusion_criteria(find(exclusion_criteria(:,2)==0),1)';
+save('../usermat_completed_task_attentive.mat', 'usermat_completed_task_attentive')
 
 % Figures
 addpath('../../figures/export_fig')
@@ -144,15 +144,17 @@ for q_num = 1:8
     subplot(4,2,q_num)
     plot(RT_quest_all(:,q_num)/(1000*60), 'o')
     grid on;
-    xlim([0 length(usermat_completed)+1])
-    xticks(1:1:length(usermat_completed))
-    xticklabels(usermat_completed)
+    xlim([0 length(usermat_completed_task)+1])
+    xticks(1:1:length(usermat_completed_task))
+    xticklabels(usermat_completed_task)
     xlabel('user')
     ylabel('time (min)')
     title(RT_quest_desc(q_num))
 end
 
 export_fig(['Fig_time_questionnaires.tif'],'-nocrop','-r200')
+col_(1,:) = [0.925490200519562 0.839215695858002 0.839215695858002];
+col_(2,:) = [0.584313750267029 0.388235300779343 0.388235300779343];
 
 %%%%% Time plot
 
@@ -166,10 +168,10 @@ hold on
 n = size(time_interval_in_hours,2);
 
 % mean
-bar_plot = bar(1,nanmean(time_interval_in_hours), 'FaceAlpha', 0.3, 'BarWidth',.3); hold on;
+bar_plot = bar(1,nanmean(time_interval_in_hours), 'FaceAlpha', 1, 'BarWidth',.3, 'FaceColor',col_(1,:)); hold on;
 
 % individual dots
-plot(rand(1,n)/10+ones(1,n), time_interval_in_hours,'.','MarkerSize',10);
+plot((rand(1,n)-0.5)/10+ones(1,n), time_interval_in_hours,'.','MarkerSize',7,'MarkerEdgeColor',col_(2,:));
 
 % variance
 h = errorbar(1,[nanmean(time_interval_in_hours)],...
@@ -179,6 +181,7 @@ set(h,'Marker','none')
 % parameters
 ylim([0 3])
 ylabel('Time (hours)')
+xticks('')
 xlim([0 2])
 
 export_fig(['Fig_time_all.tif'],'-nocrop','-r200')
@@ -186,7 +189,7 @@ export_fig(['Fig_time_all.tif'],'-nocrop','-r200')
 
 %%%%% RT task plot
 
-task_RT_all = task_RT_all_in_sec(2:end); % remove user 2
+task_RT_all = task_RT_1st_in_sec(2:end); % remove user 2
 
 figure('Color','w');
 set(gcf,'Unit','centimeters','OuterPosition',[0 0 10 10]);
@@ -196,10 +199,10 @@ hold on
 n = size(task_RT_all,2);
 
 % mean
-bar_plot = bar(1,nanmean(task_RT_all), 'FaceAlpha', 0.3, 'BarWidth',.3); hold on;
+bar_plot = bar(1,nanmean(task_RT_all), 'FaceAlpha', 1, 'BarWidth',.3, 'FaceColor',col_(1,:)); hold on;
 
 % individual dots
-plot(rand(1,n)/10+ones(1,n), task_RT_all,'.','MarkerSize',10);
+plot((rand(1,n)-0.5)/10+ones(1,n), task_RT_all,'.','MarkerSize',7,'MarkerEdgeColor',col_(2,:));
 
 % variance
 h = errorbar(1,[nanmean(task_RT_all)],...
@@ -209,6 +212,7 @@ set(h,'Marker','none')
 % parameters
 ylim([0 ceil(max(task_RT_all))])
 ylabel('Time (seconds)')
+xticks('')
 xlim([0 2])
 
 export_fig(['Fig_RT_all.tif'],'-nocrop','-r200')

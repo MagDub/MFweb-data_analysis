@@ -7,6 +7,11 @@ ind_LH = find(contains(model_parameters_desc,'eta_long'));
 param_SH = model_parameters(:,ind_SH);
 param_LH = model_parameters(:,ind_LH);
 
+eta_SH = param_SH;
+eta_LH = param_LH;
+save('../../data/data_for_figs/eta_SH.mat', 'eta_SH')
+save('../../data/data_for_figs/eta_LH.mat', 'eta_LH')
+
 % Figure
 figure('Color','w');
 set(gcf,'Unit','centimeters','OuterPosition',[0 0 10 10]);
@@ -39,12 +44,12 @@ xlim([x_ax(1)-0.5 x_ax(2)+0.5])
 set(gca,'XTick',[mean(x_ax)])
 set(gca,'XTickLabel',{''});
 
-ylabel('Choice frequency [%]','FontName','Arial','Fontweight','bold','FontSize',12);
+ylabel('Best-fit parameter value','FontName','Arial','Fontweight','bold','FontSize',12);
 set(gca,'YTick',0:1:10)
 ylim([0 5.3])
 
-legend([b2S b2L],{'Short horizon', 'Long horizon'}, 'location', 'NorthWest');
-legend boxoff  
+% legend([b2S b2L],{'Short horizon', 'Long horizon'}, 'location', 'NorthWest');
+% legend boxoff  
 
 % Export
 addpath('../../figures/export_fig')

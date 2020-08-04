@@ -26,18 +26,22 @@ load('../../data/data_for_figs/pickedD_LH.mat')
 load('../../data/data_for_figs/pickedC_SH.mat')
 load('../../data/data_for_figs/pickedC_LH.mat')
 
-% % Model selection
-% load('../../figures/NADA/data_for_figs/models_desc.mat');
-% load('../../figures/NADA/data_for_figs/models_mean.mat');
-% load('../../figures/NADA/data_for_figs/models_std.mat');
+% Model selection
+load('../../figures/NADA/data_for_figs/models_desc.mat');
+load('../../figures/NADA/data_for_figs/models_mean.mat');
+load('../../figures/NADA/data_for_figs/models_std.mat');
 
-% % Epsilon
-% load('../../data/data_for_figs/xi_SH.mat');
-% load('../../data/data_for_figs/xi_LH.mat');
-% 
-% % Novelty bonus
-% load('../../data/data_for_figs/nov_SH.mat');
-% load('../../data/data_for_figs/nov_LH.mat');
+% Epsilon
+load('../../data/data_for_figs/xi_SH.mat');
+load('../../data/data_for_figs/xi_LH.mat');
+
+% Novelty bonus
+load('../../data/data_for_figs/eta_SH.mat');
+load('../../data/data_for_figs/eta_LH.mat');
+
+% Uncertainty
+load('../../data/data_for_figs/sgm0_SH.mat');
+load('../../data/data_for_figs/sgm0_LH.mat');
 
 % Effect size: 0.2 = small; 0.5 = medium; 0.8 = large
 EF_EV = compute_ef_paired(EV_SH_mat, EV_LH_mat);
@@ -47,8 +51,9 @@ EF_score = compute_ef_paired(score_SH, score_LH);
 EF_high = compute_ef_paired(pickedhigh_SH, pickedhigh_LH);
 EF_low = compute_ef_paired(pickedD_SH, pickedD_LH);
 EF_novel = compute_ef_paired(pickedC_SH, pickedC_LH);
-% EF_epsilon = compute_ef_paired(xi_SH, xi_LH);
-% EF_novbonus = compute_ef_paired(nov_SH, nov_LH);
+EF_epsilon = compute_ef_paired(xi_SH, xi_LH);
+EF_novbonus = compute_ef_paired(eta_SH, eta_LH);
+EF_sgm0 = compute_ef_paired(sgm0_SH, sgm0_LH);
 
 % Compute sample size for at least 95% power - t-tests
 [n_sample_EV, pow_EV] = compute_sample_size_paired(EV_SH_mat-EV_LH_mat);
@@ -58,10 +63,22 @@ EF_novel = compute_ef_paired(pickedC_SH, pickedC_LH);
 [n_sample_high, pow_high] = compute_sample_size_paired(pickedhigh_SH-pickedhigh_LH);
 [n_sample_low, pow_low] = compute_sample_size_paired(pickedD_SH-pickedD_LH);
 [n_sample_novel, pow_novel] = compute_sample_size_paired(pickedC_SH-pickedC_LH);
-% [n_sample_epsilon, pow_epsilon] = compute_sample_size_paired(xi_SH, xi_LH);
-% [n_sample_novbonus, pow_novbonus] = compute_sample_size_paired(nov_SH, nov_LH);
+[n_sample_epsilon, pow_epsilon] = compute_sample_size_paired(xi_SH-xi_LH);
+[n_sample_novbonus, pow_novbonus] = compute_sample_size_paired(eta_SH-eta_LH);
+[n_sample_sgm0, pow_sgm0] = compute_sample_size_paired(sgm0_SH-sgm0_LH);
 
 
+% Do subjects explore more in the long horizon?
+summary_H1 = [EF_high, EF_low, EF_novel, EF_IG, EF_EV; ...
+    n_sample_high, n_sample_low, n_sample_novel, n_sample_IG, n_sample_EV]';
+
+% Is exploration beneficial for subjects?
+summary_H2 = [EF_score_first, EF_score; ...
+    n_sample_score_first, n_sample_score]';
+
+% Do subjects use exploration heurisitcs?
+summary_H3 = [EF_epsilon, EF_novbonus, EF_sgm0; ...
+    n_sample_epsilon, n_sample_novbonus, n_sample_sgm0]';
 
 
 

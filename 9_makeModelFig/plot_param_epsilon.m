@@ -7,6 +7,11 @@ ind_LH = find(contains(model_parameters_desc,'xi_long'));
 param_SH = model_parameters(:,ind_SH);
 param_LH = model_parameters(:,ind_LH);
 
+xi_SH = param_SH;
+xi_LH = param_LH;
+save('../../data/data_for_figs/xi_SH.mat', 'xi_SH')
+save('../../data/data_for_figs/xi_LH.mat', 'xi_LH')
+
 % Figure
 figure('Color','w');
 set(gcf,'Unit','centimeters','OuterPosition',[0 0 10 10]);
@@ -39,7 +44,7 @@ xlim([x_ax(1)-0.5 x_ax(2)+0.5])
 set(gca,'XTick',[mean(x_ax)])
 set(gca,'XTickLabel',{''});
 
-ylabel('Choice frequency [%]','FontName','Arial','Fontweight','bold','FontSize',12);
+ylabel('Best-fit parameter value','FontName','Arial','Fontweight','bold','FontSize',12);
 set(gca,'YTick',0:0.1:1)
 ylim([0 0.53])
 

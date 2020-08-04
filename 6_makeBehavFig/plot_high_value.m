@@ -50,8 +50,8 @@ ylabel('Choice frequency [%]','FontName','Arial','Fontweight','bold','FontSize',
 set(gca,'YTick',0:15:80)
 ylim([0 80])
 
-legend([b2S b2L],{'Short horizon', 'Long horizon'});
-legend boxoff  
+% legend([b2S b2L],{'Short horizon', 'Long horizon'});
+% legend boxoff  
 
 % Export
 addpath('../../figures/export_fig')

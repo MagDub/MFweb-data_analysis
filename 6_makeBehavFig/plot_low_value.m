@@ -50,7 +50,7 @@ ylabel('Choice frequency [%]','FontName','Arial','Fontweight','bold','FontSize',
 set(gca,'YTick',0:5:80)
 ylim([0 max(max(pickedD_SH),max(pickedD_LH))])
 
-legend([b2S b2L],{'Short horizon', 'Long horizon'});
+legend([b2S b2L],{'Short horizon', 'Long horizon'},'Position',[0.162544146548733 0.816666666666667 0.335689045936396 0.126190476190476]);
 legend boxoff  
 
 % Export

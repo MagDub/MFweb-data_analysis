@@ -2,7 +2,7 @@
 addpath('fcts/')
 
 % Compute sample size for at least 95% power - correlation
-R_corr = 0.15; 
+R_corr = 0.26; 
 [n_sample_corr, pow_cor] = compute_sample_size_corr(R_corr);
 
 
