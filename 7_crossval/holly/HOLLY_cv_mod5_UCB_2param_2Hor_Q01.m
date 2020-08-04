@@ -95,9 +95,6 @@ function HOLLY_cv_mod5_UCB_2param_2Hor_Q01(ID, data_fol)
         [mEmle, ind]= min(mEmatmle);
         mEparams  = mEmatparams(ind,:);
         mEexitflag = mEexitflag(ind);
-        if ~exist(results_dir)
-            mkdir(results_dir)
-        end
 
         % save
         save_func_data(ID+k*1000, settings, results_dir, mEparams, mEmle, [], mEexitflag, mEsubj, [], [], mEmatparams, mEmatmle,[])

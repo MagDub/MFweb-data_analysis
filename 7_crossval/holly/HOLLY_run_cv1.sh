@@ -3,7 +3,7 @@
 #$ -N cv1
 #$ -e /data/mdubois/logs/
 #$ -o /data/mdubois/logs/
-#$ -t 2-65
+#$ -t 1-65
 #$ -S /bin/sh
 
 # where to find basic custom functions

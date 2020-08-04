@@ -30,7 +30,7 @@ function HOLLY_cv_mod11_thompson_2param_nov_2Hor_2nov_Q01(ID, data_fol)
         param_bounds_eta = [0,5];
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-        algo = 'mod_10';
+        algo = 'mod_11';
         
         results_dir = strcat(data_fol, '/crossval/',algo,'/results/'); 
         
