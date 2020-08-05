@@ -17,24 +17,26 @@ col_(2,:) = [0.584313750267029 0.388235300779343 0.388235300779343];
 
 x_ax = 0:0.4:4;
 
+noise_plot = (rand(size(usermat_completed_task,2),1)-0.5)/5;
+
 % SH
 b1S= bar(x_ax(3),nanmean(IS_SH_mat),'FaceColor',col_(1,:), 'FaceAlpha', 1, 'BarWidth',1); 
 
 % data points
-plot(x_ax(3)*ones(1,size(IS_SH_mat,1)), IS_SH_mat','.','MarkerEdgeColor',col_(2,:), 'MarkerSize',3);
+% plot(x_ax(3)*ones(1,size(IS_SH_mat,1)), IS_SH_mat','.','MarkerEdgeColor',col_(2,:), 'MarkerSize',3);
 
 % first LH
 b1Lf = bar(x_ax(6),nanmean(IS_LH_mat),'FaceColor',col_(1,:), 'FaceAlpha', 1, 'BarWidth',1);
 
 % data points
-plot(x_ax(6)*ones(1,size(IS_LH_mat,1)), IS_LH_mat','.','MarkerEdgeColor',col_(2,:), 'MarkerSize',3); 
+% plot(x_ax(6)*ones(1,size(IS_LH_mat,1)), IS_LH_mat','.','MarkerEdgeColor',col_(2,:), 'MarkerSize',3); 
 
 for n = 1:size(IS_LH_mat,1)
-    lin2 = plot(x_ax([3 6]),[IS_SH_mat(n) IS_LH_mat(n)]); hold on;
+    lin2 = plot(x_ax([3 6])+noise_plot(n),[IS_SH_mat(n) IS_LH_mat(n)]); hold on;
     lin2.Color = [col_(2,:) 0.3]; % transparency
 end
 
-h = errorbar(x_ax([3 6]),...
+h = errorbar(x_ax([3 6])+noise_plot(n),...
     [nanmean(IS_SH_mat) nanmean(IS_LH_mat)], ...
     [nanstd(IS_SH_mat)./sqrt(numel) nanstd(IS_LH_mat)./sqrt(numel)],'.','color','k');
 

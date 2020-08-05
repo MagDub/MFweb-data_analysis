@@ -23,28 +23,31 @@ hold on
 col_(1,:) = [0.925490200519562 0.839215695858002 0.839215695858002];
 col_(2,:) = [0.584313750267029 0.388235300779343 0.388235300779343];
 
-x_ax = [1.2 1.8];
+x_ax = 0:0.4:4;
+
+noise_plot = (rand(size(usermat_completed_task,2),1)-0.5)/5;
 
 % Short horizon
-b2S = bar(x_ax(1),nanmean(pickedhigh_SH),'FaceColor',col_(1,:), 'FaceAlpha', 0.25, 'BarWidth',.5);
-plot(x_ax(1)*ones(1,size(pickedhigh_SH,1)), pickedhigh_SH','.','MarkerEdgeColor',col_(2,:), 'MarkerSize',2);
+b2S = bar(x_ax(3),nanmean(pickedhigh_SH),'FaceColor',col_(1,:), 'FaceAlpha', 1, 'BarWidth',1);
+% plot(x_ax(3)*ones(1,size(pickedhigh_SH,1)), pickedhigh_SH','.','MarkerEdgeColor',col_(2,:), 'MarkerSize',2);
 
 % Long horizon
-b2L = bar(x_ax(2),nanmean(pickedhigh_LH),'FaceColor',col_(1,:),'FaceAlpha', 1, 'BarWidth',.5);
-plot(x_ax(2)*ones(1,size(pickedhigh_LH,1)), pickedhigh_LH','.','MarkerEdgeColor',col_(2,:), 'MarkerSize',2);
+b2L = bar(x_ax(6),nanmean(pickedhigh_LH),'FaceColor',col_(1,:),'FaceAlpha', 1, 'BarWidth',1);
+% plot(x_ax(6)*ones(1,size(pickedhigh_LH,1)), pickedhigh_LH','.','MarkerEdgeColor',col_(2,:), 'MarkerSize',2);
 
 for n = 1:size(pickedhigh_SH,1)
-    lin2 = plot(x_ax(1:2),[pickedhigh_SH(n) pickedhigh_LH(n)]); hold on;
+    lin2 = plot(x_ax([3 6])+noise_plot(n),[pickedhigh_SH(n) pickedhigh_LH(n)]); hold on;
     lin2.Color = [col_(2,:) 0.3];
 end
 
-h = errorbar(x_ax,[nanmean(pickedhigh_SH) nanmean(pickedhigh_LH)], ...
+h = errorbar(x_ax([3 6])+noise_plot(n),[nanmean(pickedhigh_SH) nanmean(pickedhigh_LH)], ...
     [nanstd(pickedhigh_SH)./sqrt(size(pickedhigh_SH,1)) nanstd(pickedhigh_LH)./sqrt(size(pickedhigh_SH,1))],'.','color','k');
 set(h,'Marker','none')
 
-xlim([x_ax(1)-0.5 x_ax(2)+0.5])   
-set(gca,'XTick',[mean(x_ax)])
-set(gca,'XTickLabel',{''});
+xlim([0 2.8])
+set(gca,'XTick',[x_ax(3) x_ax(6)])
+a = gca;
+a.XTickLabel = {'Short horizon', 'Long horizon'};
 
 ylabel('Choice frequency [%]','FontName','Arial','Fontweight','bold','FontSize',12);
 set(gca,'YTick',0:15:80)

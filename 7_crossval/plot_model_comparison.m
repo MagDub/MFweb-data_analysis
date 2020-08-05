@@ -13,93 +13,93 @@ participant_list=usermat_completed_task;
 % Thompson %
 %%%%%%%%%%%%
 % 9
-model = model+1;
+model = model + 1;
 mod.file_name{model} = '../../data/crossval/mod_9/results/aver_prob_';
 mod.model_type{model} = 'thompson';
 mod.name{model} = 'thompson2params1Hor';
 mod.legend{model} = 'thompson';
 %%%%%
 % 10
-model = model+1;
+model = model + 1;
 mod.file_name{model} = '../../data/crossval/mod_10/results/aver_prob_';
 mod.model_type{model} = 'thompson';
 mod.name{model} = 'thompson3params2Hor';
-mod.legend{model} = 'thompson+xi'; 
+mod.legend{model} = 'thompson + \epsilon'; 
 %%%%%
 % 11
-model = model+1;
+model = model + 1;
 mod.file_name{model} = '../../data/crossval/mod_11/results/aver_prob_';
 mod.model_type{model} = 'thompson';
-mod.legend{model} = 'thompson+nov';
+mod.legend{model} = 'thompson + \eta';
 %%%%%
 % 12
-model = model+1;
+model = model + 1;
 mod.file_name{model} = '../../data/crossval/mod_12/results/aver_prob_';
 mod.model_type{model} = 'thompson';
 mod.name{model} = 'thompson3params2Hor2novQ01';
-mod.legend{model} = 'thompson+nov+xi';
+mod.legend{model} = 'thompson + \eta + \epsilon';
 
 %%%%%%%
 % UCB %
 %%%%%%%
 % 5
-model = model+1;
+model = model + 1;
 mod.file_name{model} = '../../data/crossval/mod_5/results/aver_prob_';
 mod.model_type{model} = 'UCB';
 mod.name{model} = 'UCB2params2Hor';
 mod.legend{model} = 'UCB';
 %%%
 % 6
-model = model+1;
+model = model + 1;
 mod.file_name{model} = '../../data/crossval/mod_6/results/aver_prob_';
 mod.model_type{model} = 'UCB';
 mod.name{model} = 'UCB2params2Hor';
-mod.legend{model} = 'UCB+nov';
+mod.legend{model} = 'UCB + \eta';
 %%%%
 % 7
-model = model+1;
+model = model + 1;
 mod.file_name{model} = '../../data/crossval/mod_7/results/aver_prob_';
 mod.model_type{model} = 'UCB';
 mod.name{model} = 'UCB3params2Hor';
-mod.legend{model} = 'UCB+xi';
+mod.legend{model} = 'UCB + \epsilon';
 %%%%
 % 8
-model = model+1;
+model = model + 1;
 mod.file_name{model} = '../../data/crossval/mod_8/results/aver_prob_';
 mod.model_type{model} = 'UCB';
 mod.name{model} = 'UCBnoveltybonus3params2Hor2nov';
-mod.legend{model} = 'UCB+nov+xi'; 
+mod.legend{model} = 'UCB + \eta + \epsilon'; 
 
 %%%%%%%%%%
 % HYBRID %
 %%%%%%%%%%
 % 1
-model = model+1;
+model = model + 1;
 mod.file_name{model} = '../../data/crossval/mod_1/results/aver_prob_';
 mod.model_type{model} = 'hybrid';
 mod.name{model} = 'hybrid4params2Hor1w';
 mod.legend{model} = 'hybrid'; 
 %%%%%%
 % 2
-model = model+1;
+model = model + 1;
 mod.file_name{model} = '../../data/crossval/mod_2/results/aver_prob_';
 mod.model_type{model} = 'hybrid';
 mod.name{model} = 'hybrid5params2Hor1w';
-mod.legend{model} = 'hybrid+xi';
+mod.legend{model} = 'hybrid + \epsilon';
 %%%%%
 % 3
-model = model+1;
+model = model + 1;
 mod.file_name{model} = '../../data/crossval/mod_3/results/aver_prob_';
 mod.model_type{model} = 'hybrid';
 mod.name{model} = 'hybridnovboth4params2Hor1w';
-mod.legend{model} = 'hybrid+nov'; 
+mod.legend{model} = 'hybrid + \eta'; 
 %%%%%
 % 4
-model = model+1;
+model = model + 1;
 mod.file_name{model} = '../../data/crossval/mod_4/results/aver_prob_';
 mod.model_type{model} = 'hybrid';
 mod.name{model} = 'hybridnovboth4paramsxi2Hor2nov';
-mod.legend{model} = 'hybrid+nov+xi'; 
+mod.legend{model} = 'hybrid + \eta + \epsilon'; 
 
 %% Plotting  
 average_prob_mat = [];
@@ -118,11 +118,11 @@ for model = 1:size(mod.file_name,2)
     
     for i = 1:n_part_for_model
         if model<5 % thompson
-            tmp_part(end+1) = str2num(dirData(i).name(20:end-4));
+            tmp_part(end + 1) = str2num(dirData(i).name(20:end-4));
         elseif model<9 %UCB
-            tmp_part(end+1) = str2num(dirData(i).name(15:end-4));
+            tmp_part(end + 1) = str2num(dirData(i).name(15:end-4));
         else %hybrid
-            tmp_part(end+1) = str2num(dirData(i).name(18:end-4));
+            tmp_part(end + 1) = str2num(dirData(i).name(18:end-4));
         end
     end
     
@@ -149,17 +149,12 @@ for model = 1:size(mod.file_name,2)
         
     disp(strcat('participants for model', 32, int2str(model), 32,mod.legend{model}, 32, '=', 32, int2str(mod.number_par{model}),32,'selected =',32,int2str(size(average_prob_mat,1))));
         
-    mean_av_prob = nanmean(average_prob_mat,2); 
+    mean_av_prob = nanmean(average_prob_mat,2); % average over k iterations
     
     mod.mean_pp{model} = mean_av_prob;
-    mod.mean_all{model} = nanmean(mean_av_prob);
-    mod.stderror_all{model} = nanstd(mean_av_prob) / sqrt(mod.number_par{model});
+
     
     clear mean_av_prob
-
-    mean_all(model) = mod.mean_all{model};
-    stderror_all(model) = mod.stderror_all{model};
-    number_par_all(model) = mod.number_par{model};
     
 end
 
@@ -167,13 +162,31 @@ for model = 1:12
     
     legend_all{model} = mod.legend{model};
     
-    for ID = 1:number_par_all(model)
+    for ID = 1:size(usermat_completed_task,2)
         
         tmp_ = mod.mean_pp{model};
         
         mean_all_pp(ID, model) = tmp_(ID);
         
     end
+end
+
+% delete the 3, thom and hybrid same score, per head with 2 models -> thompson wins
+
+mean_all_pp(4,:) = nan(1,12);
+mean_all_pp(32,:) = nan(1,12);
+mean_all_pp(36,:) = nan(1,12);
+
+for model = 1:12
+    
+    mod.mean_all{model} = nanmean(mean_all_pp(:,model));
+    mod.stderror_all{model} = nanstd(mean_all_pp(:,model)) / sqrt(mod.number_par{model});
+    
+    mean_all(model) = mod.mean_all{model};
+    stderror_all(model) = mod.stderror_all{model};
+    
+    number_par_all(model) = mod.number_par{model};
+    
 end
 
 % % Check that all models have the same number of participants
@@ -209,31 +222,36 @@ I = 1:1:size(mean_all,2);
 
 bar(x,mean_all(I)*100,'FaceColor',col_(1,:), 'FaceAlpha', 1); hold on;
 
+noise_plot = (rand(65,1)-0.5)/4;
+
 % data points
-plot(x.*ones(65,1), mean_all_pp*100,'.','MarkerEdgeColor',col_(2,:), 'MarkerSize',4); hold on;
+plot(x.*ones(65,1)+noise_plot, mean_all_pp*100,'.','MarkerEdgeColor',col_(2,:), 'MarkerSize',4); hold on;
 
 er = errorbar(x,mean_all(I)*100,stderror_all(I)*100,stderror_all(I)*100);    
 er.Color = [0 0 0];                            
 er.LineStyle = 'none';  
 title('10-fold crossvalidation performance per model')
 ylabel('Average performance accuracy [%]')
-yrange = [53 55]; grid on;
-% yrange = [min(min(mean_all_pp*100)) max(max(mean_all_pp*100))];
+% yrange = [54.4 54.5]; grid on;
+yrange = [min(min(mean_all_pp*100)) max(max(mean_all_pp*100))];
 ylim(yrange)
 xticks(x)
 xticklabels(legend_all(I));
 xtickangle(45)
 
 for i1=1:numel(mean_all)
-    text(x(i1),yrange(1)+0.01*100,num2str(number_par_all(I(i1))),...
+    text(x(i1),yrange(1) + 0.01*100,num2str(number_par_all(I(i1))),...
                'HorizontalAlignment','center',...
                'VerticalAlignment','bottom')
-   text(x(i1),yrange(1)+0.025*100,'n= ',...
+   text(x(i1),yrange(1) + 0.025*100,'n= ',...
                'HorizontalAlignment','center',...
                'VerticalAlignment','bottom')
 end
 
 hold off
 
+nanmean(mean_all_pp(:,[4,8,12]))
+mean_all(:,[4,8,12])
 
-%save('D:/MaggiesFarm/modeling_05_07_developmental/crossval/model_selection_mat.mat', 'mod')
+save('model_selection.mat', 'mod')
+save('mean_all_pp.mat', 'mean_all_pp')

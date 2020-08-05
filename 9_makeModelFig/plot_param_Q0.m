@@ -16,8 +16,10 @@ col_(2,:) = [0.584313750267029 0.388235300779343 0.388235300779343];
 
 x_ax = [1];
 
+noise_plot = (rand(size(usermat_completed_task,2),1)-0.5)/5;
+
 b2S = bar(x_ax(1),nanmean(param),'FaceColor',col_(1,:), 'FaceAlpha', 1, 'BarWidth',.5);
-plot(x_ax(1)*ones(1,size(param,1)), param','.','MarkerEdgeColor',col_(2,:), 'MarkerSize',2);
+plot(x_ax(1)*ones(1,size(param,1))+noise_plot, param','.','MarkerEdgeColor',col_(2,:), 'MarkerSize',2);
 
 h = errorbar(x_ax,[nanmean(param)], ...
     [nanstd(param)./sqrt(size(param,1))],'.','color','k');
