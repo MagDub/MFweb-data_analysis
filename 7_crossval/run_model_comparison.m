@@ -119,29 +119,32 @@ for model = 1:size(mod.file_name,2)
     for i = 1:n_part_for_model
         if model<5 % thompson
             tmp_part(end+1) = str2num(dirData(i).name(20:end-4));
-        elseif model<9 %hybrid
-            tmp_part(end+1) = str2num(dirData(i).name(18:end-4));
-        else %UCB
+        elseif model<9 %UCB
             tmp_part(end+1) = str2num(dirData(i).name(15:end-4));
+        else %hybrid
+            tmp_part(end+1) = str2num(dirData(i).name(18:end-4));
         end
     end
+    
+    tmp_part = sort(tmp_part);
             
     mod.participant_list{model} = tmp_part;
     mod.number_par{model} = size(tmp_part,2);
     
-    average_prob_mat = [];
-    average_prob = nan(1,10);
+    average_prob_mat = nan(size(usermat_completed_task,2),10);
     
-    for ID_ind = 1:n_part_for_model
+    for ID_ind = 1:size(usermat_completed_task,2)%n_part_for_model
         
-        ID = tmp_part(ID_ind);
+        average_prob = nan(1,10);
+        
+        ID = usermat_completed_task(ID_ind);
         f_name = strcat(mod.file_name{model}, mod.model_type{model},'_',int2str(ID),'.mat');
         
         if exist(f_name)==2
             load(f_name);
         end
         
-        average_prob_mat(end+1,:) = average_prob;
+        average_prob_mat(ID_ind,:) = average_prob;
     end
         
     disp(strcat('participants for model', 32, int2str(model), 32,mod.legend{model}, 32, '=', 32, int2str(mod.number_par{model}),32,'selected =',32,int2str(size(average_prob_mat,1))));
@@ -154,7 +157,6 @@ for model = 1:size(mod.file_name,2)
     
     clear mean_av_prob
 
-    %mean_all_pp(:, end+1) = mod.mean_pp{model};
     mean_all(model) = mod.mean_all{model};
     stderror_all(model) = mod.stderror_all{model};
     number_par_all(model) = mod.number_par{model};
@@ -205,27 +207,28 @@ x = [1:4 6:9 11:14];
 
 I = 1:1:size(mean_all,2); 
 
-bar(x,mean_all(I),'FaceColor',col_(1,:), 'FaceAlpha', 1); hold on;
+bar(x,mean_all(I)*100,'FaceColor',col_(1,:), 'FaceAlpha', 1); hold on;
 
 % data points
-plot(x.*ones(65,1), mean_all_pp,'.','MarkerEdgeColor',col_(2,:), 'MarkerSize',4); hold on;
+plot(x.*ones(65,1), mean_all_pp*100,'.','MarkerEdgeColor',col_(2,:), 'MarkerSize',4); hold on;
 
-er = errorbar(x,mean_all(I),stderror_all(I),stderror_all(I));    
+er = errorbar(x,mean_all(I)*100,stderror_all(I)*100,stderror_all(I)*100);    
 er.Color = [0 0 0];                            
 er.LineStyle = 'none';  
 title('10-fold crossvalidation performance per model')
-ylabel('Average perforamnce accuracy [%]')
-yrange = [min(min(mean_all_pp)) max(max(mean_all_pp))];
+ylabel('Average performance accuracy [%]')
+yrange = [53 55]; grid on;
+% yrange = [min(min(mean_all_pp*100)) max(max(mean_all_pp*100))];
 ylim(yrange)
 xticks(x)
 xticklabels(legend_all(I));
 xtickangle(45)
 
 for i1=1:numel(mean_all)
-    text(x(i1),yrange(1)+0.01,num2str(number_par_all(I(i1))),...
+    text(x(i1),yrange(1)+0.01*100,num2str(number_par_all(I(i1))),...
                'HorizontalAlignment','center',...
                'VerticalAlignment','bottom')
-   text(x(i1),yrange(1)+0.025,'n= ',...
+   text(x(i1),yrange(1)+0.025*100,'n= ',...
                'HorizontalAlignment','center',...
                'VerticalAlignment','bottom')
 end
