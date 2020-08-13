@@ -7,6 +7,14 @@ load(strcat(data_fold, 'data_for_figs/consistency_freq.mat'))
 consist_LH = consistency_freq(:,1);
 consist_SH = consistency_freq(:,2);
 
+% Remove ID
+consist_LH(4,:) = nan;
+consist_LH(32,:) = nan;
+consist_LH(36,:) = nan;
+consist_SH(4,:) = nan;
+consist_SH(32,:) = nan;
+consist_SH(36,:) = nan;
+
 % Figure
 figure('Color','w');
 set(gcf,'Unit','centimeters','OuterPosition',[0 0 10 10]);

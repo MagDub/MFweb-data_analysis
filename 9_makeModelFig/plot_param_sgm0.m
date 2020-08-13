@@ -12,6 +12,14 @@ sgm0_LH = param_LH;
 save('../../data/data_for_figs/sgm0_SH.mat', 'sgm0_SH')
 save('../../data/data_for_figs/sgm0_LH.mat', 'sgm0_LH')
 
+% Remove ID
+param_SH(4,:) = nan;
+param_SH(32,:) = nan;
+param_SH(36,:) = nan;
+param_LH(4,:) = nan;
+param_LH(32,:) = nan;
+param_LH(36,:) = nan;
+
 % Figure
 figure('Color','w');
 set(gcf,'Unit','centimeters','OuterPosition',[0 0 10 10]);
@@ -23,7 +31,7 @@ col_(2,:) = [0.584313750267029 0.388235300779343 0.388235300779343];
 
 x_ax = 0:0.4:4;
 
-noise_plot = (rand(size(usermat_completed_task,2),1)-0.5)/5;
+noise_plot = (rand(size(model_parameters,1),1)-0.5)/5;
 
 % Short horizon
 b2S = bar(x_ax(3),nanmean(param_SH),'FaceColor',col_(1,:), 'FaceAlpha', 1, 'BarWidth',1);
@@ -49,7 +57,7 @@ a.XTickLabel = {'Short horizon', 'Long horizon'};
 
 ylabel('Best-fit parameter value','FontName','Arial','Fontweight','bold','FontSize',12);
 set(gca,'YTick',0:1:10)
-ylim([0 3.5])
+ylim([0 3.25])
 
 % legend([b2S b2L],{'Short horizon', 'Long horizon'}, 'location', 'NorthWest');
 % legend boxoff  

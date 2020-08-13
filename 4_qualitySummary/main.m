@@ -126,94 +126,98 @@ exclusion_criteria_desc = {'user', 'CheckPassedPerc_all<0.9', 'time_interval_in_
 % Save
 save('../../data/questionnaire/demographics/raw/exclusion_criteria_desc.mat', 'exclusion_criteria_desc')
 save('../../data/questionnaire/demographics/raw/exclusion_criteria.mat', 'exclusion_criteria')
+save('../../data/data_for_figs/task_RT_1st_in_sec.mat', 'task_RT_1st_in_sec')
 
 % Remove the ones that failed attention checks
 usermat_completed_task_attentive = exclusion_criteria(find(exclusion_criteria(:,2)==0),1)';
 save('../usermat_completed_task_attentive.mat', 'usermat_completed_task_attentive')
 
-% Figures
-addpath('../../figures/export_fig')
-
-% RT on questionnaires
-figure('Color','w');
-set(gcf,'Unit','centimeters','OuterPosition',[0 0 20 20]);
-set(gca,'FontName','Arial','FontSize',10)
-hold on
-
-for q_num = 1:8
-    subplot(4,2,q_num)
-    plot(RT_quest_all(:,q_num)/(1000*60), 'o')
-    grid on;
-    xlim([0 length(usermat_completed_task)+1])
-    xticks(1:1:length(usermat_completed_task))
-    xticklabels(usermat_completed_task)
-    xlabel('user')
-    ylabel('time (min)')
-    title(RT_quest_desc(q_num))
-end
-
-export_fig(['Fig_time_questionnaires.tif'],'-nocrop','-r200')
-col_(1,:) = [0.925490200519562 0.839215695858002 0.839215695858002];
-col_(2,:) = [0.584313750267029 0.388235300779343 0.388235300779343];
-
-%%%%% Time plot
-
-time_interval_in_hours = time_interval_in_hours(2:end); % remove user 2
-
-figure('Color','w');
-set(gcf,'Unit','centimeters','OuterPosition',[0 0 10 10]);
-set(gca,'FontName','Arial','FontSize',10)
-hold on
-
-n = size(time_interval_in_hours,2);
-
-% mean
-bar_plot = bar(1,nanmean(time_interval_in_hours), 'FaceAlpha', 1, 'BarWidth',.3, 'FaceColor',col_(1,:)); hold on;
-
-% individual dots
-plot((rand(1,n)-0.5)/10+ones(1,n), time_interval_in_hours,'.','MarkerSize',7,'MarkerEdgeColor',col_(2,:));
-
-% variance
-h = errorbar(1,[nanmean(time_interval_in_hours)],...
-    [nanstd(time_interval_in_hours)./sqrt(n)],'.','color','k');
-set(h,'Marker','none')
-
-% parameters
-ylim([0 3])
-ylabel('Time (hours)')
-xticks('')
-xlim([0 2])
-
-export_fig(['Fig_time_all.tif'],'-nocrop','-r200')
-
-
-%%%%% RT task plot
-
-task_RT_all = task_RT_1st_in_sec(2:end); % remove user 2
-
-figure('Color','w');
-set(gcf,'Unit','centimeters','OuterPosition',[0 0 10 10]);
-set(gca,'FontName','Arial','FontSize',10)
-hold on
-
-n = size(task_RT_all,2);
-
-% mean
-bar_plot = bar(1,nanmean(task_RT_all), 'FaceAlpha', 1, 'BarWidth',.3, 'FaceColor',col_(1,:)); hold on;
-
-% individual dots
-plot((rand(1,n)-0.5)/10+ones(1,n), task_RT_all,'.','MarkerSize',7,'MarkerEdgeColor',col_(2,:));
-
-% variance
-h = errorbar(1,[nanmean(task_RT_all)],...
-    [nanstd(task_RT_all)./sqrt(n)],'.','color','k');
-set(h,'Marker','none')
-
-% parameters
-ylim([0 ceil(max(task_RT_all))])
-ylabel('Time (seconds)')
-xticks('')
-xlim([0 2])
-
-export_fig(['Fig_RT_all.tif'],'-nocrop','-r200')
- 
+% % Figures
+% addpath('../../figures/export_fig')
+% 
+% % RT on questionnaires
+% figure('Color','w');
+% set(gcf,'Unit','centimeters','OuterPosition',[0 0 20 20]);
+% set(gca,'FontName','Arial','FontSize',10)
+% hold on
+% 
+% for q_num = 1:8
+%     subplot(4,2,q_num)
+%     plot(RT_quest_all(:,q_num)/(1000*60), 'o')
+%     grid on;
+%     xlim([0 length(usermat_completed_task)+1])
+%     xticks(1:1:length(usermat_completed_task))
+%     xticklabels(usermat_completed_task)
+%     xlabel('user')
+%     ylabel('time (min)')
+%     title(RT_quest_desc(q_num))
+% end
+% 
+% export_fig(['Fig_time_questionnaires.tif'],'-nocrop','-r200')
+% col_(1,:) = [0.925490200519562 0.839215695858002 0.839215695858002];
+% col_(2,:) = [0.584313750267029 0.388235300779343 0.388235300779343];
+% 
+% %%%%% Time plot
+% 
+% % time_interval_in_hours = time_interval_in_hours(2:end); % remove user 2
+% 
+% figure('Color','w');
+% set(gcf,'Unit','centimeters','OuterPosition',[0 0 10 10]);
+% set(gca,'FontName','Arial','FontSize',10)
+% hold on
+% 
+% n = size(time_interval_in_hours,2);
+% 
+% % mean
+% bar_plot = bar(1,nanmean(time_interval_in_hours), 'FaceAlpha', 1, 'BarWidth',.5, 'FaceColor',col_(1,:)); hold on;
+% 
+% % individual dots
+% plot(ones(1,n)+noise_plot, time_interval_in_hours,'.','MarkerSize',5,'MarkerEdgeColor',col_(2,:));
+% 
+% % variance
+% h = errorbar(1,[nanmean(time_interval_in_hours)],...
+%     [nanstd(time_interval_in_hours)./sqrt(n)],'.','color','k');
+% set(h,'Marker','none')
+% 
+% % parameters
+% ylim([0 3])
+% ylabel('Time (hours)')
+% xticks('')
+% xlim([1-0.75 1+0.75])   
+% 
+% export_fig(['Fig_time_all.tif'],'-nocrop','-r200')
+% 
+% 
+% %%%%% RT task plot
+% 
+% task_RT_all = task_RT_1st_in_sec; %(2:end); % remove user 2
+% 
+% figure('Color','w');
+% set(gcf,'Unit','centimeters','OuterPosition',[0 0 10 10]);
+% set(gca,'FontName','Arial','FontSize',10)
+% hold on
+% 
+% n = size(task_RT_all,2);
+% 
+% noise_plot = (rand(1,n)-0.5)/5;
+% 
+% % mean
+% bar_plot = bar(1,nanmean(task_RT_all), 'FaceAlpha', 1, 'BarWidth',.5, 'FaceColor',col_(1,:)); hold on;
+% 
+% % individual dots
+% plot(ones(1,n)+noise_plot, task_RT_all,'.','MarkerSize',2,'MarkerEdgeColor',col_(2,:));
+% 
+% % variance
+% h = errorbar(1,[nanmean(task_RT_all)],...
+%     [nanstd(task_RT_all)./sqrt(n)],'.','color','k');
+% set(h,'Marker','none')
+% 
+% % parameters
+% xlim([1-0.75 1+0.75])   
+% % ylim([0 ceil(max(task_RT_all))])
+% ylim([0 7])
+% ylabel('Time (seconds)')
+% xticks('')
+% 
+% export_fig(['Fig_RT_all.tif'],'-nocrop','-r200')
+%  

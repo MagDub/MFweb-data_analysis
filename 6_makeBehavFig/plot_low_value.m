@@ -14,6 +14,14 @@ save('./frequencies/pickedD_LH.mat', 'pickedD_LH')
 save('../../data/data_for_figs/pickedD_SH.mat', 'pickedD_SH')
 save('../../data/data_for_figs/pickedD_LH.mat', 'pickedD_LH')
 
+% Remove ID
+pickedD_SH(4,:) = nan;
+pickedD_SH(32,:) = nan;
+pickedD_SH(36,:) = nan;
+pickedD_LH(4,:) = nan;
+pickedD_LH(32,:) = nan;
+pickedD_LH(36,:) = nan;
+
 % Figure
 figure('Color','w');
 set(gcf,'Unit','centimeters','OuterPosition',[0 0 10 10]);
@@ -25,7 +33,7 @@ col_(2,:) = [0.584313750267029 0.388235300779343 0.388235300779343];
 
 x_ax = 0:0.4:4;
 
-noise_plot = (rand(size(usermat_completed_task,2),1)-0.5)/5;
+noise_plot = (rand(size(pickedD_SH,1),1)-0.5)/5;
 
 % Short horizon
 b2S = bar(x_ax(3),nanmean(pickedD_SH),'FaceColor',col_(1,:), 'FaceAlpha', 1, 'BarWidth',1);

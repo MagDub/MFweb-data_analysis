@@ -46,7 +46,7 @@ col_(1,:) = [0.925490200519562 0.839215695858002 0.839215695858002];
 
 x = 1:n_mod;
 
-[highest_acc_pp,best_model_ind_pp] = max(all_models(models,:),[],1);
+[clos,best_model_ind_pp] = max(all_models(models,:),[],1);
 
 [val]=hist(best_model_ind_pp,1:1:n_mod);
 
@@ -76,9 +76,7 @@ xtickangle(45)
 hold off
 
 
-% %% Export
-% out_dir = 'figs\';
-% addpath('D:\writing\export_fig')
-% export_fig([out_dir 'Fig_model_comparaison_per_pp_best3.tif'],'-nocrop','-r200')
-
+% Export
+addpath('../../figures/export_fig')
+export_fig(['./fig/Fig_model_comparison_3.png'],'-nocrop','-r200')
 

@@ -17,6 +17,7 @@ consist_SH_C = consistency_freq_per_tree(:,6);
 consist_LH_D = consistency_freq_per_tree(:,7);
 consist_SH_D = consistency_freq_per_tree(:,8);
 
+
 % Figure
 figure('Color','w');
 set(gcf,'Unit','centimeters','OuterPosition',[0 0 10 10]);

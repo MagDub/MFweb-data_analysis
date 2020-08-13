@@ -11,6 +11,17 @@ save('../../data/data_for_figs/score_SH.mat', 'score_SH')
 save('../../data/data_for_figs/score_LH.mat', 'score_LH')
 save('../../data/data_for_figs/first_LH.mat', 'first_LH')
 
+% Remove ID
+score_SH(4,:) = nan;
+score_SH(32,:) = nan;
+score_SH(36,:) = nan;
+first_LH(4,:) = nan;
+first_LH(32,:) = nan;
+first_LH(36,:) = nan;
+score_LH(4,:) = nan;
+score_LH(32,:) = nan;
+score_LH(36,:) = nan;
+
 % Figure
 figure('Color','w');
 set(gcf,'Unit','centimeters','OuterPosition',[0 0 10 10]);
@@ -22,23 +33,35 @@ col_(2,:) = [0.584313750267029 0.388235300779343 0.388235300779343];
 
 x_ax = 0:0.4:4;
 
+noise_plot = (rand(size(score_SH,1),1)-0.5)/5;
+
 % SH
 b1S= bar(x_ax(3),nanmean(score_SH),'FaceColor',col_(1,:), 'FaceAlpha', 1, 'BarWidth',1); 
 
-% data points
-plot(x_ax(3)*ones(1,size(score_SH,1)), score_SH','.','MarkerEdgeColor',col_(2,:), 'MarkerSize',3);
+% % data points
+% plot(x_ax(3)*ones(1,size(score_SH,1))+noise_plot, score_SH','.','MarkerEdgeColor',col_(2,:), 'MarkerSize',3);
 
 % first LH
 b1Lf = bar(x_ax(6),nanmean(first_LH),'FaceColor',col_(1,:), 'FaceAlpha', 1, 'BarWidth',1);
 
-% data points
-plot(x_ax(6)*ones(1,size(first_LH,1)), first_LH','.','MarkerEdgeColor',col_(2,:), 'MarkerSize',3);
+% % data points
+% plot(x_ax(6)*ones(1,size(first_LH,1))+noise_plot, first_LH','.','MarkerEdgeColor',col_(2,:), 'MarkerSize',3);
 
 % LH
 b1L = bar(x_ax(9),nanmean(score_LH),'FaceColor',col_(1,:), 'FaceAlpha', 1, 'BarWidth',1);
 
-% data points
-plot(x_ax(9)*ones(1,size(score_LH,1)), score_LH','.','MarkerEdgeColor',col_(2,:), 'MarkerSize',3)
+% % data points
+% plot(x_ax(9)*ones(1,size(score_LH,1))+noise_plot, score_LH','.','MarkerEdgeColor',col_(2,:), 'MarkerSize',3)
+
+for n = 1:size(first_LH,1)
+    lin2 = plot(x_ax([3 6])+noise_plot(n),[score_SH(n) first_LH(n)]); hold on;
+    lin2.Color = [col_(2,:) 0.3]; % transparency
+end
+
+for n = 1:size(first_LH,1)
+    lin2 = plot(x_ax([6 9])+noise_plot(n),[first_LH(n) score_LH(n)]); hold on;
+    lin2.Color = [col_(2,:) 0.3]; % transparency
+end
 
 h = errorbar(x_ax([3 6 9]),...
     [nanmean(score_SH) nanmean(first_LH) nanmean(score_LH)], ...

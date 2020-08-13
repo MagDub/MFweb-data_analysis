@@ -14,6 +14,14 @@ save('./frequencies/pickedC_LH.mat', 'pickedC_LH')
 save('../../data/data_for_figs/pickedC_SH.mat', 'pickedC_SH')
 save('../../data/data_for_figs/pickedC_LH.mat', 'pickedC_LH')
 
+% Remove ID
+pickedC_SH(4,:) = nan;
+pickedC_SH(32,:) = nan;
+pickedC_SH(36,:) = nan;
+pickedC_LH(4,:) = nan;
+pickedC_LH(32,:) = nan;
+pickedC_LH(36,:) = nan;
+
 % Figure
 figure('Color','w');
 set(gcf,'Unit','centimeters','OuterPosition',[0 0 10 10]);
@@ -25,7 +33,7 @@ col_(2,:) = [0.584313750267029 0.388235300779343 0.388235300779343];
 
 x_ax = 0:0.4:4;
 
-noise_plot = (rand(size(usermat_completed_task,2),1)-0.5)/5;
+noise_plot = (rand(size(pickedC_SH,1),1)-0.5)/5;
 
 % Short horizon
 b2S = bar(x_ax(3),nanmean(pickedC_SH),'FaceColor',col_(1,:), 'FaceAlpha', 1, 'BarWidth',1);
@@ -40,7 +48,7 @@ for n = 1:size(pickedC_SH,1)
     lin2.Color = [col_(2,:) 0.3];
 end
 
-h = errorbar(x_ax([3 6])+noise_plot(n),[nanmean(pickedC_SH) nanmean(pickedC_LH)], ...
+h = errorbar(x_ax([3 6]),[nanmean(pickedC_SH) nanmean(pickedC_LH)], ...
     [nanstd(pickedC_SH)./sqrt(size(pickedC_SH,1)) nanstd(pickedC_LH)./sqrt(size(pickedC_SH,1))],'.','color','k');
 set(h,'Marker','none')
 

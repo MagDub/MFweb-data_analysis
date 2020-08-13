@@ -22,7 +22,7 @@ col_(2,:) = [0.584313750267029 0.388235300779343 0.388235300779343];
 
 x_ax = 0:0.4:4;
 
-noise_plot = (rand(size(usermat_completed_task,2),1)-0.5)/5;
+noise_plot = (rand(size(pickedmedium_SH,1),1)-0.5)/5;
 
 
 % Short horizon

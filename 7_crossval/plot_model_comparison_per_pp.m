@@ -69,9 +69,8 @@ xtickangle(45)
 hold off
 
 
-% %% Export
-% out_dir = 'figs\';
-% addpath('D:\writing\export_fig')
-% export_fig([out_dir 'Fig_model_comparaison_per_pp.tif'],'-nocrop','-r200')
+% Export
+addpath('../../figures/export_fig')
+export_fig(['./fig/Fig_model_comparison_all.png'],'-nocrop','-r200')
 
 

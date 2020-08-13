@@ -6,6 +6,14 @@ numel = size(usermat_completed_task,2);
 load(strcat(data_fold, 'data_for_figs/IS_SH_mat.mat'))
 load(strcat(data_fold, 'data_for_figs/IS_LH_mat.mat'))
 
+% Remove ID
+IS_SH_mat(4,:) = nan;
+IS_SH_mat(32,:) = nan;
+IS_SH_mat(36,:) = nan;
+IS_LH_mat(4,:) = nan;
+IS_LH_mat(32,:) = nan;
+IS_LH_mat(36,:) = nan;
+
 % Figure
 figure('Color','w');
 set(gcf,'Unit','centimeters','OuterPosition',[0 0 10 10]);
