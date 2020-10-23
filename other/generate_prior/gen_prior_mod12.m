@@ -1,19 +1,8 @@
 
-%% get prior data
-for i = 1:60
-    ID = i+500;
-    load(strcat('D:\MaggiesFarm\modeling_28_02\participant_data\thompson_noveltybonus\3params_1Hor\results\fmincon\res_thompson_',int2str(ID),'_results.mat'))
-    mEmat(i) = mE;
-end
 
-parameters = settings.params.param_names;
-parameters = parameters(~cellfun('isempty',parameters)); % ignores empty entries
+parameters = {'sgm0'    'Q0'    'xi'    'eta'};
 
-%% get parameters
-params = reshape([mEmat(:).params],length(parameters),length(mEmat))';
-
-
-%% fit distributions
+% fit distributions
 prior = [];
 for p = 1:length(parameters)
     % set up settings
@@ -37,23 +26,13 @@ for p = 1:length(parameters)
     else
         error('unknown parameter')
     end
-   
-    % plot
-    max_p = max(params(:,p).*prior(p).scale);
-    figure(p)
-    subplot(2,1,1)
-    hist(params(:,p).*prior(p).scale,12)
-    title(prior(p).name)
-    
-    subplot(2,1,2)
-    tmp = []; n = 1;
-    for i =0.0001:max_p/100:max_p
-        tmp(n) = prior(p).pd.pdf(i);
-        n=n+1;
-    end
-    plot(0.0001:max_p/100:max_p,tmp,'m','LineWidth',2)
     
 end
 
-%% save
-save('participant_data/priors/thompson_4params_sgm0_xi_eta_uni/empirical_prior.mat','prior')
+folder_name = ('../../../data/priors/mod12/');
+
+if ~exist(folder_name)
+    mkdir(folder_name)
+end
+
+save('../../../data/priors/mod12/empirical_prior.mat','prior')

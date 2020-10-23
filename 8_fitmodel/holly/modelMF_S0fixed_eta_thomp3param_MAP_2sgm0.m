@@ -1,4 +1,4 @@
-function [nMAP, nLogL, mo, logL] = modelMF_S0fixed_eta_thomp3param_MAP_2sgm0(param_val,param_names,sID,settings,data,gameIDs, prior)
+function [nMAP, nLogL, mo, logL] = modelMF_S0fixed_eta_thomp3param_MAP_2sgm0(param_val,param_names,sID,settings,data,gameIDs, prior, param_names_prior)
 
 holly = 0;
 
@@ -81,16 +81,15 @@ nLogL = sum(sum(logL)) * -1;
 
 %% load priors and define densities
 
-param_names = {'sgm0', 'sgm0', 'Q0','eta', 'eta'};
 p_params = {prior(:).name}; params_prior = [];
-for p = 1:length(param_names)
+for p = 1:length(param_names_prior)
     % get equivalend
-    idx = find(strcmp(p_params,param_names{p}));
+    idx = find(strcmp(p_params,param_names_prior{p}));
     if isempty(idx)
-        idx = find(cell2mat(strfind(p_params,param_names{p}(1:end-1))));
+        idx = find(cell2mat(strfind(p_params,param_names_prior{p}(1:end-1))));
     end
     if isempty(idx) || numel(idx)>1
-        error(['error when looking for prior of ' param_names{p}])
+        error(['error when looking for prior of ' param_names_prior{p}])
     end
     
     % get estimate

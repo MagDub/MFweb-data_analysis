@@ -9,9 +9,10 @@ set(gca,'FontName','Arial','FontSize',10)
 hold on;
 
 load(strcat(saving_dir, 'inp_params_thompson.mat'))
+load(strcat(saving_dir, 'out_sim_thompson.mat'))
 
-load('../../data/data_for_figs/model_parameters.mat')
-load('../../data/data_for_figs/model_parameters_desc.mat')
+load('../../../../data/data_for_figs/model_parameters.mat')
+load('../../../../data/data_for_figs/model_parameters_desc.mat')
 
 model_parameters([4,32,36],:)=nan;
 param_mean = nanmean(model_parameters(:,2:end));
@@ -69,5 +70,5 @@ legend_position = [0.608024691358024 0.300329806108683 0.0961199294532628 0.0875
 render_sim_points(para_vals_generated(:,2), param_bounds_sgm0, [0.5:0.5:2.5], title_, 'f', legend_position, param_mean(2), param_std(2), max_freq);
 
 % Export
-addpath('../../export_fig')
+addpath('../../../../export_fig')
 export_fig('./fig/Fig_sim_dist.tif','-nocrop','-r200')

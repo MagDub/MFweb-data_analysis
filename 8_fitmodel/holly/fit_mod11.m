@@ -1,11 +1,12 @@
-function fit_mod9_like_param_recovery_2sgm0_prior1normal(ID, data_fol)
+function fit_mod11(ID, data_fol)
 
-    algo = 'mod9';
+    algo = 'mod11';
     results_dir = strcat(data_fol, '/modelfit/',algo,'/results/');
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     param_bounds_sgm0 = [0.01,6];
     param_bounds_Q0 = [1,10]; 
+    param_bounds_eta = [0,5];
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     % settings
@@ -16,24 +17,25 @@ function fit_mod9_like_param_recovery_2sgm0_prior1normal(ID, data_fol)
     settings.task.N_trees           = 3;
     settings.opts.TLT               = [];
     settings.funs.decfun            = @softmax;
-    settings.funs.valuefun          = @mvnorm_Thompson_new; 
+    settings.funs.valuefun          = @mvnorm_Thompson_noveltybonus_new; 
     settings.funs.priorfun          = [];
     settings.funs.learningfun       = @kalman_filt;
     settings.desc                   = ['thompson'];    
-    settings.params.param_names     = {'sgm0', '', 'Q0'}; 
-    settings.params.lb              = [param_bounds_sgm0(1) param_bounds_sgm0(1)  param_bounds_Q0(1)];    
-    settings.params.ub              = [param_bounds_sgm0(2) param_bounds_sgm0(2)  param_bounds_Q0(2)];    
+    settings.params.param_names     = {'sgm0', '', 'Q0', 'eta', ''}; 
+    settings.params.lb              = [param_bounds_sgm0(1) param_bounds_sgm0(1)  param_bounds_Q0(1)  param_bounds_eta(1) param_bounds_eta(1)];    
+    settings.params.ub              = [param_bounds_sgm0(2) param_bounds_sgm0(2)  param_bounds_Q0(2)  param_bounds_eta(2) param_bounds_eta(2)];    
 
     % get data
     data_dir = strcat(data_fol, 'concat_data/');
     [data,gameIDs] = aggregateData(ID,data_dir);
 
     % prior
-    load(strcat(data_fol,'/modelfit/priors/thompson_4params_sgm0_xi_eta_uni/empirical_prior.mat'),'prior') % ignoring eta in modelMF_S0fixed_thomp3param_MAP_2sgm0
+    load(strcat(data_fol,'/priors/mod11/empirical_prior.mat'),'prior')
+    param_names = {'sgm0', 'sgm0', 'Q0','eta', 'eta'};
 
     % fit model
     modelfunLL = @(x) modelMF_S0fixed_eta_2sgm0(x,settings.params.param_names,ID,settings,data,gameIDs);
-    modelfun = @(x) modelMF_S0fixed_thomp3param_MAP_2sgm0(x,settings.params.param_names,ID,settings,data,gameIDs, prior);
+    modelfun = @(x) modelMF_S0fixed_eta_thomp3param_MAP_2sgm0(x,settings.params.param_names,ID,settings,data,gameIDs, prior, param_names);
 
     % fmincon
     options = optimoptions('fmincon','Display','off');

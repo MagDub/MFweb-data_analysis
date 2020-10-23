@@ -6,7 +6,7 @@ function main_Holly_mod9(ID)
     load('usermat_completed_task.mat')
     data_fol = ('/home/mdubois/scripts/modeling_web/data/');
 
-    fit_mod9_like_param_recovery_2sgm0_prior1normal(usermat_completed_task(ID), data_fol)
+    fit_mod9(usermat_completed_task(ID), data_fol)
 
 end
 

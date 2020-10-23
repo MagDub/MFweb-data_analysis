@@ -1,12 +1,14 @@
-function fit_mod11_like_param_recovery_2sgm0_prior1normal(ID, data_fol)
+function fit_mod8(ID, data_fol)
 
-    algo = 'mod11';
+    algo = 'mod8';
     results_dir = strcat(data_fol, '/modelfit/',algo,'/results/');
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    param_bounds_sgm0 = [0.01,6];
+    param_bounds_gamma = [10^-8,10]; 
+    param_bounds_tau = [10^-8,7]; 
     param_bounds_Q0 = [1,10]; 
     param_bounds_eta = [0,5];
+    param_bounds_xi = [0,0.5];
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     % settings
@@ -17,24 +19,25 @@ function fit_mod11_like_param_recovery_2sgm0_prior1normal(ID, data_fol)
     settings.task.N_trees           = 3;
     settings.opts.TLT               = [];
     settings.funs.decfun            = @softmax;
-    settings.funs.valuefun          = @mvnorm_Thompson_noveltybonus_new; 
+    settings.funs.valuefun          = @UCB_noveltybonus; 
     settings.funs.priorfun          = [];
     settings.funs.learningfun       = @kalman_filt;
-    settings.desc                   = ['thompson'];    
-    settings.params.param_names     = {'sgm0', '', 'Q0', 'eta', ''}; 
-    settings.params.lb              = [param_bounds_sgm0(1) param_bounds_sgm0(1)  param_bounds_Q0(1)  param_bounds_eta(1) param_bounds_eta(1)];    
-    settings.params.ub              = [param_bounds_sgm0(2) param_bounds_sgm0(2)  param_bounds_Q0(2)  param_bounds_eta(2) param_bounds_eta(2)];    
+    settings.desc                   = ['UCB'];    % description of model (settings, etc)
+    settings.params.param_names     = {'Q0' 'gamma'  ''  'tau'  ''  'xi'  ''  'eta' ''};   
+    settings.params.lb              = [param_bounds_Q0(1) param_bounds_gamma(1) param_bounds_gamma(1) param_bounds_tau(1) param_bounds_tau(1) param_bounds_xi(1) param_bounds_xi(1) param_bounds_eta(1) param_bounds_eta(1)];    % lower bound
+    settings.params.ub              = [param_bounds_Q0(2) param_bounds_gamma(2) param_bounds_gamma(2) param_bounds_tau(2) param_bounds_tau(2) param_bounds_xi(2) param_bounds_xi(2) param_bounds_eta(2) param_bounds_eta(2)];    % upper bound
 
     % get data
     data_dir = strcat(data_fol, 'concat_data/');
     [data,gameIDs] = aggregateData(ID,data_dir);
 
     % prior
-    load(strcat(data_fol,'/modelfit/priors/thompson_4params_sgm0_xi_eta_uni/empirical_prior.mat'),'prior') 
+    load(strcat(data_fol,'/priors/mod8/empirical_prior.mat'),'prior')
+    param_names = {'Q0', 'gamma', 'gamma','tau', 'tau', 'xi', 'xi', 'eta', 'eta'};
 
     % fit model
-    modelfunLL = @(x) modelMF_S0fixed_eta_2sgm0(x,settings.params.param_names,ID,settings,data,gameIDs);
-    modelfun = @(x) modelMF_S0fixed_eta_thomp3param_MAP_2sgm0(x,settings.params.param_names,ID,settings,data,gameIDs, prior);
+    modelfunLL = @(x) modelMF_S0fixed_sgm0fixed_eta(x,settings.params.param_names,ID,settings,data,gameIDs);
+    modelfun = @(x) modelMF_S0fixed_sgm0fixed_eta_UCB_MAP(x,settings.params.param_names,ID,settings,data,gameIDs, prior, param_names);
 
     % fmincon
     options = optimoptions('fmincon','Display','off');

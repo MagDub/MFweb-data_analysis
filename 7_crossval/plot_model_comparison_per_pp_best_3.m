@@ -15,7 +15,7 @@ mean_per_model = nanmean(all_models');
 
 [~,index_best_models] = sort(mean_per_model, 'descend');
 
-n_mod = 2;
+n_mod = 3;
 
 best_models = index_best_models(1:n_mod);
 models = sort(best_models);
@@ -65,7 +65,17 @@ ylim([0 40])
 models = sort(best_models);
 
 xticks(1:0.5:size(models,2));
-xticklabels([legend_all(models(1)),{''}, legend_all(models(2))]);
+xticklabels([legend_all(models(1)),...
+                {''}, legend_all(models(2)),...
+                {''}, legend_all(models(3)),...
+%                 {''}, legend_all(models(4)),...
+%                 {''}, legend_all(models(5)),...
+%                 {''}, legend_all(models(6)),...
+%                 {''}, legend_all(models(7)),...
+%                 {''}, legend_all(models(8)),...
+%                 {''}, legend_all(models(9)),...
+%                 {''}, legend_all(models(10)),...
+                ]);
 xlim([0,size(models,2)+1])
 
 xtickangle(45)
@@ -77,6 +87,6 @@ hold off
 
 
 % Export
-addpath('../../figures/export_fig')
-export_fig(['./fig/Fig_model_comparison_3.png'],'-nocrop','-r200')
+addpath('../../export_fig')
+export_fig(['./fig/Fig_model_comparison_CV_pp_3.png'],'-nocrop','-r200')
 

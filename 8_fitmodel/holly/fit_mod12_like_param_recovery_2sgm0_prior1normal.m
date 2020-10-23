@@ -32,10 +32,11 @@ function fit_mod12_like_param_recovery_2sgm0_prior1normal(ID, data_fol)
 
     % prior
     load(strcat(data_fol,'/modelfit/priors/thompson_4params_sgm0_xi_eta_uni/empirical_prior.mat'),'prior') 
+    param_names = {'sgm0', 'sgm0', 'Q0','eta', 'eta', 'xi', 'xi'};
 
     % fit model
     modelfunLL = @(x) modelMF_S0fixed_eta_2sgm0(x,settings.params.param_names,ID,settings,data,gameIDs);
-    modelfun = @(x) modelMF_S0fixed_eta_thomp4param_MAP_2sgm0(x,settings.params.param_names,ID,settings,data,gameIDs, prior);
+    modelfun = @(x) modelMF_S0fixed_eta_thomp4param_MAP_2sgm0(x,settings.params.param_names,ID,settings,data,gameIDs, prior, param_names);
 
     % fmincon
     options = optimoptions('fmincon','Display','off');

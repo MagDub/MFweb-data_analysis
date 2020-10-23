@@ -70,7 +70,7 @@ hold off
 
 
 % Export
-addpath('../../figures/export_fig')
-export_fig(['./fig/Fig_model_comparison_all.png'],'-nocrop','-r200')
+addpath('../../export_fig')
+export_fig(['./fig/Fig_model_comparison_CV_pp.png'],'-nocrop','-r200')
 
 
