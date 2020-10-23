@@ -108,7 +108,6 @@ summary_desc{30} = 'Q0';
 
 score_tot = (score(:,2)+score(:,4))/2;
 bonus_GBP = (score_tot-4)/2;
-    
 
 for i=1:size(userID)
     
@@ -124,9 +123,14 @@ for i=1:size(userID)
     end
 end
 
+bonus_mat = [p_ID  num2cell(round(summary(:,8),2))];
+to_del = isnan(summary(:,8));
+bonus_mat(to_del,:)=[];
+bonus_table = cell2table(bonus_mat);
+
 summary_all_desc = ['prolific_id', 'started_datetime', summary_desc]; 
 summary_all = [p_ID started_datetime num2cell(summary)]; 
 T = cell2table(summary_all,'VariableNames',summary_all_desc);
 
-% filename = '../../data/excel/web_data_new.xlsx';
-% writetable(T,filename)
+% writetable(bonus_table,'../../data/excel/bonus_table.txt');
+% writetable(T,'../../data/excel/web_data_new.xlsx')

@@ -12,5 +12,5 @@ model_path=/home/mdubois/scripts/modeling_web/webapp_data_analysis/8_fitmodel/ho
 
 # Run Matlab
 # matlab_command="addpath('$model_path');global jobId;jobId=$SGE_TASK_ID;"
-matlab_command="addpath('$model_path');main_Holly($SGE_TASK_ID);"
+matlab_command="addpath('$model_path');main_Holly_mod9($SGE_TASK_ID);"
 /share/apps/matlab -nojvm -nodesktop -nosplash -nodisplay -singleCompThread -r $matlab_command

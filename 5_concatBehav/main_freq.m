@@ -11,7 +11,9 @@ load('../usermat_completed_task.mat')
 
 cond_mat = [];
 
-for ID_n = 1:size(usermat_completed_task,2)
+n_ = 1%size(usermat_completed_task,2);
+
+for ID_n = 1:n_
     
     ID = usermat_completed_task(ID_n);
     
@@ -82,7 +84,7 @@ for ID_n = 1:size(usermat_completed_task,2)
 
 end
 
-for ID_n = 1:size(usermat_completed_task,2)
+for ID_n = 1:n_
     
     ID = usermat_completed_task(ID_n);
     
@@ -109,5 +111,5 @@ frequencies = [all_short all_long];
 frequencies_desc = [{'all_A_short'} {'all_B_short'} {'all_C_short'} {'all_D_short'} ...
                 {'all_A_long'} {'all_B_long'} {'all_C_long'} {'all_D_long'}];
             
-save(strcat(dir_save, 'frequencies.mat'), 'frequencies');
-save(strcat(dir_save, 'frequencies_desc.mat'), 'frequencies_desc');
+% save(strcat(dir_save, 'frequencies.mat'), 'frequencies');
+% save(strcat(dir_save, 'frequencies_desc.mat'), 'frequencies_desc');
