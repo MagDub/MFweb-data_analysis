@@ -1,6 +1,4 @@
 
-addpath('../../figures/export_fig')
-
 load('../../data/data_for_figs/score_SH.mat')
 load('../../data/data_for_figs/score_LH.mat')
 
@@ -41,4 +39,6 @@ ylim([4.3 max(score)+0.3])
 ylabel({'Value'},'FontName','Arial','Fontweight','bold','FontSize',12);
 xticks('')
 
+% export
+addpath('../../export_fig')
 export_fig(['Fig_score_exclusion.tif'],'-nocrop','-r200')

@@ -7,15 +7,15 @@ data_fold = ('../../data/');
 dir_data = (strcat(data_fold,'sanity_check/'));
 dir_save = (strcat(data_fold,'data_for_figs/'));
 
-load('../usermat_completed_task.mat')
+load('../usermat_completed.mat')
 
 cond_mat = [];
 
-n_ = 1%size(usermat_completed_task,2);
+n_ = size(usermat_completed,2);
 
 for ID_n = 1:n_
     
-    ID = usermat_completed_task(ID_n);
+    ID = usermat_completed(ID_n);
     
         %%% cond AB
 
@@ -86,7 +86,7 @@ end
 
 for ID_n = 1:n_
     
-    ID = usermat_completed_task(ID_n);
+    ID = usermat_completed(ID_n);
     
        cond_mat(ID_n, 1:8) = cond{ID_n}.AB; 
        cond_mat(ID_n, 9:16) = cond{ID_n}.BD; 
@@ -111,5 +111,5 @@ frequencies = [all_short all_long];
 frequencies_desc = [{'all_A_short'} {'all_B_short'} {'all_C_short'} {'all_D_short'} ...
                 {'all_A_long'} {'all_B_long'} {'all_C_long'} {'all_D_long'}];
             
-% save(strcat(dir_save, 'frequencies.mat'), 'frequencies');
-% save(strcat(dir_save, 'frequencies_desc.mat'), 'frequencies_desc');
+save(strcat(dir_save, 'frequencies.mat'), 'frequencies');
+save(strcat(dir_save, 'frequencies_desc.mat'), 'frequencies_desc');

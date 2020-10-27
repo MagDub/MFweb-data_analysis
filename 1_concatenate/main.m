@@ -1,9 +1,9 @@
 
-load('../usermat_completed_task.mat')
+load('../usermat_completed.mat')
 
-for i=1:length(usermat_completed_task)
+for i=1:length(usermat_completed)
         
-    userID = usermat_completed_task(i);
+    userID = usermat_completed(i);
     
     disp(['userID:', 32, num2str(userID)])
 

@@ -8,12 +8,12 @@ consist_LH = consistency_freq(:,1);
 consist_SH = consistency_freq(:,2);
 
 % Remove ID
-consist_LH(4,:) = nan;
-consist_LH(32,:) = nan;
-consist_LH(36,:) = nan;
-consist_SH(4,:) = nan;
-consist_SH(32,:) = nan;
-consist_SH(36,:) = nan;
+to_del = [];
+to_del(end+1) = find(consistency_freq(:,3)==4);
+to_del(end+1) = find(consistency_freq(:,3)==34);
+to_del(end+1) = find(consistency_freq(:,3)==39);
+consist_LH(to_del,:) = nan;
+consist_SH(to_del,:) = nan;
 
 % Figure
 figure('Color','w');
@@ -56,5 +56,5 @@ ylim([0 100])
 % legend boxoff  
 
 % Export
-addpath('../../figures/export_fig')
+addpath('../../export_fig')
 export_fig(['./fig/Fig_behaviour_consistency.tif'],'-nocrop','-r200')

@@ -1,25 +1,26 @@
 
 % Data
-load('../../data/data_for_figs/model_parameters.mat')
-load('../../data/data_for_figs/model_parameters_desc.mat')
-ind_SH = find(contains(model_parameters_desc,'eta_short'));
-ind_LH = find(contains(model_parameters_desc,'eta_long'));
+load('../../data/data_for_figs/model_parameters_mod8.mat')
+load('../../data/data_for_figs/model_parameters_mod8_desc.mat')
+ind_SH = find(contains(model_parameters_desc,'xi_short'));
+ind_LH = find(contains(model_parameters_desc,'xi_long'));
 param_SH = model_parameters(:,ind_SH);
 param_LH = model_parameters(:,ind_LH);
 
+xi_SH = param_SH;
+xi_LH = param_LH;
+save('../../data/data_for_figs/mod8_xi_SH.mat', 'xi_SH')
+save('../../data/data_for_figs/mod8_xi_LH.mat', 'xi_LH')
 
-eta_SH = param_SH;
-eta_LH = param_LH;
-save('../../data/data_for_figs/eta_SH.mat', 'eta_SH')
-save('../../data/data_for_figs/eta_LH.mat', 'eta_LH')
+load('../usermat_completed.mat')
 
 % Remove ID
-param_SH(4,:) = nan;
-param_SH(32,:) = nan;
-param_SH(36,:) = nan;
-param_LH(4,:) = nan;
-param_LH(32,:) = nan;
-param_LH(36,:) = nan;
+to_del = [];
+to_del(end+1) = find(usermat_completed==4);
+to_del(end+1) = find(usermat_completed==34);
+to_del(end+1) = find(usermat_completed==39);
+param_SH(to_del,:) = nan;
+param_LH(to_del,:) = nan;
 
 % Figure
 figure('Color','w');
@@ -57,12 +58,11 @@ a = gca;
 a.XTickLabel = {'Short horizon', 'Long horizon'};
 
 ylabel('Best-fit parameter value','FontName','Arial','Fontweight','bold','FontSize',12);
-set(gca,'YTick',0:1:10)
-ylim([0 5.1])
+set(gca,'YTick',0:0.1:1)
+ylim([0 0.53])
 
-% legend([b2S b2L],{'Short horizon', 'Long horizon'}, 'location', 'NorthWest');
-% legend boxoff  
+legend boxoff  
 
 % Export
-addpath('../../figures/export_fig')
-export_fig(['./fig/Fig_param_eta.tif'],'-nocrop','-r200')
+addpath('../../export_fig')
+export_fig(['./fig/Fig_param_epsilon_mod8.tif'],'-nocrop','-r200')

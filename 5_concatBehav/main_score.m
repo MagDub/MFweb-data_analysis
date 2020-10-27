@@ -1,11 +1,11 @@
 addpath('./functions/')
 
-load('../usermat_completed_task.mat')
+load('../usermat_completed.mat')
 data_fold = ('../../data/');
 dir_data = (strcat(data_fold,'sanity_check/'));
 dir_save = (strcat(data_fold,'data_for_figs/'));
 
-n = size(usermat_completed_task,2);
+n = size(usermat_completed,2);
 
 score_LH = nan(n,1);
 first_apple_LH = nan(n,1);
@@ -19,7 +19,7 @@ average_all_apple_LH = nan(n,1);
 
 for ID_i = 1:n
     
-    ID = usermat_completed_task(ID_i);
+    ID = usermat_completed(ID_i);
     
     tmp1 = load(strcat(dir_data, 'user_',num2str(ID),'/logs/logABDlong.mat'));
     tmp2 = load(strcat(dir_data, 'user_',num2str(ID),'/logs/logABlong.mat'));
@@ -90,7 +90,7 @@ for ID_i = 1:n
 end
 
 score_desc = [{'ID'} {'average_first_apple_SH'} {'average_first_apple_LH'} {'average_all_apple_LH'}];
-score = [usermat_completed_task' average_first_apple_SH average_first_apple_LH average_all_apple_LH];
+score = [usermat_completed' average_first_apple_SH average_first_apple_LH average_all_apple_LH];
 
 save(strcat(dir_save, 'score.mat'), 'score');
 save(strcat(dir_save, 'score_desc.mat'), 'score_desc');

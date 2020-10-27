@@ -1,5 +1,5 @@
 
-load('../usermat_completed_task.mat')
+load('../usermat_completed.mat')
 
 load('../../data/questionnaire/all/RT_quest_all.mat');
 load('../../data/questionnaire/all/RT_quest_desc.mat');
@@ -10,9 +10,9 @@ raw_fol = ('../../data/raw/');
 
 disp('----------------------')
 
-for i=1:length(usermat_completed_task)
+for i=1:length(usermat_completed)
     
-    userID = usermat_completed_task(i);
+    userID = usermat_completed(i);
     
     % user
     disp(['userID:', 32, num2str(userID)])
@@ -91,7 +91,7 @@ for i=1:length(usermat_completed_task)
 end
 
 %%%%% Exclusion
-exclusion_criteria(:,1) = usermat_completed_task; 
+exclusion_criteria(:,1) = usermat_completed; 
 
 % Attention checks (less than 90%)
 exclusion_criteria(:,2) = CheckPassedPerc_all<0.9;
@@ -129,8 +129,8 @@ save('../../data/questionnaire/demographics/raw/exclusion_criteria.mat', 'exclus
 save('../../data/data_for_figs/task_RT_1st_in_sec.mat', 'task_RT_1st_in_sec')
 
 % Remove the ones that failed attention checks
-usermat_completed_task_attentive = exclusion_criteria(find(exclusion_criteria(:,2)==0),1)';
-save('../usermat_completed_task_attentive.mat', 'usermat_completed_task_attentive')
+usermat_completed_attentive = exclusion_criteria(find(exclusion_criteria(:,2)==0),1)';
+save('../usermat_completed_attentive.mat', 'usermat_completed_attentive')
 
 % % Figures
 % addpath('../../figures/export_fig')
@@ -145,9 +145,9 @@ save('../usermat_completed_task_attentive.mat', 'usermat_completed_task_attentiv
 %     subplot(4,2,q_num)
 %     plot(RT_quest_all(:,q_num)/(1000*60), 'o')
 %     grid on;
-%     xlim([0 length(usermat_completed_task)+1])
-%     xticks(1:1:length(usermat_completed_task))
-%     xticklabels(usermat_completed_task)
+%     xlim([0 length(usermat_completed)+1])
+%     xticks(1:1:length(usermat_completed))
+%     xticklabels(usermat_completed)
 %     xlabel('user')
 %     ylabel('time (min)')
 %     title(RT_quest_desc(q_num))

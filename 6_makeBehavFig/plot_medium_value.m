@@ -11,6 +11,14 @@ pickedmedium_LH = (chosenOption.ABD.freq(:,5)+chosenOption.AB.freq(:,5))*100/n_t
 save('./frequencies/pickedmedium_SH.mat', 'pickedmedium_SH')
 save('./frequencies/pickedmedium_LH.mat', 'pickedmedium_LH')
 
+% Remove ID
+to_del = [];
+to_del(end+1) = find(usermat_completed==4);
+to_del(end+1) = find(usermat_completed==34);
+to_del(end+1) = find(usermat_completed==39);
+pickedmedium_SH(to_del,:) = nan;
+pickedmedium_LH(to_del,:) = nan;
+
 % Figure
 figure('Color','w');
 set(gcf,'Unit','centimeters','OuterPosition',[0 0 10 10]);
@@ -54,5 +62,5 @@ ylim([0 max(max(pickedmedium_SH),max(pickedmedium_LH))])
 legend boxoff  
 
 % Export
-addpath('../../figures/export_fig')
+addpath('../../export_fig')
 export_fig(['./fig/Fig_behaviour_medium_value.tif'],'-nocrop','-r200')

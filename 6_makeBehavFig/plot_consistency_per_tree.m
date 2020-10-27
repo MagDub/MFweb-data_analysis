@@ -5,6 +5,14 @@ data_fold = ('../../data/');
 load(strcat(data_fold, 'data_for_figs/consistency_freq_per_tree_desc.mat'))
 load(strcat(data_fold, 'data_for_figs/consistency_freq_per_tree.mat'))
 
+% Remove ID
+to_del = [];
+to_del(end+1) = find(consistency_freq_per_tree(:,9)==4);
+to_del(end+1) = find(consistency_freq_per_tree(:,9)==34);
+to_del(end+1) = find(consistency_freq_per_tree(:,9)==39);
+consistency_freq_per_tree(to_del,:) = [];
+consistency_freq_per_tree(to_del,:) = [];
+
 consist_LH_A = consistency_freq_per_tree(:,1);
 consist_SH_A = consistency_freq_per_tree(:,2);
 
@@ -118,5 +126,5 @@ legend([b2SA b2LA],{'Short horizon', 'Long horizon'}, 'Location', 'NorthWest');
 legend boxoff  
 
 % Export
-addpath('../../figures/export_fig')
+addpath('../../export_fig')
 export_fig(['./fig/Fig_behaviour_consistency_per_tree.tif'],'-nocrop','-r200')

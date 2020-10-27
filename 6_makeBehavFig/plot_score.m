@@ -11,16 +11,16 @@ save('../../data/data_for_figs/score_SH.mat', 'score_SH')
 save('../../data/data_for_figs/score_LH.mat', 'score_LH')
 save('../../data/data_for_figs/first_LH.mat', 'first_LH')
 
+load('../usermat_completed.mat')
+
 % Remove ID
-score_SH(4,:) = nan;
-score_SH(32,:) = nan;
-score_SH(36,:) = nan;
-first_LH(4,:) = nan;
-first_LH(32,:) = nan;
-first_LH(36,:) = nan;
-score_LH(4,:) = nan;
-score_LH(32,:) = nan;
-score_LH(36,:) = nan;
+to_del = [];
+to_del(end+1) = find(usermat_completed==4);
+to_del(end+1) = find(usermat_completed==34);
+to_del(end+1) = find(usermat_completed==39);
+score_SH(to_del,:) = nan;
+score_LH(to_del,:) = nan;
+first_LH(to_del,:) = nan;
 
 % Figure
 figure('Color','w');
@@ -82,5 +82,5 @@ ylim([min(min(score(:,2:4)))-0.1 max(max(score(:,2:4)))+0.1])
 
 
 % Export
-addpath('../../figures/export_fig')
+addpath('../../export_fig')
 export_fig(['./fig/Fig_behaviour_score.tif'],'-nocrop','-r200')

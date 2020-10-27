@@ -1,14 +1,21 @@
 
 % Data
-load('../../data/data_for_figs/model_parameters.mat')
-load('../../data/data_for_figs/model_parameters_desc.mat')
+load('../../data/data_for_figs/model_parameters_mod8.mat')
+load('../../data/data_for_figs/model_parameters_mod8_desc.mat')
 ind = find(contains(model_parameters_desc,'Q0'));
 param = model_parameters(:,ind);
 
+Q0 = param;
+save('../../data/data_for_figs/mod8_Q0.mat', 'Q0')
+
+load('../usermat_completed.mat')
+
 % Remove ID
-param(4,:) = nan;
-param(32,:) = nan;
-param(36,:) = nan;
+to_del = [];
+to_del(end+1) = find(usermat_completed==4);
+to_del(end+1) = find(usermat_completed==34);
+to_del(end+1) = find(usermat_completed==39);
+param(to_del,:) = nan;
 
 % Figure
 figure('Color','w');
@@ -39,5 +46,5 @@ set(gca,'YTick',0:2:10)
 ylim([0 6.2])
 
 % Export
-addpath('../../figures/export_fig')
-export_fig(['./fig/Fig_param_Q0.tif'],'-nocrop','-r200')
+addpath('../../export_fig')
+export_fig(['./fig/Fig_param_Q0_mod8.tif'],'-nocrop','-r200')

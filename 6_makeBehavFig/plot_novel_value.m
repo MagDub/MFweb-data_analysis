@@ -14,13 +14,15 @@ save('./frequencies/pickedC_LH.mat', 'pickedC_LH')
 save('../../data/data_for_figs/pickedC_SH.mat', 'pickedC_SH')
 save('../../data/data_for_figs/pickedC_LH.mat', 'pickedC_LH')
 
+load('../usermat_completed.mat')
+
 % Remove ID
-pickedC_SH(4,:) = nan;
-pickedC_SH(32,:) = nan;
-pickedC_SH(36,:) = nan;
-pickedC_LH(4,:) = nan;
-pickedC_LH(32,:) = nan;
-pickedC_LH(36,:) = nan;
+to_del = [];
+to_del(end+1) = find(usermat_completed==4);
+to_del(end+1) = find(usermat_completed==34);
+to_del(end+1) = find(usermat_completed==39);
+pickedC_SH(to_del,:) = nan;
+pickedC_SH(to_del,:) = nan;
 
 % Figure
 figure('Color','w');
@@ -65,5 +67,5 @@ ylim([0 max(max(pickedC_SH),max(pickedC_LH))])
 % legend boxoff  
 
 % Export
-addpath('../../figures/export_fig')
+addpath('../../export_fig')
 export_fig(['./fig/Fig_behaviour_novel_value.tif'],'-nocrop','-r200')

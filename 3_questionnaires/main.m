@@ -8,7 +8,7 @@
 
 % Correlation power simulation 
 
-load('../usermat_completed_task.mat')
+load('../usermat_completed.mat')
 
 res_fold = '../../data/questionnaire/';
 
@@ -17,7 +17,7 @@ load(strcat(res_fold, 'demographics/raw/p_ID.mat'))
 load(strcat(res_fold, 'demographics/raw/demo.mat'))
 load(strcat(res_fold, 'demographics/raw/demo_desc.mat'))
 
-n = length(usermat_completed_task);
+n = length(usermat_completed);
 
 %init
 RT_quest_all = nan(n,8);
@@ -33,7 +33,7 @@ Demo_all = nan(n,6);
 
 for i=1:n
         
-    userID = usermat_completed_task(i);
+    userID = usermat_completed(i);
         
     disp(['userID:', 32, num2str(userID)])
     

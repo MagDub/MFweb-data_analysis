@@ -1,18 +1,18 @@
 
-load('../usermat_completed_task.mat')
+load('../usermat_completed.mat')
 data_fold = ('../../data/');
-numel = size(usermat_completed_task,2);
+numel = size(usermat_completed,2);
 
 load(strcat(data_fold, 'data_for_figs/IS_SH_mat.mat'))
 load(strcat(data_fold, 'data_for_figs/IS_LH_mat.mat'))
 
 % Remove ID
-IS_SH_mat(4,:) = nan;
-IS_SH_mat(32,:) = nan;
-IS_SH_mat(36,:) = nan;
-IS_LH_mat(4,:) = nan;
-IS_LH_mat(32,:) = nan;
-IS_LH_mat(36,:) = nan;
+to_del = [];
+to_del(end+1) = find(usermat_completed==4);
+to_del(end+1) = find(usermat_completed==34);
+to_del(end+1) = find(usermat_completed==39);
+IS_SH_mat(to_del,:) = nan;
+IS_LH_mat(to_del,:) = nan;
 
 % Figure
 figure('Color','w');
@@ -25,7 +25,7 @@ col_(2,:) = [0.584313750267029 0.388235300779343 0.388235300779343];
 
 x_ax = 0:0.4:4;
 
-noise_plot = (rand(size(usermat_completed_task,2),1)-0.5)/5;
+noise_plot = (rand(size(usermat_completed,2),1)-0.5)/5;
 
 % SH
 b1S= bar(x_ax(3),nanmean(IS_SH_mat),'FaceColor',col_(1,:), 'FaceAlpha', 1, 'BarWidth',1); 
@@ -63,6 +63,6 @@ set(gca,'YTick',0:0.5:3)
 ylim([min(min([IS_SH_mat IS_LH_mat]))-0.3 max(max([IS_SH_mat IS_LH_mat]))+0.3])
 
 % Export
-addpath('../../figures/export_fig')
+addpath('../../export_fig')
 export_fig(['./fig/Fig_behaviour_IG.tif'],'-nocrop','-r200')
 
