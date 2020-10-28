@@ -8,7 +8,7 @@ for t = 1:size(data.alltrees,1)+1 %Changed / Added one because [Q0 Q]
     mo.mat.appleD{idx_hor,idx_g} = data.d;
     
     if t == 1 % plug in priors
-        mo.mat.Q{idx_hor,idx_g}(:,t) = mo.params.Q0(data.gameNo);
+        mo.mat.Q{idx_hor,idx_g}(:,t) = mo.params.Q0; %(data.gameNo);
         mo.mat.sgm{idx_hor,idx_g}(:,t) = mo.params.sgm0(idx_hor);
     end
     

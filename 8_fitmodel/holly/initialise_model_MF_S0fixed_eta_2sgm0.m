@@ -11,7 +11,7 @@ mo.params.xi            = [];   % lapse rate
 mo.params.gamma         = [];   % variance scaling factor for UCB
 mo.params.S0            = 0.8*ones(settings.task.N_games,1); % prior draw std (set up, so that learning can be implemented
 mo.params.sgm0          = []; % prior mean std (set up, so that learning can be implemented
-mo.params.Q0            = nan(settings.task.N_games,1); % prior mean (set up, so that learning can be implemented
+mo.params.Q0            = []; %nan(settings.task.N_games,1); % prior mean (set up, so that learning can be implemented
 mo.params.alpha         = []; % variance scaling factor for the simple model 
 mo.params.w_hyb         = [];
 
