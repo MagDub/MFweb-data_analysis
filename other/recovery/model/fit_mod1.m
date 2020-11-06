@@ -38,7 +38,7 @@ function fit_mod1(ID, data_fol, sim_dir, settings, data, gameIDs)
     mEexitflag = nan(8,1);
 
     tic
-    for iter=1:8
+    parfor iter=1:2%8
         xo_fmincon = (b-a).*rand(1,1) + a; % random value in this interval     
         [mEparams, mEMAP, mEexitflag] = fmincon(modelfun,xo_fmincon,[],[],[],[],...
             settings.params.lb,settings.params.ub,[],options);

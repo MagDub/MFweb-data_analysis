@@ -1,27 +1,18 @@
-function HOLLY_main_mod12_sim(ID)
+function HOLLY_main_mod4_sim(ID)
 
     data_fol = '/home/mdubois/scripts/modeling_web/data/';
-%     data_fol = '../../../../../data/';
     sim_fol=strcat(data_fol, 'sim_model_recov/');
 
-    %%%% Sim mod12 %%%%
+    %%%% Sim mod8 %%%%
 
     % variables
-    model = 'mod12';
+    model = 'mod4';
     n_sim = 1000;
 
     % simulation dir
     sim_mod_fol = strcat(sim_fol,model,'/n_sim_',num2str(n_sim), '/');
 
-%     % load from run_setup (sampled from normal distrib of empirical mean)
-%     load(strcat(sim_mod_fol,'inp_params.mat')); 
-%     load(strcat(sim_mod_fol,'param_bounds.mat'));
-% 
-%     % load parameter values
-%     para_vals = inp_params(ID,:);
-
     % simulate model
-    % [settings.settings, data.data, gameIDs] = sim_mod12(ID, para_vals, param_bounds, sim_mod_fol);
     data=load(strcat(sim_mod_fol,'results/sim_data_',num2str(ID),'.mat'),'data');
     gameIDs=load(strcat(sim_mod_fol,'results/sim_data_',num2str(ID),'.mat'),'gameIDs');
     settings=load(strcat(sim_mod_fol,'results/sim_',num2str(ID),'.mat'),'settings');
