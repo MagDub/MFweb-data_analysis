@@ -91,6 +91,7 @@ mod.model_type{n_model} = 'hybrid';
 mod.legend{n_model} = 'hybrid + \eta + \epsilon'; 
 
 
+%%%%%%%%%%%%%%%%%%%%%
 % Plotting  
 mle_mat = [];
 mean_all_pp=nan(length(participant_list),n_model);

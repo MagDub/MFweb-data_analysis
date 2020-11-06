@@ -7,6 +7,6 @@ data_fol = ('../../data/');
     
     disp(['user' int2str(usermat_completed_task(i))])
     
-    fit_mod12(usermat_completed_task(i), data_fol)
+    fit_mod12_etaT(usermat_completed_task(i), data_fol)
     
 end

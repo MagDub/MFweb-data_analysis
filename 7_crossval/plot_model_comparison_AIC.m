@@ -7,12 +7,27 @@ mle_mat_all(4,:) = nan(1,n_model);
 mle_mat_all(32,:) = nan(1,n_model);
 mle_mat_all(36,:) = nan(1,n_model);
 
-AIC_all = 2/log(400)*mle_mat_all + 2*[3, 5, 5, 7,    5, 7, 7, 9,     8, 10, 10, 12] ./log(400); %mle is NLL
+AIC_all = 2*mle_mat_all + 2*[3, 5, 5, 7,    5, 7, 7, 9,     8, 10, 10, 12]; %mle is NLL
 
 mean_all = nanmean(AIC_all,1);
 n_part = sum(~isnan(AIC_all));
 stderror_all = nanstd(AIC_all,1)./n_part;
 
+% Legend
+legend_all{1} = 'thompson';
+legend_all{2} = 'thompson + \epsilon';
+legend_all{3} = 'thompson + \eta';
+legend_all{4} = 'thompson + \epsilon + \eta';
+
+legend_all{5} = 'UCB';
+legend_all{6} = 'UCB + \epsilon';
+legend_all{7} = 'UCB + \eta';
+legend_all{8} = 'UCB + \epsilon + \eta';
+
+legend_all{9} = 'hybrid';
+legend_all{10} = 'hybrid + \epsilon';
+legend_all{11} = 'hybrid + \eta';
+legend_all{12} = 'hybrid + \epsilon + \eta';
 
 % Figure
 figure('Color','w');
@@ -35,16 +50,16 @@ er = errorbar(x,mean_all(I),stderror_all(I),stderror_all(I));
 er.Color = [0 0 0];                            
 er.LineStyle = 'none';  
 ylabel('AIC score')
-yrange = [81 97];
+yrange = [470 580];
 ylim(yrange)
 xticks(x)
 xticklabels(legend_all(I));
 xtickangle(45)
-set(gca,'YTick',0:4:1000);
+set(gca,'YTick',0:30:1000);
 box off;
 
 hold off
 
-% Export
-addpath('../../export_fig')
-export_fig(['./fig/Fig_model_comparison_AIC.png'],'-nocrop','-r200')
+% % Export
+% addpath('../../export_fig')
+% export_fig(['./fig/Fig_model_comparison_AIC.png'],'-nocrop','-r200')

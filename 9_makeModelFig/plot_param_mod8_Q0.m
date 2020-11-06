@@ -1,12 +1,12 @@
 
 % Data
-load('../../data/data_for_figs/model_parameters_mod8.mat')
-load('../../data/data_for_figs/model_parameters_mod8_desc.mat')
+load('../../data/data_for_figs/model_parameters_mod8_eta8.mat')
+load('../../data/data_for_figs/model_parameters_mod8_eta8_desc.mat')
 ind = find(contains(model_parameters_desc,'Q0'));
 param = model_parameters(:,ind);
 
 Q0 = param;
-save('../../data/data_for_figs/mod8_Q0.mat', 'Q0')
+save('../../data/data_for_figs/mod8_eta8_Q0.mat', 'Q0')
 
 load('../usermat_completed.mat')
 
@@ -47,4 +47,4 @@ ylim([0 6.2])
 
 % Export
 addpath('../../export_fig')
-export_fig(['./fig/Fig_param_Q0_mod8.tif'],'-nocrop','-r200')
+export_fig(['./fig/Fig_param_Q0_mod8_eta8.tif'],'-nocrop','-r200')

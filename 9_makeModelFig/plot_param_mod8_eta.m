@@ -1,7 +1,7 @@
 
 % Data
-load('../../data/data_for_figs/model_parameters_mod8.mat')
-load('../../data/data_for_figs/model_parameters_mod8_desc.mat')
+load('../../data/data_for_figs/model_parameters_mod8_eta8.mat')
+load('../../data/data_for_figs/model_parameters_mod8_eta8_desc.mat')
 ind_SH = find(contains(model_parameters_desc,'eta_short'));
 ind_LH = find(contains(model_parameters_desc,'eta_long'));
 param_SH = model_parameters(:,ind_SH);
@@ -9,8 +9,8 @@ param_LH = model_parameters(:,ind_LH);
 
 eta_SH = param_SH;
 eta_LH = param_LH;
-save('../../data/data_for_figs/mod8_eta_SH.mat', 'eta_SH')
-save('../../data/data_for_figs/mod8_eta_LH.mat', 'eta_LH')
+save('../../data/data_for_figs/mod8_eta8_eta_SH.mat', 'eta_SH')
+save('../../data/data_for_figs/mod8_eta8_eta_LH.mat', 'eta_LH')
 
 load('../usermat_completed.mat')
 
@@ -59,11 +59,11 @@ a.XTickLabel = {'Short horizon', 'Long horizon'};
 
 ylabel('Best-fit parameter value','FontName','Arial','Fontweight','bold','FontSize',12);
 set(gca,'YTick',0:1:10)
-ylim([0 5.1])
+ylim([0 8.1])
 
 % legend([b2S b2L],{'Short horizon', 'Long horizon'}, 'location', 'NorthWest');
 % legend boxoff  
 
 % Export
 addpath('../../export_fig')
-export_fig(['./fig/Fig_param_eta_mod8.tif'],'-nocrop','-r200')
+export_fig(['./fig/Fig_param_eta_mod8_eta8.tif'],'-nocrop','-r200')

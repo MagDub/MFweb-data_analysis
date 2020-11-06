@@ -7,7 +7,7 @@ mle_mat_all(4,:) = nan(1,n_model);
 mle_mat_all(32,:) = nan(1,n_model);
 mle_mat_all(36,:) = nan(1,n_model);
 
-AIC_all = 2/log(400)*mle_mat_all + 2*[3, 5, 5, 7,    5, 7, 7, 9,     8, 10, 10, 12] ./log(400); %mle is NLL
+AIC_all = 2*mle_mat_all + 2*[3, 5, 5, 7,    5, 7, 7, 9,     8, 10, 10, 12]; %mle is NLL
 
 [highest_acc_pp,best_model_ind_pp] = min(AIC_all,[],2);
 [val]=hist(best_model_ind_pp,1:1:n_model);
@@ -51,8 +51,8 @@ ylabel('Number of subjects','FontName','Arial','Fontweight','bold','FontSize',11
 set(gca,'YTick',0:10:100)
 ylim([0  39])
 
-xticks(1:n_model+2);
-xticklabels([legend_all(1:1+3),{''}, legend_all(5:5+3),{''},legend_all(9:9+3)]);
+xticks(x);
+xticklabels([legend_all(1:4), legend_all(5:8), legend_all(9:12)]);
 xlim([0,n_model+3])
 
 xtickangle(45)

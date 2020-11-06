@@ -7,7 +7,11 @@ mo = [];
 %% set up parameters
 mo.params.tau           = [];   % decision temperature
 mo.params.eta           = [];
+mo.params.etaT          = [];
+mo.params.etaB          = [];
 mo.params.xi            = [];   % lapse rate
+mo.params.xiT           = [];
+mo.params.xiB           = [];
 mo.params.gamma         = [];   % variance scaling factor for UCB
 mo.params.S0            = 0.8*ones(settings.task.N_games,1); % prior draw std (set up, so that learning can be implemented
 mo.params.sgm0          = []; % prior mean std (set up, so that learning can be implemented

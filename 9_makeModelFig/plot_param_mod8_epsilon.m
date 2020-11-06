@@ -1,7 +1,7 @@
 
 % Data
-load('../../data/data_for_figs/model_parameters_mod8.mat')
-load('../../data/data_for_figs/model_parameters_mod8_desc.mat')
+load('../../data/data_for_figs/model_parameters_mod8_eta8.mat')
+load('../../data/data_for_figs/model_parameters_mod8_eta8_desc.mat')
 ind_SH = find(contains(model_parameters_desc,'xi_short'));
 ind_LH = find(contains(model_parameters_desc,'xi_long'));
 param_SH = model_parameters(:,ind_SH);
@@ -9,8 +9,8 @@ param_LH = model_parameters(:,ind_LH);
 
 xi_SH = param_SH;
 xi_LH = param_LH;
-save('../../data/data_for_figs/mod8_xi_SH.mat', 'xi_SH')
-save('../../data/data_for_figs/mod8_xi_LH.mat', 'xi_LH')
+save('../../data/data_for_figs/mod8_eta8_xi_SH.mat', 'xi_SH')
+save('../../data/data_for_figs/mod8_eta8_xi_LH.mat', 'xi_LH')
 
 load('../usermat_completed.mat')
 
@@ -65,4 +65,4 @@ legend boxoff
 
 % Export
 addpath('../../export_fig')
-export_fig(['./fig/Fig_param_epsilon_mod8.tif'],'-nocrop','-r200')
+export_fig(['./fig/Fig_param_epsilon_mod8_eta8.tif'],'-nocrop','-r200')

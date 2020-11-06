@@ -51,8 +51,8 @@ ylabel('Number of subjects','FontName','Arial','Fontweight','bold','FontSize',11
 set(gca,'YTick',0:10:100)
 ylim([0  39])
 
-xticks(1:n_model+2);
-xticklabels([legend_all(1:1+3),{''}, legend_all(5:5+3),{''},legend_all(9:9+3)]);
+xticks(x);
+xticklabels([legend_all(1:4), legend_all(5:8), legend_all(9:12)]);
 xlim([0,n_model+3])
 
 xtickangle(45)
