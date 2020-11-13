@@ -1,6 +1,6 @@
 
-n_sim = 1000;
-path_ = '/Users/magdadubois/MFweb/data/sim_model_recov/mod12/';
+n_sim = 100;
+path_ = '/Users/magdadubois/MFweb/data/sim_model_recov/mod12_test/';
 saving_dir = strcat(path_, 'n_sim_', int2str(n_sim), '/');
 
 load('../../../../data/data_for_figs/model_parameters.mat')
@@ -25,7 +25,7 @@ param_bounds.sgm0 = param_bounds_sgm0;
 param_bounds.Q0 = param_bounds_Q0; 
 param_bounds.eta = param_bounds_eta; 
 
-inp_params = prep_mod12(param_bounds, saving_dir, n_sim, param_mean, param_std);
+inp_params = prep_mod12_normal(param_bounds, saving_dir, n_sim, param_mean, param_std);
 
 save(strcat(saving_dir,'/param_bounds.mat'), 'param_bounds')
 

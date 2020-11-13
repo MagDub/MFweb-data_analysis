@@ -27,8 +27,8 @@ for ID = 1:2 %n_sim
 %     end
 
     % fit WITH EACH model
-    fit_mod1(ID, data_fol, sim_mod_fol, settings.settings, data.data, gameIDs.gameIDs);
-
+    
+    % % fit_mod1(ID, data_fol, sim_mod_fol, settings.settings, data.data, gameIDs.gameIDs);
     % % fit_mod2(ID, data_fol, sim_mod_fol, settings, data, gameIDs);
     % % fit_mod3(ID, data_fol, sim_mod_fol, settings, data, gameIDs);
     % % fit_mod4(ID, data_fol, sim_mod_fol, settings, data, gameIDs);

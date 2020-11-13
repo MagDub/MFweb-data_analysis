@@ -1,13 +1,14 @@
-function HOLLY_main_mod8_sim(ID)
+function HOLLY_main_mod12_sim_uniform(ID)
 
     data_fol = '/home/mdubois/scripts/modeling_web/data/';
+%     data_fol = '../../../../../data/';
     sim_fol=strcat(data_fol, 'sim_model_recov/');
 
-    %%%% Sim mod8 %%%%
+    %%%% Sim mod12 %%%%
 
     % variables
-    model = 'mod8';
-    n_sim = 1000;
+    model = 'mod12_uniform';
+    n_sim = 100;
 
     % simulation dir
     sim_mod_fol = strcat(sim_fol,model,'/n_sim_',num2str(n_sim), '/');

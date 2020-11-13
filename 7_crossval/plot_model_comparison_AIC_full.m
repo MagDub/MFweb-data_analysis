@@ -55,16 +55,16 @@ er = errorbar(x,mean_all(I),stderror_all(I),stderror_all(I));
 er.Color = [0 0 0];                            
 er.LineStyle = 'none';  
 ylabel('AIC score')
-yrange = [480 580];
+yrange = [480 520];
 ylim(yrange)
 xticks(x)
 xticklabels(legend_all(I));
 xtickangle(45)
-set(gca,'YTick',0:30:1000);
+set(gca,'YTick',0:10:1000); grid on;
 box off;
 
 hold off
 
-% Export
-addpath('../../export_fig')
-export_fig(['./fig/Fig_model_comparison_AIC_full.png'],'-nocrop','-r200')
+% % Export
+% addpath('../../export_fig')
+% export_fig(['./fig/Fig_model_comparison_AIC_full.png'],'-nocrop','-r200')

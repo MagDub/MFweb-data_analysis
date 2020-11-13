@@ -7,8 +7,8 @@ function fit_mod4(ID, data_fol, sim_dir, settings, data, gameIDs)
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     param_bounds_sgm0 = [0.01,6];
-    param_bounds_gamma = [10^-8,10]; 
-    param_bounds_tau = [10^-8,7]; 
+    param_bounds_gamma = [10^-8,2]; 
+    param_bounds_tau = [0.25,1.75]; 
     param_bounds_Q0 = [1,10]; 
     param_bounds_eta = [0,5];
     param_bounds_w_hyb = [0,1];

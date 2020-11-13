@@ -1,6 +1,6 @@
 
-n_sim = 1000;
-path_ = '/Users/magdadubois/MFweb/data/sim_model_recov/mod8/';
+n_sim = 100;
+path_ = '/Users/magdadubois/MFweb/data/sim_model_recov/mod8_normal/';
 saving_dir = strcat(path_, 'n_sim_', int2str(n_sim), '/');
 
 load('../../../../data/modelfit/mod8/concatenated/model_parameters_mod8.mat')
@@ -11,10 +11,10 @@ param_mean = nanmean(model_parameters(:,2:end));
 param_std = nanstd(model_parameters(:,2:end));
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-param_bounds_gamma = [10^-8,10]; 
-param_bounds_tau = [10^-8,7]; 
+param_bounds_gamma = [10^-8,2]; 
+param_bounds_tau = [0.25,1.75];  
 param_bounds_Q0 = [1,10]; 
-param_bounds_eta = [0,8];
+param_bounds_eta = [0,5];
 param_bounds_xi = [0,0.5];
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -27,7 +27,7 @@ param_bounds.gamma = param_bounds_gamma;
 param_bounds.xi = param_bounds_xi;
 param_bounds.eta = param_bounds_eta; 
 
-inp_params = prep_mod8(param_bounds, saving_dir, n_sim, param_mean, param_std);
+inp_params = prep_mod8_normal(param_bounds, saving_dir, n_sim, param_mean, param_std);
 
 save(strcat(saving_dir,'/param_bounds.mat'), 'param_bounds')
 

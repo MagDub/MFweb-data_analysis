@@ -4,10 +4,10 @@ function fit_mod8(ID, data_fol)
     results_dir = strcat(data_fol, '/modelfit/',algo,'/results/');
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    param_bounds_gamma = [10^-8,10]; 
-    param_bounds_tau = [10^-8,7]; 
+    param_bounds_gamma = [10^-8,3]; 
+    param_bounds_tau = [10^-8,2]; 
     param_bounds_Q0 = [1,10]; 
-    param_bounds_eta = [0,8];
+    param_bounds_eta = [0,5];
     param_bounds_xi = [0,0.5];
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

@@ -1,9 +1,9 @@
 #!/bin/bash
 
-#$ -N mod_rec_8
+#$ -N mod_8_norm
 #$ -e /data/mdubois/logs/
 #$ -o /data/mdubois/logs/
-#$ -t 1-1000
+#$ -t 1-100
 #$ -S /bin/sh
 
 # where to find basic custom functions
@@ -12,5 +12,5 @@ model_path=/home/mdubois/scripts/modeling_web/webapp_data_analysis/other/recover
 
 # Run Matlab
 # matlab_command="addpath('$model_path');global jobId;jobId=$SGE_TASK_ID;"
-matlab_command="addpath('$model_path');HOLLY_main_mod8_sim($SGE_TASK_ID);"
+matlab_command="addpath('$model_path');HOLLY_main_mod8_sim_normal($SGE_TASK_ID);"
 /share/apps/matlab -nojvm -nodesktop -nosplash -nodisplay -singleCompThread -r $matlab_command

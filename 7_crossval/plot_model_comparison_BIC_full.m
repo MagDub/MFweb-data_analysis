@@ -55,16 +55,16 @@ er = errorbar(x,mean_all(I),stderror_all(I),stderror_all(I));
 er.Color = [0 0 0];                            
 er.LineStyle = 'none';  
 ylabel('BIC score')
-yrange = [510 590];
+yrange = [510 540];
 ylim(yrange)
 xticks(x)
 xticklabels(legend_all(I));
 xtickangle(45)
-set(gca,'YTick',0:20:1000);
+set(gca,'YTick',0:5:1000); grid on;
 box off;
 
 hold off
 
-% Export
-addpath('../../export_fig')
-export_fig(['./fig/Fig_model_comparison_BIC_full.png'],'-nocrop','-r200')
+% % Export
+% addpath('../../export_fig')
+% export_fig(['./fig/Fig_model_comparison_BIC_full.png'],'-nocrop','-r200')

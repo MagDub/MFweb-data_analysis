@@ -6,9 +6,9 @@ function fit_mod5(ID, data_fol, sim_dir, settings, data, gameIDs)
     settings.desc = ['mod5']; 
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    param_bounds_gamma = [10^-8,10]; 
-    param_bounds_tau = [10^-8,7]; 
-    param_bounds_Q0 = [1,10]; 
+    param_bounds_gamma = [10^-8,2]; 
+    param_bounds_tau = [10^-8,2]; 
+    param_bounds_Q0 = [1,6]; 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     settings.funs.decfun            = @softmax;
@@ -36,7 +36,7 @@ function fit_mod5(ID, data_fol, sim_dir, settings, data, gameIDs)
     mEexitflag = nan(8,1);
 
     tic
-    for iter=1:8
+    parfor iter=1:8
         xo_fmincon = (b-a).*rand(1,1) + a; % random value in this interval     
         [mEparams, mEMAP, mEexitflag] = fmincon(modelfun,xo_fmincon,[],[],[],[],...
             settings.params.lb,settings.params.ub,[],options);

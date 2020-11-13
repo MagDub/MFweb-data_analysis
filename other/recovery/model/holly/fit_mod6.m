@@ -6,8 +6,8 @@ function fit_mod6(ID, data_fol, sim_dir, settings, data, gameIDs)
     settings.desc = ['mod6']; 
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    param_bounds_gamma = [10^-8,10]; 
-    param_bounds_tau = [10^-8,7]; 
+    param_bounds_gamma = [10^-8,2]; 
+    param_bounds_tau = [0.25,1.75];  
     param_bounds_Q0 = [1,10]; 
     param_bounds_xi = [10^-8,0.5];
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

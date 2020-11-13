@@ -13,6 +13,21 @@ mean_all = nanmean(BIC_all,1);
 n_part = sum(~isnan(BIC_all));
 stderror_all = nanstd(BIC_all,1)./n_part;
 
+% Legend
+legend_all{1} = 'thompson';
+legend_all{2} = 'thompson + \epsilon';
+legend_all{3} = 'thompson + \eta';
+legend_all{4} = 'thompson + \epsilon + \eta';
+
+legend_all{5} = 'UCB';
+legend_all{6} = 'UCB + \epsilon';
+legend_all{7} = 'UCB + \eta';
+legend_all{8} = 'UCB + \epsilon + \eta';
+
+legend_all{9} = 'hybrid';
+legend_all{10} = 'hybrid + \epsilon';
+legend_all{11} = 'hybrid + \eta';
+legend_all{12} = 'hybrid + \epsilon + \eta';
 
 % Figure
 figure('Color','w');

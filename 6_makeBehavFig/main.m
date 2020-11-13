@@ -12,5 +12,3 @@ plot_medium_value;
 plot_low_value;
 plot_novel_value;
 
-plot_score;
-
