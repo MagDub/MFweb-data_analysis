@@ -1,21 +1,16 @@
-function fit_mod9(ID, data_fol, sim_dir, settings, data, gameIDs)
+function fit_mod9(ID, data_fol, sim_dir, settings, data, gameIDs, param_bounds)
 
     results_dir = strcat(sim_dir, 'results/');
     
     % settings
     settings.desc = ['mod9']; 
 
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    param_bounds_sgm0 = [0.01,6];
-    param_bounds_Q0 = [1,10]; 
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
     settings.funs.decfun            = @softmax;
     settings.funs.valuefun          = @mvnorm_Thompson_new; 
     settings.funs.learningfun       = @kalman_filt;
     settings.params.param_names     = {'sgm0', '', 'Q0'}; 
-    settings.params.lb              = [param_bounds_sgm0(1) param_bounds_sgm0(1)  param_bounds_Q0(1)];    
-    settings.params.ub              = [param_bounds_sgm0(2) param_bounds_sgm0(2)  param_bounds_Q0(2)];   
+    settings.params.lb              = [param_bounds.sgm0(1) param_bounds.sgm0(1)  param_bounds.Q0(1)];    
+    settings.params.ub              = [param_bounds.sgm0(2) param_bounds.sgm0(2)  param_bounds.Q0(2)];   
     
     % prior
     load(strcat(data_fol,'/priors/mod9/empirical_prior.mat'),'prior') 

@@ -6,30 +6,33 @@ function HOLLY_main_mod8_sim_normal(ID)
     %%%% Sim mod8 %%%%
 
     % variables
-    model = 'mod8_normal';
+    model = 'mod8_normal_Q0_3_7_gamma_0_4_tau_25_200_sgm0_1_300_genQ0fixed_5_Q0std001';
     n_sim = 100;
 
     % simulation dir
     sim_mod_fol = strcat(sim_fol,model,'/n_sim_',num2str(n_sim), '/');
 
-    % simulate model
+    % simulated model
     data=load(strcat(sim_mod_fol,'results/sim_data_',num2str(ID),'.mat'),'data');
     gameIDs=load(strcat(sim_mod_fol,'results/sim_data_',num2str(ID),'.mat'),'gameIDs');
     settings=load(strcat(sim_mod_fol,'results/sim_',num2str(ID),'.mat'),'settings');
+    
+    % param bounds
+    load(strcat(sim_mod_fol,'param_bounds.mat'));
 
     %%% fit WITH EACH model
-    fit_mod1(ID, data_fol, sim_mod_fol, settings.settings, data.data, gameIDs.gameIDs);
-    fit_mod2(ID, data_fol, sim_mod_fol, settings.settings, data.data, gameIDs.gameIDs);
-    fit_mod3(ID, data_fol, sim_mod_fol, settings.settings, data.data, gameIDs.gameIDs);
-    fit_mod4(ID, data_fol, sim_mod_fol, settings.settings, data.data, gameIDs.gameIDs);
-    fit_mod5(ID, data_fol, sim_mod_fol, settings.settings, data.data, gameIDs.gameIDs);
-    fit_mod6(ID, data_fol, sim_mod_fol, settings.settings, data.data, gameIDs.gameIDs);
-    fit_mod7(ID, data_fol, sim_mod_fol, settings.settings, data.data, gameIDs.gameIDs);
-    fit_mod8(ID, data_fol, sim_mod_fol, settings.settings, data.data, gameIDs.gameIDs);
-    fit_mod9(ID, data_fol, sim_mod_fol, settings.settings, data.data, gameIDs.gameIDs);
-    fit_mod10(ID, data_fol, sim_mod_fol, settings.settings, data.data, gameIDs.gameIDs);
-    fit_mod11(ID, data_fol, sim_mod_fol, settings.settings, data.data, gameIDs.gameIDs);
-    fit_mod12(ID, data_fol, sim_mod_fol, settings.settings, data.data, gameIDs.gameIDs);
+    %fit_mod1(ID, data_fol, sim_mod_fol, settings.settings, data.data, gameIDs.gameIDs);
+    %fit_mod2(ID, data_fol, sim_mod_fol, settings.settings, data.data, gameIDs.gameIDs);
+    %fit_mod3(ID, data_fol, sim_mod_fol, settings.settings, data.data, gameIDs.gameIDs);
+    %fit_mod4(ID, data_fol, sim_mod_fol, settings.settings, data.data, gameIDs.gameIDs);
+    %fit_mod5(ID, data_fol, sim_mod_fol, settings.settings, data.data, gameIDs.gameIDs);
+    %fit_mod6(ID, data_fol, sim_mod_fol, settings.settings, data.data, gameIDs.gameIDs);
+    %fit_mod7(ID, data_fol, sim_mod_fol, settings.settings, data.data, gameIDs.gameIDs);
+    fit_mod8(ID, data_fol, sim_mod_fol, settings.settings, data.data, gameIDs.gameIDs, param_bounds);
+    fit_mod9(ID, data_fol, sim_mod_fol, settings.settings, data.data, gameIDs.gameIDs, param_bounds);
+    fit_mod10(ID, data_fol, sim_mod_fol, settings.settings, data.data, gameIDs.gameIDs, param_bounds);
+    fit_mod11(ID, data_fol, sim_mod_fol, settings.settings, data.data, gameIDs.gameIDs, param_bounds);
+    fit_mod12(ID, data_fol, sim_mod_fol, settings.settings, data.data, gameIDs.gameIDs, param_bounds);
     
     for n_mod=1:12
     

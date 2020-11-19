@@ -6,8 +6,8 @@ function fit_mod8(ID, data_fol, sim_dir, settings, data, gameIDs)
     settings.desc = ['mod8']; 
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    param_bounds_gamma = [10^-8,2]; 
-    param_bounds_tau = [10^-8,2]; 
+    param_bounds_gamma = [0,4]; 
+    param_bounds_tau = [10^-8,2];
     param_bounds_Q0 = [1,6]; 
     param_bounds_eta = [0,5];
     param_bounds_xi = [0,0.5];

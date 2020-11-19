@@ -14,16 +14,14 @@ param_std = nanstd(model_parameters(:,2:end));
 param_bounds_gamma = [10^-8,2]; 
 param_bounds_tau = [0.25,1.75];  
 param_bounds_Q0 = [1,10]; 
-param_bounds_eta = [0,5];
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %
-n_param = 9;
+n_param = size(param_mean,2);
 
 param_bounds.Q0 = param_bounds_Q0; 
 param_bounds.tau = param_bounds_tau; 
 param_bounds.gamma = param_bounds_gamma; 
-param_bounds.eta = param_bounds_eta; 
 
 inp_params = prep_mod5_normal(param_bounds, saving_dir, n_sim, param_mean, param_std);
 

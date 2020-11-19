@@ -1,24 +1,16 @@
-function fit_mod12(ID, data_fol, sim_dir, settings, data, gameIDs)
+function fit_mod12(ID, data_fol, sim_dir, settings, data, gameIDs, param_bounds)
     
     results_dir = strcat(sim_dir, 'results/');
 
     % settings
     settings.desc = ['mod12']; 
     
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    param_bounds_sgm0 = [0.01,6];
-    param_bounds_Q0 = [1,10]; 
-    param_bounds_eta = [0,5];
-    param_bounds_xi = [10^-8,0.5];
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    
-    % settings
     settings.funs.decfun            = @softmax;
     settings.funs.valuefun          = @mvnorm_Thompson_noveltybonus_new; 
     settings.funs.learningfun       = @kalman_filt;
     settings.params.param_names     = {'sgm0', '', 'Q0', 'eta', '', 'xi', ''}; 
-    settings.params.lb              = [param_bounds_sgm0(1) param_bounds_sgm0(1)  param_bounds_Q0(1)  param_bounds_eta(1) param_bounds_eta(1) param_bounds_xi(1) param_bounds_xi(1)];    
-    settings.params.ub              = [param_bounds_sgm0(2) param_bounds_sgm0(2)  param_bounds_Q0(2)  param_bounds_eta(2) param_bounds_eta(2) param_bounds_xi(2) param_bounds_xi(2)];    
+    settings.params.lb              = [param_bounds.sgm0(1) param_bounds.sgm0(1)  param_bounds.Q0(1)  param_bounds.eta(1) param_bounds.eta(1) param_bounds.xi(1) param_bounds.xi(1)];    
+    settings.params.ub              = [param_bounds.sgm0(2) param_bounds.sgm0(2)  param_bounds.Q0(2)  param_bounds.eta(2) param_bounds.eta(2) param_bounds.xi(2) param_bounds.xi(2)];    
 
     % prior
     load(strcat(data_fol,'/priors/mod12/empirical_prior.mat'),'prior')

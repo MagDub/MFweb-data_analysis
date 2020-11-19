@@ -3,24 +3,39 @@
 data_fol = '../../../../data/';
 sim_fol=strcat(data_fol, 'sim_model_recov/');
 n_sim = 100;
-n_models = 12;
+
+model_mat = [9,10,11,12,8];
+n_models = size(model_mat,2);
 
 perc = nan(n_models,n_models);
 mean_BIC = nan(n_models,n_models);
 std_BIC = nan(n_models,n_models);
 
-occur = nan(1,n_models);
 
-for mod=1:n_models
 
-    file_BIC = strcat(sim_fol,'mod',num2str(mod),'_normal/n_sim_',num2str(n_sim),'/results/all_BIC_mat.mat');
+for mod_n=1:n_models
+    
+    mod = model_mat(mod_n);
+    
+    if mod == 8
+       file_BIC = strcat(sim_fol,'mod',num2str(mod),'_normal_Q0_3_7_gamma_0_4_tau_25_200_sgm0_1_300/n_sim_',num2str(n_sim),'/results/all_BIC_mat.mat');
+       file_BIC = strcat(sim_fol,'mod',num2str(mod),'_normal_Q0_1_6_gamma_0_4_tau_25_200_sgm0_1_300/n_sim_',num2str(n_sim),'/results/all_BIC_mat.mat');
+       file_BIC = strcat(sim_fol,'mod',num2str(mod),'_normal_Q0_3_7_gamma_0_4_tau_25_200_sgm0_1_300_genQ0fixed_5/n_sim_',num2str(n_sim),'/results/all_BIC_mat.mat');
+    else
+        file_BIC = strcat(sim_fol,'mod',num2str(mod),'_normal/n_sim_',num2str(n_sim),'/results/all_BIC_mat.mat');
+    end
     
     if exist(file_BIC)
+
+        occur = nan(1,n_models);
        
         tmp = load(file_BIC);
         
+        % keep only important models
+        BIC_mat = tmp.all_BIC_mat(:,model_mat);
+        
         % find best models (lowest BIC) for each sim
-        [min_val, ind_min_val] = min(tmp.all_BIC_mat');
+        [min_val, ind_min_val] = min(BIC_mat');
         min_val = min_val';
         ind_min_val = ind_min_val';
         
@@ -30,12 +45,7 @@ for mod=1:n_models
         occur(:,[uv]) = n; 
         
         % compute percentage
-        perc(mod,:) = occur/n_sim;
-       
-        mean_BIC(mod,:) = mean(tmp.all_BIC_mat,1);
-        
-        [~, ind_min_val_mean] = nanmin(mean_BIC');
-        ind_min_val_mean = ind_min_val_mean';
+        perc(mod_n,:) = occur/n_sim;
         
     end
 
@@ -49,31 +59,22 @@ set(gcf,'Unit','centimeters','OuterPosition',[0 0 15 15]);
 set(gca,'FontName','Arial','FontSize',10)
 hold on;
 
-legend_all{1}  = 'hybrid';
-legend_all{2} = 'hybrid + \epsilon';
-legend_all{3} = 'hybrid + \eta';
-legend_all{4} = 'hybrid + \epsilon + \eta';
-
-legend_all{5}  = 'UCB';
-legend_all{6}  = 'UCB + \epsilon';
-legend_all{7}  = 'UCB + \eta';
-legend_all{8}  = 'UCB + \epsilon + \eta';
-
-legend_all{9}  = 'thompson';
-legend_all{10}  = 'thompson + \epsilon';
-legend_all{11}  = 'thompson + \eta';
-legend_all{12}  = 'thompson + \epsilon + \eta';
+legend_all{1}  = 'thompson';
+legend_all{2}  = 'thompson + \epsilon';
+legend_all{3}  = 'thompson + \eta';
+legend_all{4}  = 'thompson + \epsilon + \eta';
+legend_all{5}  = 'UCB + \epsilon + \eta';
 
 imagesc(perc);
 
 n_mod = size(legend_all,2);
 
 yticks([1:n_mod])
-yticklabels({legend_all{1}, legend_all{2}, legend_all{3}, legend_all{4}, legend_all{5}, legend_all{6}, legend_all{7}, legend_all{8}, legend_all{9}, legend_all{10}, legend_all{11}, legend_all{12}})
+yticklabels({legend_all{1}, legend_all{2}, legend_all{3}, legend_all{4}, legend_all{5}})
 ylim([0.5 n_mod+0.5])
 
 xticks([1:n_mod])
-xticklabels({legend_all{1}, legend_all{2}, legend_all{3}, legend_all{4}, legend_all{5}, legend_all{6}, legend_all{7}, legend_all{8}, legend_all{9}, legend_all{10}, legend_all{11}, legend_all{12}})
+xticklabels({legend_all{1}, legend_all{2}, legend_all{3}, legend_all{4}, legend_all{5}})
 xtickangle(45)
 xlim([0.5 n_mod+0.5])
 
@@ -115,7 +116,11 @@ end
 hStrings = text(x(:), y(:), textStrings(:),'HorizontalAlignment', 'center');
 midValue = mean(get(gca, 'CLim'));  % Get the middle value of the color range
 
-t=title('Model recovery (N_{sim}=100)','FontSize', 18, 'FontName','Arial', 'Fontweight','normal');
+t=title('BIC model recovery (N_{sim}=100)','FontSize', 18, 'FontName','Arial', 'Fontweight','normal');
 
 ylabel('Simulated model','FontName','Arial','Fontweight','bold','FontSize',12);
 xlabel('Recovered model','FontName','Arial','Fontweight','bold','FontSize',12);
+
+% % Export
+% addpath('../../../../export_fig')
+% export_fig(['./fig/Fig_model_recov_BIC.tif'],'-nocrop','-r200')

@@ -3,10 +3,10 @@ addpath('../../../8_fitmodel/holly/')
 data_fol = '../../../../data/';
 sim_fol=strcat(data_fol, 'sim_model_recov/');
 
-%%%% Sim mod8 %%%%
+%%%% Sim mod7 %%%%
 
 % variables
-model = 'mod8_normal_Q0_3_7_gamma_0_4_tau_25_200_sgm0_1_300_genQ0fixed_5_Q0std001';
+model = 'mod7_normal';
 n_sim = 100;
 
 % simulation dir
@@ -22,7 +22,7 @@ for ID = 1:n_sim
     para_vals = inp_params(ID,:);
 
     % simulate model
-    [settings, data, gameIDs] = sim_mod8(ID, para_vals, param_bounds, sim_mod_fol);
+    [settings, data, gameIDs] = sim_mod7(ID, para_vals, param_bounds, sim_mod_fol);
 
 end
 

@@ -18,7 +18,7 @@ param_bounds_eta = [0,5];
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %
-n_param = 9;
+n_param = size(param_mean,2);
 
 param_bounds.Q0 = param_bounds_Q0; 
 param_bounds.tau = param_bounds_tau; 

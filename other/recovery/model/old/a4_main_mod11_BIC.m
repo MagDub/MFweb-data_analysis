@@ -3,10 +3,10 @@ addpath('../../../8_fitmodel/holly/')
 data_fol = '../../../../data/';
 sim_fol=strcat(data_fol, 'sim_model_recov/');
 
-%%%% Sim mod 8 %%%%
+%%%% Sim mod 12 %%%%
 
 % variables
-model = 'mod8_normal';
+model = 'mod11_normal';
 n_sim = 100;
 n_models = 12;
 
@@ -23,7 +23,7 @@ for n_=1:n_sim
     
         tmp = load(res_file);
                 
-        for n_mod = 5:size(tmp.all_mod_fit,2) % SHOULD BE 1
+        for n_mod = 1:size(tmp.all_mod_fit,2)
         
             all_BIC_mat(n_, n_mod) = 2*tmp.all_mod_fit(n_mod).mEmle + log(400).*size(tmp.all_mod_fit(n_mod).mEparams,2);
         
