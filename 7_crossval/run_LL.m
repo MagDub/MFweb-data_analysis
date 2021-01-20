@@ -4,8 +4,8 @@ close all;
 n_model = 0;
 mod = [];
 
-load('../usermat_completed_task.mat')
-participant_list=usermat_completed_task;
+load('../../data_analysis/usermat_completed.mat')
+participant_list=usermat_completed;
 
 % Models
 
@@ -59,7 +59,7 @@ mod.legend{n_model} = 'UCB + \eta';
 %%%%
 % 8
 n_model = n_model + 1;
-mod.file_name{n_model} = '../../data/modelfit/mod8/results/res_';
+mod.file_name{n_model} = '../../data/modelfit/mod8_newB/results/res_';
 mod.model_type{n_model} = 'UCB';
 mod.legend{n_model} = 'UCB + \epsilon + \eta'; 
  
@@ -97,7 +97,7 @@ mle_mat = [];
 mean_all_pp=nan(length(participant_list),n_model);
 number_par_all=zeros(1,n_model);
 
-mle_mat_all = nan(size(usermat_completed_task,2),n_model);
+mle_mat_all = nan(size(usermat_completed,2),n_model);
 
 for model = 1:n_model
     
@@ -122,11 +122,11 @@ for model = 1:n_model
     mod.participant_list{model} = tmp_part;
     mod.number_par{model} = size(tmp_part,2);
     
-    mle_mat = nan(size(usermat_completed_task,2),1);
+    mle_mat = nan(size(usermat_completed,2),1);
         
-    for ID_ind = 1:size(usermat_completed_task,2)%n_part_for_model
+    for ID_ind = 1:size(usermat_completed,2)%n_part_for_model
                 
-        ID = usermat_completed_task(ID_ind);
+        ID = usermat_completed(ID_ind);
         f_name = strcat(mod.file_name{model}, mod.model_type{model},'_',int2str(ID),'_results.mat');
         
         if exist(f_name)==2

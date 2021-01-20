@@ -6,10 +6,12 @@ sim_fol=strcat(data_fol, 'sim_model_recov/');
 n_sim = 100;
 n_models = 12;
 
-for sim_model = 8 %5:12
+for sim_model = 4
 
     % variables
-    model = strcat('mod',num2str(sim_model),'_normal_Q0_3_7_gamma_0_4_tau_25_200_sgm0_1_300_genQ0fixed_5');
+    % model = strcat('mod',num2str(sim_model),'_normal');
+    model = strcat('mod',num2str(sim_model),'_normal_gamma_0_0.5_tau_20_70_sgm0_1_300');
+    % model = strcat('mod',num2str(sim_model),'_normal_Q0fixed_gamma_0_0.5_tau_20_70_sgm0_1_300_Q055_sgm014_newB');
 
     % simulation dir
     sim_mod_fol = strcat(sim_fol,model,'/n_sim_',num2str(n_sim), '/');

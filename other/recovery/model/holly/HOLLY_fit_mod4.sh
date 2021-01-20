@@ -3,7 +3,7 @@
 #$ -N mod_rec_4
 #$ -e /data/mdubois/logs/
 #$ -o /data/mdubois/logs/
-#$ -t 1-1000
+#$ -t 1-100
 #$ -S /bin/sh
 
 # where to find basic custom functions

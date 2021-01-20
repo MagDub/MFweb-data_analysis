@@ -26,12 +26,13 @@ for i=1:length(usermat_completed)
         user_log_desc = {'Block', 'Blocktrial', 'Horizon', 'Item', 'Sample', ...
                             'TreeA', 'TreeB', 'TreeC', 'TreeD', ...
                                 'Size', 'RT', 'PressedKey', 'UnusedTree',...
-                                    'TreeColGroup', 'AppleCol1', 'AppleCol2', 'AppleCol3', ...
+                                    'TreeColGroup', 'TreeLeft', 'TreeMiddle', 'TreeRight', ...
                                         'BlockDuration', 'InfoRequestNo'};
 
         ItemMatAllBlocks = [];
         InitialSamplesSizeMatAllBlocks = [];
         InitialSamplesTreeMatAllBlocks = [];
+        TreePositionsMatAllBlocks = [];
         UnusedTreeMatAllBlocks = [];
 
         for block_i = 1:4
@@ -60,14 +61,16 @@ for i=1:length(usermat_completed)
             pressedMat = make_mat(n_trials, T.AllKeyPressed, 6);    
             InitialSamplesSizeMat = make_mat(n_trials, T.InitialSamplesSize, 5);
             InitialSamplesTreeMat = make_mat(n_trials, T.InitialSamplesTree, 5);
+            TreePositionsMat = make_mat(n_trials, T.TreePositions, 4); 
             ChosenTreeMat = make_mat(n_trials, T.ChosenTree, 6); 
             ChosenAppleSizeMat = make_mat(n_trials, T.ChosenAppleSize, 6); 
 
-            for i = 1:100
-                ItemMatAllBlocks(end+1) = ItemMat(i);
-                UnusedTreeMatAllBlocks(end+1) = UnusedTreeMat(i);
-                InitialSamplesSizeMatAllBlocks(end+1,:) = InitialSamplesSizeMat(i,:);
-                InitialSamplesTreeMatAllBlocks(end+1,:) = InitialSamplesTreeMat(i,:);
+            for i_ = 1:100
+                ItemMatAllBlocks(end+1) = ItemMat(i_);
+                UnusedTreeMatAllBlocks(end+1) = UnusedTreeMat(i_);
+                InitialSamplesSizeMatAllBlocks(end+1,:) = InitialSamplesSizeMat(i_,:);
+                InitialSamplesTreeMatAllBlocks(end+1,:) = InitialSamplesTreeMat(i_,:);
+                TreePositionsMatAllBlocks(end+1,:) = TreePositionsMat(i_,:);
             end
 
             % reaction times
@@ -109,9 +112,19 @@ for i=1:length(usermat_completed)
                     rt = nan;
                     pressed = nan;
 
-                    % TODO
-                    apple_col = nan(1,3);
+                    % Color position
+                    tmp_treePos = TreePositionsMat(trial,:);
+                    tmp_treeCol = nan(1,3);
+                    
+                    for h_ = 1:4
+                        if tmp_treePos(h_)~=0
+                            tmp_treeCol(tmp_treePos(h_))=h_;
+                        end
+                    end
+                    
+                    apple_col = tmp_treeCol;
 
+                    % user_log
                     user_log(end+1, :) = [T.BlockNo, TrialMat(trial), HorizonMat(trial)+5, ItemMat(trial), sample,...
                                           trees, init_samp, rt, pressed, ...
                                           UnusedTreeMat(trial), TreeColoursMat(trial), ...
@@ -147,6 +160,13 @@ for i=1:length(usermat_completed)
         end
     end
 
+    if size(unique(user_log(:,18)),1)~=4
+        disp('compute task length manually')
+        sum_dur_4blocks_s(i) = nan;
+    else
+        sum_dur_4blocks_s(i) = sum(unique(user_log(:,18)));
+    end
+    
     user = [];
     user.log = user_log;
     user.log_desc = user_log_desc;
@@ -180,5 +200,5 @@ for i=1:length(usermat_completed)
           
 end
 
-
+save('../../data/data_for_figs/sum_dur_4blocks_s.mat')
 

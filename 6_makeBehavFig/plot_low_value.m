@@ -21,8 +21,8 @@ to_del = [];
 to_del(end+1) = find(usermat_completed==4);
 to_del(end+1) = find(usermat_completed==34);
 to_del(end+1) = find(usermat_completed==39);
-pickedlow_SH(to_del,:) = nan;
-pickedlow_LH(to_del,:) = nan;
+pickedD_SH(to_del,:) = nan;
+pickedD_LH(to_del,:) = nan;
 
 % Figure
 figure('Color','w');

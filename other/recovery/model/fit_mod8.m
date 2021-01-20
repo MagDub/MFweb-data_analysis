@@ -1,24 +1,16 @@
-function fit_mod8(ID, data_fol, sim_dir, settings, data, gameIDs)
+function fit_mod8(ID, data_fol, sim_dir, settings, data, gameIDs, param_bounds)
 
     results_dir = strcat(sim_dir, 'results/');
     
     % settings
     settings.desc = ['mod8']; 
 
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    param_bounds_gamma = [0,4]; 
-    param_bounds_tau = [10^-8,2];
-    param_bounds_Q0 = [1,6]; 
-    param_bounds_eta = [0,5];
-    param_bounds_xi = [0,0.5];
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
     settings.funs.decfun            = @softmax;
     settings.funs.valuefun          = @UCB_noveltybonus; 
     settings.funs.learningfun       = @kalman_filt;
     settings.params.param_names     = {'Q0' 'gamma'  ''  'tau'  ''  'xi'  ''  'eta' ''};   
-    settings.params.lb              = [param_bounds_Q0(1) param_bounds_gamma(1) param_bounds_gamma(1) param_bounds_tau(1) param_bounds_tau(1) param_bounds_xi(1) param_bounds_xi(1) param_bounds_eta(1) param_bounds_eta(1)];    % lower bound
-    settings.params.ub              = [param_bounds_Q0(2) param_bounds_gamma(2) param_bounds_gamma(2) param_bounds_tau(2) param_bounds_tau(2) param_bounds_xi(2) param_bounds_xi(2) param_bounds_eta(2) param_bounds_eta(2)];    % upper bound
+    settings.params.lb              = [param_bounds.Q0(1) param_bounds.gamma(1) param_bounds.gamma(1) param_bounds.tau(1) param_bounds.tau(1) param_bounds.xi(1) param_bounds.xi(1) param_bounds.eta(1) param_bounds.eta(1)];    % lower bound
+    settings.params.ub              = [param_bounds.Q0(2) param_bounds.gamma(2) param_bounds.gamma(2) param_bounds.tau(2) param_bounds.tau(2) param_bounds.xi(2) param_bounds.xi(2) param_bounds.eta(2) param_bounds.eta(2)];    % upper bound
 
     % prior
     load(strcat(data_fol,'/priors/mod8_eta8/empirical_prior.mat'),'prior')
@@ -38,7 +30,7 @@ function fit_mod8(ID, data_fol, sim_dir, settings, data, gameIDs)
     mEexitflag = nan(8,1);
 
     tic
-    parfor iter=1:8
+    parfor iter=1:2 %8
         xo_fmincon = (b-a).*rand(1,1) + a; % random value in this interval     
         [mEparams, mEMAP, mEexitflag] = fmincon(modelfun,xo_fmincon,[],[],[],[],...
             settings.params.lb,settings.params.ub,[],options);

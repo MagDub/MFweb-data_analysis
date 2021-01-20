@@ -62,12 +62,18 @@ EV_LH_mat(to_del,:) = [];
 % % Remove ID
 % pickedC_SH(to_del,:) = [];
 % pickedC_LH(to_del,:) = [];
-% 
+ 
 % % Model selection
 % load('../../7_crossval/mean_all_pp.mat') % 4: thomp+xi+nv vs 11:hybrid+nov
 % mod_1st = mean_all_pp(:,4);
 % mod_4th = mean_all_pp(:,11);
-% 
+
+load('../../../data/data_for_figs/mle_mat_all.mat');
+BIC_all = 2*mle_mat_all + log(400).*[3, 5, 5, 7,    4, 6, 6, 8,     8, 10, 10, 12]; %mle is NLL
+BIC_all(to_del,:) = [];
+mod_thomp=BIC_all(:,1);
+mod_thomp_heu=BIC_all(:,4);
+ 
 % % Remove ID
 % mod_1st(to_del,:) = [];
 % mod_4th(to_del,:) = [];
@@ -98,7 +104,7 @@ EV_LH_mat(to_del,:) = [];
 % sgm0_LH(to_del,:) = [];
 
 % Effect size: 0.2 = small; 0.5 = medium; 0.8 = large
-EF_EV = compute_ef_paired(EV_SH_mat, EV_LH_mat);
+%EF_EV = compute_ef_paired(EV_SH_mat, EV_LH_mat);
 % EF_IG = compute_ef_paired(IS_SH_mat, IS_LH_mat);
 % EF_score_first = compute_ef_paired(score_SH, first_LH);
 % EF_score = compute_ef_paired(score_SH, score_LH);
@@ -108,10 +114,10 @@ EF_EV = compute_ef_paired(EV_SH_mat, EV_LH_mat);
 % EF_epsilon = compute_ef_paired(xi_SH, xi_LH);
 % EF_novbonus = compute_ef_paired(eta_SH, eta_LH);
 % EF_sgm0 = compute_ef_paired(sgm0_SH, sgm0_LH);
-% EF_mod = compute_ef_paired(mod_1st, mod_4th);
+EF_mod = compute_ef_paired(mod_thomp_heu, mod_thomp);
 
 % Compute sample size for at least 95% power - t-tests
-[n_sample_EV, pow_EV] = compute_sample_size_paired(EV_SH_mat-EV_LH_mat);
+%[n_sample_EV, pow_EV] = compute_sample_size_paired(EV_SH_mat-EV_LH_mat);
 % [n_sample_IG, pow_IG] = compute_sample_size_paired(IS_SH_mat-IS_LH_mat);
 % [n_sample_score_first, pow_score_first] = compute_sample_size_paired(score_SH-first_LH);
 % [n_sample_score, pow_score] = compute_sample_size_paired(score_SH-score_LH);
@@ -121,7 +127,7 @@ EF_EV = compute_ef_paired(EV_SH_mat, EV_LH_mat);
 % [n_sample_epsilon, pow_epsilon] = compute_sample_size_paired(xi_SH-xi_LH);
 % [n_sample_novbonus, pow_novbonus] = compute_sample_size_paired(eta_SH-eta_LH);
 % [n_sample_sgm0, pow_sgm0] = compute_sample_size_paired(sgm0_SH-sgm0_LH);
-% [n_sample_mod, pow_mod] = compute_sample_size_paired(mod_1st-mod_4th);
+[n_sample_mod, pow_mod] = compute_sample_size_paired(mod_thomp_heu-mod_thomp);
 
 
 % % Do subjects explore more in the long horizon?

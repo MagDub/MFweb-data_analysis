@@ -6,7 +6,7 @@ function HOLLY_main_mod8_sim_normal(ID)
     %%%% Sim mod8 %%%%
 
     % variables
-    model = 'mod8_normal_Q0_3_7_gamma_0_4_tau_25_200_sgm0_1_300_genQ0fixed_5_Q0std001';
+    model = 'mod8_normal_Q0_1_6_gamma_0_4_tau_5_300_sgm0_1_300_highergamma';
     n_sim = 100;
 
     % simulation dir

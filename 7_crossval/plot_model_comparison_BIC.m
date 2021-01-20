@@ -7,7 +7,7 @@ mle_mat_all(4,:) = nan(1,n_model);
 mle_mat_all(32,:) = nan(1,n_model);
 mle_mat_all(36,:) = nan(1,n_model);
 
-BIC_all = 2*mle_mat_all + log(400).*[3, 5, 5, 7,    5, 7, 7, 9,     8, 10, 10, 12]; %mle is NLL
+BIC_all = 2*mle_mat_all + log(400).*[3, 5, 5, 7,    4, 6, 6, 8,     8, 10, 10, 12]; %mle is NLL
 
 mean_all = nanmean(BIC_all,1);
 n_part = sum(~isnan(BIC_all));

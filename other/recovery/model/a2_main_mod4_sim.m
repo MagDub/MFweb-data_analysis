@@ -6,8 +6,8 @@ sim_fol=strcat(data_fol, 'sim_model_recov/');
 %%%% Sim mod4 %%%%
 
 % variables
-model = 'mod4';
-n_sim = 1000;
+model = 'mod4_normal_gamma_0_0.5_tau_20_70_sgm0_1_300';
+n_sim = 100;
 
 % simulation dir
 sim_mod_fol = strcat(sim_fol,model,'/n_sim_',num2str(n_sim), '/');

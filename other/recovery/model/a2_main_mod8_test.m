@@ -6,25 +6,26 @@ sim_fol=strcat(data_fol, 'sim_model_recov/');
 %%%% Sim mod8 %%%%
 
 % variables
-model = 'mod8';
+model = 'test_mod8';
 n_sim = 1;
 
 % simulation dir
-sim_mod_fol = strcat(sim_fol,model,'_normal/n_sim_',num2str(n_sim), '/');
+sim_mod_fol = strcat(sim_fol,model,'/n_sim_',num2str(n_sim), '/');
 
 % param
-v_gamma_1 = 0.5;
-v_gamma_2 = 0.5;
-v_Q0 = 2.5;
-v_tau_1 = 0.5;
-v_tau_2 = 0.5;
-v_xi_1 = 0.4;
-v_xi_2 = 0.5;
-v_eta_1 = 4;
-v_eta_2 = 5;
+v_gamma_1 = 10^-7;
+v_gamma_2 = 10^-8;
+v_tau_1 = 0.4;
+v_tau_2 = 0.6;
+v_xi_1 = 0;
+v_xi_2 = 0.2;
+v_eta_1 = 1;
+v_eta_2 = 2;
 
 
-inp_params = [v_Q0, v_gamma_1, v_gamma_2, v_tau_1, v_tau_2, v_xi_1, v_xi_2, v_eta_1, v_eta_2];
+% inp_params = [v_Q0, v_gamma_1, v_gamma_2, v_tau_1, v_tau_2, v_xi_1, v_xi_2, v_eta_1, v_eta_2];
+inp_params = [v_gamma_1, v_gamma_2, v_tau_1, v_tau_2, v_xi_1, v_xi_2, v_eta_1, v_eta_2];
+
 
 % inp_params = [v_sgm0_1, v_sgm0_2, v_Q0, v_eta_1, v_eta_2, v_xi_1, v_xi_2];
 
@@ -34,9 +35,9 @@ inp_params = [v_Q0, v_gamma_1, v_gamma_2, v_tau_1, v_tau_2, v_xi_1, v_xi_2, v_et
 
 % param bounds
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-param_bounds_gamma = [10^-8,3]; % changed from 10 to 3
-param_bounds_tau = [10^-8,2]; % changed from 7 to 2
-param_bounds_Q0 = [1,6]; % changed from 10 to 8
+param_bounds_gamma = [0,0.5]; 
+param_bounds_tau = [0.2,0.7]; 
+param_bounds_Q0 = [1,8]; 
 param_bounds_eta = [0,5];
 param_bounds_xi = [0,0.5];
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -54,7 +55,7 @@ ID = 1;
 para_vals = inp_params(ID,:);
 
 % simulate model
-[settings, data, gameIDs] = sim_mod8(ID, para_vals, param_bounds, sim_mod_fol);
+[settings, data, gameIDs] = sim_mod8_Q0fixed(ID, para_vals, param_bounds, sim_mod_fol);
 
 % load data
 data=load(strcat(sim_mod_fol,'results/sim_data_',num2str(ID),'.mat'),'data');
@@ -62,10 +63,12 @@ gameIDs=load(strcat(sim_mod_fol,'results/sim_data_',num2str(ID),'.mat'),'gameIDs
 settings=load(strcat(sim_mod_fol,'results/sim_',num2str(ID),'.mat'),'settings');
 
 % fit with models     
-fit_mod5(ID, data_fol, sim_mod_fol, settings.settings, data.data, gameIDs.gameIDs);
-fit_mod6(ID, data_fol, sim_mod_fol, settings.settings, data.data, gameIDs.gameIDs);
-fit_mod7(ID, data_fol, sim_mod_fol, settings.settings, data.data, gameIDs.gameIDs);
-fit_mod8(ID, data_fol, sim_mod_fol, settings.settings, data.data, gameIDs.gameIDs);
+% fit_mod5(ID, data_fol, sim_mod_fol, settings.settings, data.data, gameIDs.gameIDs);
+% fit_mod6(ID, data_fol, sim_mod_fol, settings.settings, data.data, gameIDs.gameIDs);
+% fit_mod7(ID, data_fol, sim_mod_fol, settings.settings, data.data, gameIDs.gameIDs);
+% fit_mod8(ID, data_fol, sim_mod_fol, settings.settings, data.data, gameIDs.gameIDs, param_bounds);
+fit_mod8_Q0fixed(ID, data_fol, sim_mod_fol, settings.settings, data.data, gameIDs.gameIDs, param_bounds);
+
 
 for n_mod=1:12
 

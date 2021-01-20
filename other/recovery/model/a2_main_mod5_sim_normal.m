@@ -22,7 +22,7 @@ for ID = 1:n_sim
     para_vals = inp_params(ID,:);
 
     % simulate model
-    [settings, data, gameIDs] = sim_mod5(ID, para_vals, param_bounds, sim_mod_fol);
+    [settings, data, gameIDs] = sim_mod5_Q0fixed(ID, para_vals, param_bounds, sim_mod_fol);
 
 end
 

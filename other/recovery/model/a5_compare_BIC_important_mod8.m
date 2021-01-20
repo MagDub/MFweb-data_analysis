@@ -4,7 +4,7 @@ data_fol = '../../../../data/';
 sim_fol=strcat(data_fol, 'sim_model_recov/');
 n_sim = 100;
 
-model_mat = [9,10,11,12,8];
+model_mat = [9,5,10,6,11,7,12,8];
 n_models = size(model_mat,2);
 
 perc = nan(n_models,n_models);
@@ -18,11 +18,11 @@ for mod_n=1:n_models
     mod = model_mat(mod_n);
     
     if mod == 8
-       file_BIC = strcat(sim_fol,'mod',num2str(mod),'_normal_Q0_3_7_gamma_0_4_tau_25_200_sgm0_1_300/n_sim_',num2str(n_sim),'/results/all_BIC_mat.mat');
-       file_BIC = strcat(sim_fol,'mod',num2str(mod),'_normal_Q0_1_6_gamma_0_4_tau_25_200_sgm0_1_300/n_sim_',num2str(n_sim),'/results/all_BIC_mat.mat');
-       file_BIC = strcat(sim_fol,'mod',num2str(mod),'_normal_Q0_3_7_gamma_0_4_tau_25_200_sgm0_1_300_genQ0fixed_5/n_sim_',num2str(n_sim),'/results/all_BIC_mat.mat');
+       %file_BIC = strcat(sim_fol,'mod',num2str(mod),'_normal_Q0_3_7_gamma_0_4_tau_25_200_sgm0_1_300/n_sim_',num2str(n_sim),'/results/all_BIC_mat.mat');
+       %file_BIC = strcat(sim_fol,'mod',num2str(mod),'_normal_Q0_1_6_gamma_0_4_tau_25_200_sgm0_1_300/n_sim_',num2str(n_sim),'/results/all_BIC_mat.mat');
+       file_BIC = strcat(sim_fol,'mod',num2str(mod),'_normal_Q0fixed_gamma_0_0.5_tau_20_70_sgm0_1_300_Q055_sgm014_newB/n_sim_',num2str(n_sim),'/results/all_BIC_mat.mat');
     else
-        file_BIC = strcat(sim_fol,'mod',num2str(mod),'_normal/n_sim_',num2str(n_sim),'/results/all_BIC_mat.mat');
+       file_BIC = strcat(sim_fol,'mod',num2str(mod),'_normal/n_sim_',num2str(n_sim),'/results/all_BIC_mat.mat');
     end
     
     if exist(file_BIC)
@@ -51,6 +51,7 @@ for mod_n=1:n_models
 
 end
 
+save('../../../../data/data_for_figs/model_recov_perc.mat', 'perc');
 
 % Figure
 
@@ -60,21 +61,27 @@ set(gca,'FontName','Arial','FontSize',10)
 hold on;
 
 legend_all{1}  = 'thompson';
-legend_all{2}  = 'thompson + \epsilon';
-legend_all{3}  = 'thompson + \eta';
-legend_all{4}  = 'thompson + \epsilon + \eta';
-legend_all{5}  = 'UCB + \epsilon + \eta';
+legend_all{2}  = 'UCB';
+
+legend_all{3}  = 'thompson + \epsilon';
+legend_all{4}  = 'UCB + \epsilon';
+
+legend_all{5}  = 'thompson + \eta';
+legend_all{6}  = 'UCB + \eta';
+
+legend_all{7}  = 'thompson + \epsilon + \eta';
+legend_all{8}  = 'UCB + \epsilon + \eta';
 
 imagesc(perc);
 
 n_mod = size(legend_all,2);
 
 yticks([1:n_mod])
-yticklabels({legend_all{1}, legend_all{2}, legend_all{3}, legend_all{4}, legend_all{5}})
+yticklabels({legend_all{1}, legend_all{2}, legend_all{3}, legend_all{4}, legend_all{5}, legend_all{6}, legend_all{7}, legend_all{8}})
 ylim([0.5 n_mod+0.5])
 
 xticks([1:n_mod])
-xticklabels({legend_all{1}, legend_all{2}, legend_all{3}, legend_all{4}, legend_all{5}})
+xticklabels({legend_all{1}, legend_all{2}, legend_all{3}, legend_all{4}, legend_all{5}, legend_all{6}, legend_all{7}, legend_all{8}})
 xtickangle(45)
 xlim([0.5 n_mod+0.5])
 

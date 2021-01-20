@@ -3,7 +3,7 @@ data_fol = '../../../../data/';
 sim_fol=strcat(data_fol, 'sim_model_recov/');
 
 % variables
-model = 'mod8_normal_Q0_3_7_gamma_0_4_tau_25_200_sgm0_1_300_genQ0fixed_5';
+model = 'mod8_normal_Q0fixed_gamma_0_0.5_tau_20_70_sgm0_1_300_Q055_sgm014';
 n_sim = 100;
 
 % simulation dir

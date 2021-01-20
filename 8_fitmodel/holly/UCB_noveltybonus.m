@@ -32,18 +32,25 @@ sgm = mo.mat.sgm{idx_hor,idx_g}(:,t);
 %% compute values
 V = [];
 
+
 if isempty(mo.mat.appleA{idx_hor,idx_g}) || isempty(mo.mat.appleB{idx_hor,idx_g})
-    %disp('no A - BCD || no B - ACD')
+%     disp('no A - BCD || no B - ACD')
+%     disp(sgm)
+%     disp('%%%%%%%%%')
     V(1) = Q(1) + (gamma*sgm(1));
     V(2) = Q(2) + (gamma*sgm(2)) + eta; %novelty bonus on tree C
     V(3) = Q(3) + (gamma*sgm(3)); 
 elseif isempty(mo.mat.appleD{idx_hor,idx_g})
-    %disp('no D - ABC')
+%     disp('no D - ABC')
+%     disp(sgm)
+%     disp('%%%%%%%%%')
     V(1) = Q(1) + (gamma*sgm(1));
     V(2) = Q(2) + (gamma*sgm(2));
     V(3) = Q(3) + (gamma*sgm(3)) + eta; %novelty bonus on tree C
 else
-    %disp('no C')
+%     disp('no C')
+%     disp(sgm)
+%     disp('%%%%%%%%%')
     for i = 1:length(Q)
         V(i) = Q(i) + (gamma*sgm(i));
     end

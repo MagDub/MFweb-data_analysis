@@ -23,7 +23,8 @@ average_all_apple_LH = nan(n,1);
 
 disp('Long horizon all samples')
 
-per_trial_all_LH = nan(n, Ntrials);
+per_trial_all_LH_400trials = nan(n, Ntrials);
+per_trial_all_LH = nan(n, Ntrials/2);
 
 for ID_i = 1:n 
     
@@ -54,9 +55,13 @@ for ID_i = 1:n
         score_LH(ID_i,trial_) = sum(tmp1.logABDlong(:,7)) + sum(tmp2.logABlong(:,7)) + sum(tmp3.logADlong(:,7)) + sum(tmp4.logBDlong(:,7));
 
         % Mean per draw
-        per_trial_all_LH(ID_i,trial_) = score_LH(ID_i,trial_)/6;
+        per_trial_all_LH_400trials(ID_i,trial_) = score_LH(ID_i,trial_)/6;
 
     end
+    
+    tmp_ = per_trial_all_LH_400trials(ID_i,:);
+    tmp_(tmp_==0) = [];
+    per_trial_all_LH(ID_i, :) = tmp_;
 
 end
 
@@ -65,7 +70,8 @@ end
 
 disp('Long horizon 1st sample')
 
-per_trial_first_LH = nan(n, Ntrials);
+per_trial_first_LH_400trials = nan(n, Ntrials);
+per_trial_first_LH = nan(n, Ntrials/2);
 
 for ID_i = 1:n 
     
@@ -105,9 +111,13 @@ for ID_i = 1:n
         it4 = tmp4.logBDlong(:,7);
         it4(tmp4.logBDlong(:,5)~=3) = []; %50
 
-        per_trial_first_LH(ID_i,trial_) = sum(it1) + sum(it2) + sum(it3) + sum(it4); 
+        per_trial_first_LH_400trials(ID_i,trial_) = sum(it1) + sum(it2) + sum(it3) + sum(it4); 
 
     end
+    
+    tmp_ = per_trial_first_LH_400trials(ID_i,:);
+    tmp_(tmp_==0) = [];
+    per_trial_first_LH(ID_i, :) = tmp_;
 
 end
 
@@ -116,7 +126,8 @@ end
 
 disp('Short horizon')
 
-per_trial_score_SH = nan(n, Ntrials);
+per_trial_score_SH_400trials = nan(n, Ntrials);
+per_trial_score_SH = nan(n, Ntrials/2);
 
 for ID_i = 1:n 
     
@@ -144,14 +155,18 @@ for ID_i = 1:n
         tmp4.logBDshort = keeponlychoice(tmp4.logBDshort);
  
         % All trials
-        per_trial_score_SH(ID_i,trial_) = sum(tmp1.logABDshort(:,7)) + sum(tmp2.logABshort(:,7)) + sum(tmp3.logADshort(:,7)) + sum(tmp4.logBDshort(:,7));
-
+        per_trial_score_SH_400trials(ID_i,trial_) = sum(tmp1.logABDshort(:,7)) + sum(tmp2.logABshort(:,7)) + sum(tmp3.logADshort(:,7)) + sum(tmp4.logBDshort(:,7));
+        
     end
-
+    
+    tmp_ = per_trial_score_SH_400trials(ID_i,:);
+    tmp_(tmp_==0) = [];
+    per_trial_score_SH(ID_i, :) = tmp_;
+    
 end
 
-% Save
 
+% Save
 
 % LH all
 per_trial_score_desc = [ {'ID'} {'trials'} ];

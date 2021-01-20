@@ -1,6 +1,6 @@
 
 addpath('model_fct/')
-data_folder = '../../data/modelfit/mod4/';
+data_folder = '../../data/modelfit/mod4_newB/';
 
 load('../usermat_completed.mat')
 

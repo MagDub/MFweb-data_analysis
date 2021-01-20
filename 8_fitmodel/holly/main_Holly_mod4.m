@@ -6,7 +6,7 @@ function main_Holly_mod4(ID)
     load('usermat_completed_task.mat')
     data_fol = ('/home/mdubois/scripts/modeling_web/data/');
 
-    fit_mod4(usermat_completed_task(ID), data_fol)
+    fit_mod4_newB(usermat_completed_task(ID), data_fol)
 
 end
 
