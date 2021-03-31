@@ -1,8 +1,8 @@
 
 load('../usermat_completed.mat')
 
-load('../../data/questionnaire/all/RT_quest_all.mat');
-load('../../data/questionnaire/all/RT_quest_desc.mat');
+%load('../../data/questionnaire/all/RT_quest_all.mat');
+%load('../../data/questionnaire/all/RT_quest_desc.mat');
 load('../../data/questionnaire/all/TotTimeSec_all.mat');
 load('../../data/questionnaire/all/CheckPassedPerc_all.mat');
 
@@ -135,25 +135,26 @@ save('../usermat_completed_attentive.mat', 'usermat_completed_attentive')
 % Figures
 addpath('../../export_fig')
 
-% RT on questionnaires
-figure('Color','w');
-set(gcf,'Unit','centimeters','OuterPosition',[0 0 20 20]);
-set(gca,'FontName','Arial','FontSize',10)
-hold on
+% % RT on questionnaires
+% figure('Color','w');
+% set(gcf,'Unit','centimeters','OuterPosition',[0 0 20 20]);
+% set(gca,'FontName','Arial','FontSize',10)
+% hold on
+% 
+% for q_num = 1:8
+%     subplot(4,2,q_num)
+%     plot(RT_quest_all(:,q_num)/(1000*60), 'o')
+%     grid on;
+%     xlim([0 length(usermat_completed)+1])
+%     xticks(1:1:length(usermat_completed))
+%     xticklabels(usermat_completed)
+%     xlabel('user')
+%     ylabel('time (min)')
+%     title(RT_quest_desc(q_num))
+% end
+% 
+% export_fig(['Fig_time_questionnaires.tif'],'-nocrop','-r200')
 
-for q_num = 1:8
-    subplot(4,2,q_num)
-    plot(RT_quest_all(:,q_num)/(1000*60), 'o')
-    grid on;
-    xlim([0 length(usermat_completed)+1])
-    xticks(1:1:length(usermat_completed))
-    xticklabels(usermat_completed)
-    xlabel('user')
-    ylabel('time (min)')
-    title(RT_quest_desc(q_num))
-end
-
-export_fig(['Fig_time_questionnaires.tif'],'-nocrop','-r200')
 col_(1,:) = [0.925490200519562 0.839215695858002 0.839215695858002];
 col_(2,:) = [0.584313750267029 0.388235300779343 0.388235300779343];
 
@@ -191,11 +192,10 @@ export_fig(['Fig_time_all.tif'],'-nocrop','-r200')
 
 save('../../data/data_for_figs/time_interval_in_hours.mat','time_interval_in_hours')
 
+%%%%% RT task plot
 
-% %%%%% RT task plot
-% 
-% task_RT_all = task_RT_1st_in_sec; %(2:end); % remove user 2
-% 
+%task_RT_all = task_RT_1st_in_sec; 
+ 
 % figure('Color','w');
 % set(gcf,'Unit','centimeters','OuterPosition',[0 0 10 10]);
 % set(gca,'FontName','Arial','FontSize',10)

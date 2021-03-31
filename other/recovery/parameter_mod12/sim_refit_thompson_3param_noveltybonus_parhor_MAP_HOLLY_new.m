@@ -3,7 +3,7 @@ function sim_refit_thompson_3param_noveltybonus_parhor_MAP_HOLLY_new(ID)
 addpath('./fct/')
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-param_bounds_sgm0 = [0.5,2.5];
+param_bounds_sgm0 = [0.01,3.5];
 param_bounds_Q0 = [1,6]; 
 param_bounds_xi = [0,0.5];  
 param_bounds_eta = [0,5];
@@ -11,21 +11,21 @@ param_bounds_eta = [0,5];
         
     % settings
     settings = [];
-    settings.task.N_games = 400;
-    settings.task.N_hor = 2;
-    settings.task.Ngames_per_hor = settings.task.N_games / settings.task.N_hor;
-    settings.task.N_trees = 3; % Changed
-    settings.opts.TLT       = [];
-    settings.funs.decfun        = @softmax;
-    settings.funs.valuefun      = @mvnorm_Thompson_noveltybonus_new; %@hybrid; % @thompson; % 
-    settings.funs.priorfun      = [];
-    settings.funs.learningfun   = @kalman_filt;
-    settings.desc = ['sim_thompson_noveltybonus' int2str(ID)];    % description of model (settings, etc)
-    settings.params.param_names = {'sgm0', '', 'Q0','xi', '', 'eta', ''};   % is same param name as prev, write ''
-    settings.params.lb          = [param_bounds_sgm0(1) param_bounds_sgm0(1)  param_bounds_Q0(1)  param_bounds_xi(1) param_bounds_xi(1) param_bounds_eta(1) param_bounds_eta(1)];    % lower bound
-    settings.params.ub          = [param_bounds_sgm0(2) param_bounds_sgm0(2)  param_bounds_Q0(2)  param_bounds_xi(2) param_bounds_xi(2) param_bounds_eta(2) param_bounds_eta(2)];    % upper bound
+    settings.task.N_games           = 400;
+    settings.task.N_hor             = 2;
+    settings.task.Ngames_per_hor    = settings.task.N_games / settings.task.N_hor;
+    settings.task.N_trees           = 3;
+    settings.opts.TLT               = [];
+    settings.funs.decfun            = @softmax;
+    settings.funs.valuefun          = @mvnorm_Thompson_noveltybonus_new; 
+    settings.funs.priorfun          = [];
+    settings.funs.learningfun       = @kalman_filt;
+    settings.desc                   = ['sim_thompson_noveltybonus' int2str(ID)];    % description of model (settings, etc)
+    settings.params.param_names     = {'sgm0', '', 'Q0','xi', '', 'eta', ''};   % is same param name as prev, write ''
+    settings.params.lb              = [param_bounds_sgm0(1) param_bounds_sgm0(1)  param_bounds_Q0(1)  param_bounds_xi(1) param_bounds_xi(1) param_bounds_eta(1) param_bounds_eta(1)];    % lower bound
+    settings.params.ub              = [param_bounds_sgm0(2) param_bounds_sgm0(2)  param_bounds_Q0(2)  param_bounds_xi(2) param_bounds_xi(2) param_bounds_eta(2) param_bounds_eta(2)];    % upper bound
 
-    sim_dir = strcat('/home/mdubois/scripts/modeling_web/data/sim_recov/thompson_rand/n_sim_20000/');
+    sim_dir = strcat('/home/mdubois/scripts/modeling_web/data/sim_recov/thompson_rand_part_values/n_sim_20000/');
 
     %% load parameter values
     tmp = load([sim_dir 'inp_params_thompson.mat']);
@@ -123,13 +123,12 @@ param_bounds_eta = [0,5];
     end
 
     %% make results directory
-    results_dir = strcat(sim_dir, 'results');
+    results_dir = strcat(sim_dir, 'results/');
 
     if exist(results_dir, 'dir') == 0
         mkdir(results_dir)
     end
 
-    results_dir = strcat('/home/mdubois/scripts/modeling_web/data/sim_recov/thompson_rand/n_sim_20000/results/');
    
     % save
     save_sim(results_dir, ID, settings, data, gameIDs, para_vals, mo);

@@ -4,7 +4,7 @@ picked_tree_mat = [];
 picked_tree_mat_desc = {'gameIDs', 'PickedLH_1', 'PickedLH_2', 'PickedSH_1', 'PickedSH_2'};
 
 data_fold = ('../../data/');
-load(strcat(data_fold,'sanity_check/user_2/logs/logdesc.mat'))
+load(strcat(data_fold,'sanity_check/user_1/logs/logdesc.mat'))
 
 col_gameID=4;
 col_sample=5;

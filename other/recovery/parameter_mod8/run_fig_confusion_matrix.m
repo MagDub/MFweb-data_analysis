@@ -1,10 +1,10 @@
 
-n_sim = 20000;
-thompson_file = '/Users/magdadubois/MFweb/data/sim_recov/thompson_rand/';
+n_sim = 5;
+thompson_file = '/Users/magdadubois/MFweb/data/sim_recov/mod_8/';
 saving_dir = strcat(thompson_file, 'n_sim_', int2str(n_sim), '/');
 
-load(strcat(saving_dir, 'inp_params_thompson.mat'))
-load(strcat(saving_dir, 'out_sim_thompson.mat'))
+load(strcat(saving_dir, 'inp_params.mat'))
+load(strcat(saving_dir, 'out_sim.mat'))
 
 %{'sgm0', 'sgm0', 'Q0','xi', '', 'eta', ''};
 

@@ -10,7 +10,7 @@ n = size(usermat_completed,2);
 
 % LH
 
-disp('Long horizon')
+disp('Per trial: Long horizon')
 
 per_trial_freq_LH_400 = nan(n, Ntrials);
 
@@ -27,9 +27,7 @@ per_trial_freq_LH_D = nan(n, Ntrials/2);
 for ID_i = 1:n 
     
     ID = usermat_completed(ID_i);
-    
-    disp(ID)
-    
+        
     for trial_=1:Ntrials
         
         tmp1 = load(strcat(dir_data, 'user_',num2str(ID),'/logs/logABDlong.mat'));
@@ -126,7 +124,7 @@ end
 
 % SH
 
-disp('Short horizon')
+disp('Per trial: Short horizon')
 
 per_trial_freq_SH_400 = nan(n, Ntrials);
 
@@ -143,9 +141,7 @@ per_trial_freq_SH_D = nan(n, Ntrials/2);
 for ID_i = 1:n 
     
     ID = usermat_completed(ID_i);
-    
-    disp(ID)
-    
+        
     for trial_=1:Ntrials
         
         tmp1 = load(strcat(dir_data, 'user_',num2str(ID),'/logs/logABDshort.mat'));
@@ -237,9 +233,9 @@ for ID_i = 1:n
     per_trial_SH_all_ABCD(ID_i, :) = tmp_all;
 
 end
-
-mean(per_trial_freq_SH_C(:,end))
-mean(per_trial_freq_LH_C(:,end))
+ 
+% mean(per_trial_freq_SH_C(:,end))
+% mean(per_trial_freq_LH_C(:,end))
 
 
 % Save

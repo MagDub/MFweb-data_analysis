@@ -16,7 +16,7 @@ pow = 0;
         
         n_sample = n_sample + 10;
 
-        n_perm = 10000;
+        n_perm = 100;
 
         for i = 1:n_perm
             data = mvnrnd(mu_,sig_,n_sample);

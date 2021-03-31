@@ -21,7 +21,7 @@ average_all_apple_LH = nan(n,1);
 
 % LH all trials
 
-disp('Long horizon all samples')
+disp('Per trial: Long horizon, all')
 
 per_trial_all_LH_400trials = nan(n, Ntrials);
 per_trial_all_LH = nan(n, Ntrials/2);
@@ -29,9 +29,7 @@ per_trial_all_LH = nan(n, Ntrials/2);
 for ID_i = 1:n 
     
     ID = usermat_completed(ID_i);
-    
-    disp(ID)
-    
+        
     for trial_=1:Ntrials
         
         tmp1 = load(strcat(dir_data, 'user_',num2str(ID),'/logs/logABDlong.mat'));
@@ -68,7 +66,7 @@ end
 
 % LH 1st sample
 
-disp('Long horizon 1st sample')
+disp('Per trial: Long horizon, 1st')
 
 per_trial_first_LH_400trials = nan(n, Ntrials);
 per_trial_first_LH = nan(n, Ntrials/2);
@@ -76,9 +74,7 @@ per_trial_first_LH = nan(n, Ntrials/2);
 for ID_i = 1:n 
     
     ID = usermat_completed(ID_i);
-    
-    disp(ID)
-    
+        
     for trial_=1:Ntrials
         
         tmp1 = load(strcat(dir_data, 'user_',num2str(ID),'/logs/logABDlong.mat'));
@@ -124,7 +120,7 @@ end
 
 % SH 
 
-disp('Short horizon')
+disp('Per trial: Short horizon')
 
 per_trial_score_SH_400trials = nan(n, Ntrials);
 per_trial_score_SH = nan(n, Ntrials/2);
@@ -132,9 +128,7 @@ per_trial_score_SH = nan(n, Ntrials/2);
 for ID_i = 1:n 
     
     ID = usermat_completed(ID_i);
-    
-    disp(ID)
-    
+        
     for trial_=1:Ntrials
 
         tmp1 = load(strcat(dir_data, 'user_',num2str(ID),'/logs/logABDshort.mat'));

@@ -1,6 +1,6 @@
 
-n_sim = 20000;
-thompson_file = '/Users/magdadubois/MFweb/data/sim_recov/thompson_rand/';
+n_sim = 1000;
+thompson_file = '/Users/magdadubois/MFweb/data/sim_recov/thompson_rand_part_values/';
 saving_dir = strcat(thompson_file, 'n_sim_', int2str(n_sim), '/');
 
 load(strcat(saving_dir, 'inp_params_thompson.mat'))
@@ -27,6 +27,6 @@ hold on;
 
 render_param_recovery(out)
 
-% Export
-addpath('../../export_fig')
-export_fig('./fig/Fig_sim_conf_mat.tif','-nocrop','-r200')
+% % Export
+% addpath('../../../../export_fig')
+% export_fig('./fig/Fig_sim_conf_mat.tif','-nocrop','-r200')
