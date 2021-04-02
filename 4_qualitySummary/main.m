@@ -1,3 +1,4 @@
+clear;
 
 load('../usermat_completed.mat')
 
@@ -8,7 +9,7 @@ load('../../data/questionnaire/all/CheckPassedPerc_all.mat');
 
 raw_fol = ('../../data/raw/');
 
-disp('----------------------')
+%disp('----------------------')
 
 for i=1:length(usermat_completed)
     
@@ -18,25 +19,25 @@ for i=1:length(usermat_completed)
     disp(['userID:', 32, num2str(userID)])
     
     % questionnaire checks
-    disp(['Checks:', 32, num2str(CheckPassedPerc_all(i)*100), '%'])
+    %disp(['Checks:', 32, num2str(CheckPassedPerc_all(i)*100), '%'])
     
     % total time
     time_interval_in_hours(i) = TotTimeSec_all(i)/3600;
-    disp(['Time (h):', 32, num2str(time_interval_in_hours(i))])
+    %disp(['Time (h):', 32, num2str(time_interval_in_hours(i))])
     
     % questions no
     questionsfolder = dir(strcat(raw_fol, 'user_', num2str(userID), '/questions/*.xls'));
-    disp(['Questions Repeat:', 32, num2str(size(questionsfolder,1))])   
+    %disp(['Questions Repeat:', 32, num2str(size(questionsfolder,1))])   
     questions_repeat_all(i) = size(questionsfolder,1);
     
     % training no
     trainingfolder = dir(strcat(raw_fol, 'user_', num2str(userID), '/training/*.xls'));
-    disp(['Training Repeat:', 32, num2str(size(trainingfolder,1))])   
+    %disp(['Training Repeat:', 32, num2str(size(trainingfolder,1))])   
     training_repeat_all(i) = size(trainingfolder,1);
     
     % task info request
     load(strcat('../../data/concat_data/user_',num2str(userID),'.mat'))
-    disp(['Info request:', 32, num2str(user.log(1,19))])
+    %disp(['Info request:', 32, num2str(user.log(1,19))])
     info_request_all(i) = user.log(1,19);
 
     % task RT
@@ -44,7 +45,7 @@ for i=1:length(usermat_completed)
     load(strcat('../../data/sanity_check/user_',num2str(userID),'/RT_all_1st_trial_LH.mat'))
     task_RT = [RT_all_1st_trial_SH, RT_all_1st_trial_LH];
     mean_RT = mean([RT_all_1st_trial_SH; RT_all_1st_trial_LH]);
-    disp(['task_RT:', 32, num2str(mean_RT), 'ms'])
+    %disp(['task_RT:', 32, num2str(mean_RT), 'ms'])
     task_RT_1st_in_sec(i) = mean_RT/1000;
 
     % pressed key
@@ -52,7 +53,7 @@ for i=1:length(usermat_completed)
     a = unique(pressed_key_all);
     pressed_freq = [a,histc(pressed_key_all(:),a)]; % count occurence
     pressed_freq(:,end+1) = pressed_freq(:,2)./sum(pressed_freq(:,2));
-    disp(['pressed_freq= key1: ', 32, num2str(pressed_freq(1,3)), 32, '%', 32, 'key2: ', 32, num2str(pressed_freq(2,3)), 32, '%', 32, 'key3: ', 32, num2str(pressed_freq(3,3)), 32, '%'])
+    %disp(['pressed_freq= key1: ', 32, num2str(pressed_freq(1,3)), 32, '%', 32, 'key2: ', 32, num2str(pressed_freq(2,3)), 32, '%', 32, 'key3: ', 32, num2str(pressed_freq(3,3)), 32, '%'])
     pressed_freq_all(i,:) = pressed_freq(:,3)';
 
     % bandits
@@ -62,28 +63,28 @@ for i=1:length(usermat_completed)
     picked_A_SH = size(find(hist_all_mat(1,:)==1),2);
     picked_A_LH = size(find(hist_all_mat(2,:)==1),2);
     picked_A = picked_A_SH + picked_A_LH;
-    disp(['A picked:', 32, num2str(picked_A/400*100), '%'])
+    %disp(['A picked:', 32, num2str(picked_A/400*100), '%'])
     picked_A_mat(i) = picked_A/400*100;
     
     % task picked B
     picked_B_SH = size(find(hist_all_mat(1,:)==2),2);
     picked_B_LH = size(find(hist_all_mat(2,:)==2),2);
     picked_B = picked_B_SH + picked_B_LH;
-    disp(['B picked:', 32, num2str(picked_B/400*100), '%'])
+    %disp(['B picked:', 32, num2str(picked_B/400*100), '%'])
     picked_B_mat(i) = picked_B/400*100;
     
     % task picked D
     picked_D_SH = size(find(hist_all_mat(1,:)==4),2);
     picked_D_LH = size(find(hist_all_mat(2,:)==4),2);
     picked_D = picked_D_SH + picked_D_LH;
-    disp(['D picked:', 32, num2str(picked_D/400*100), '%'])
+    %disp(['D picked:', 32, num2str(picked_D/400*100), '%'])
     picked_D_mat(i) = picked_D/400*100;
     
     % task picked C
     picked_C_SH = size(find(hist_all_mat(1,:)==3),2);
     picked_C_LH = size(find(hist_all_mat(2,:)==3),2);
     picked_C = picked_C_SH + picked_C_LH;
-    disp(['C picked:', 32, num2str(picked_C/400*100), '%'])
+    %disp(['C picked:', 32, num2str(picked_C/400*100), '%'])
     picked_C_mat(i) = picked_C/400*100;
     
     disp('----------------------')

@@ -95,3 +95,11 @@ score = [usermat_completed' average_first_apple_SH average_first_apple_LH averag
 save(strcat(dir_save, 'score.mat'), 'score');
 save(strcat(dir_save, 'score_desc.mat'), 'score_desc');
 
+score_SH = score(:,2);
+first_LH = score(:,3);
+score_LH = score(:,4);
+
+save(strcat(dir_save,'score_SH.mat'), 'score_SH');
+save(strcat(dir_save,'score_LH.mat'), 'score_LH');
+save(strcat(dir_save,'first_LH.mat'), 'first_LH');
+

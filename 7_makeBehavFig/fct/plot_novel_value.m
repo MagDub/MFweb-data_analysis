@@ -1,4 +1,6 @@
 
+function [] = plot_novel_value(to_del)
+
 data_fold = ('../../data/');
 
 n_trials_perhor = 200;
@@ -17,12 +19,8 @@ save('../../data/data_for_figs/pickedC_LH.mat', 'pickedC_LH')
 load('../usermat_completed.mat')
 
 % Remove ID
-to_del = [];
-% to_del(end+1) = find(usermat_completed==4);
-% to_del(end+1) = find(usermat_completed==34);
-% to_del(end+1) = find(usermat_completed==39);
-pickedC_SH(to_del,:) = nan;
-pickedC_SH(to_del,:) = nan;
+pickedC_SH(to_del,:) = [];
+pickedC_LH(to_del,:) = [];
 
 % Figure
 figure('Color','w');

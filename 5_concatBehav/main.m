@@ -12,7 +12,7 @@ disp('Exploit explore')
 
 main_exploitexplore;
 disp('-------------------')
-main_exploireexploit_pertrial;
+%main_exploireexploit_pertrial;
 
 main_exploitexplore_B1;
 main_exploitexplore_B2;
@@ -26,7 +26,7 @@ disp('Frequency')
 
 main_freq;
 disp('-------------------')
-main_freq_pertrial;
+%main_freq_pertrial;
 
 main_freq_B1;
 main_freq_B2;
@@ -38,7 +38,7 @@ main_freq_B4;
 disp('-------------------')
 disp('RT')
 
-main_RT_LH_alltrials;
+%main_RT_LH_alltrials;
 
 
 %%%% Score %%%%
@@ -47,7 +47,7 @@ disp('Score')
 
 main_score;
 disp('-------------------')
-main_score_pertrial;
+%main_score_pertrial;
 
 main_score_B1;
 main_score_B2;

@@ -1,7 +1,12 @@
 
+clear;
+
 tmp = dir('prolific_export_*.csv');
 filename = tmp.name;
 T=readtable(tmp.name);
+
+index = find(strcmp(T.participant_id, '56ce42d9465e580006846f57'));
+T.participant_id{index} = '556ce42d9465e580006846f57'; % unwanted additionial 5 when gave the link manually to participant
 
 %T = T(13:end,:); % remove the pre-pilot
 
@@ -22,6 +27,15 @@ for i=1:size(T.status,1)
         returned(i) = 0;
     end
 end
+
+for i=1:size(T.status,1)
+    if strcmp(T.status(i),'APPROVED')
+        approved(i) = 1;
+    else
+        approved(i) = 0;
+    end
+end
+approved = approved';
 
 
 for i=1:size(T.age,1)
@@ -69,6 +83,21 @@ end
 
 usermat_completed_task = find(completed_task==1);
 
+% Completed both
+for i=1:size(userID,1)
+    
+    tmp_completed_1 = dir(strcat('../../data/raw/user_',int2str(userID(i)),'/task/block_4_*.xls'));
+    tmp_completed_2 = dir(strcat('../../data/raw/user_',int2str(userID(i)),'/questionnaires/*.xls'));
+    
+    if ~isempty(tmp_completed_1) && ~isempty(tmp_completed_2)
+        completed_both(i) = 1;
+    else
+        completed_both(i) = 0;
+    end
+end
+
+usermat_completed_both = find(completed_both==1);
+
 demo_desc = {'User' 'Age', 'Gender', 'RejectionPercentage', 'Returned', 'CompletedQuest'};
 demo = [userID, age', gender', rejection_percetage', returned', completed_quest'];
 p_ID = T.participant_id;
@@ -85,12 +114,19 @@ for i=1:size(userID,1)
     end
 end
 
+usermat_completed = usermat_completed_both;
+
+%%% TODO understand problem
+id_=find(usermat_completed==199);
+usermat_completed(id_)=[];
+
 save('../usermat_completed.mat', 'usermat_completed')
 save('../usermat_completed_task.mat', 'usermat_completed_task')
 
 save('../../data/questionnaire/demographics/raw/started_datetime.mat','started_datetime')
 save('../../data/questionnaire/demographics/raw/p_ID.mat','p_ID')
 save('../../data/questionnaire/demographics/raw/userID.mat','userID')
+save('../../data/questionnaire/demographics/raw/approved.mat','approved')
 
 save('../../data/questionnaire/demographics/raw/demo_desc.mat','demo_desc')
 save('../../data/questionnaire/demographics/raw/demo.mat','demo')

@@ -205,7 +205,7 @@ end
 
 fol_all = strcat(res_fold,'all');
 save(strcat(fol_all,'/ASRS_all.mat'), 'ASRS_all')
-save(strcat(fol_all,'/ASRS_mat_desc.mat'), 'ASRS_mat_desc')
+save(strcat(fol_all,'/ASRS_score_desc.mat'), 'ASRS_score_desc')
 save(strcat(fol_all,'/OCIR_all.mat'), 'OCIR_all')
 save(strcat(fol_all,'/STAI_all.mat'), 'STAI_all')
 save(strcat(fol_all,'/CFS_all.mat'), 'CFS_all')

@@ -1,16 +1,9 @@
-
+clear;
 load('../usermat_completed.mat')
 
 % not completed
-load('../../data/questionnaire/demographics/raw/p_ID.mat')
-load('../../data/questionnaire/demographics/raw/demo_desc.mat')
-load('../../data/questionnaire/demographics/raw/demo.mat')
-not_completed=find(demo(:,6)==0);
-p_ID_to_reject={};
-for i=1:size(not_completed,1)
-    p_ID_to_reject{end+1,1} = p_ID{not_completed(i)};
-end
-disp(p_ID_to_reject)
+[p_ID_to_reject] = get_p_ID_to_reject();
+[p_ID_to_approve] = get_p_ID_to_approve();
 
 % mean score is lower than 5.5
 load('../../data/data_for_figs/score_SH.mat')
@@ -29,10 +22,36 @@ exclusion(:,3) = CheckPassedPerc_all<1;
 
 % To exclude
 sum_ = sum(exclusion,2);
-final=[usermat_completed' sum_];
-disp(final)
-to_exclude = final(find(final(:,2)==1),1);
+final=[usermat_completed' sum_ exclusion];
+%disp(final)
+to_exclude = final(find(final(:,2)>0),1);
+to_exclude_mat = final(find(final(:,2)>0),:);
+to_exclude=to_exclude';
+save('to_exclude.mat', 'to_exclude');
 
-disp(to_exclude)
+disp(strcat(...
+    'Participants to exclude:',32,num2str(size(to_exclude_mat,1)),...
+    ' out of', 32, num2str(size(usermat_completed,2)),...
+    '. Ratio:', 32, num2str(size(to_exclude_mat,1)/size(usermat_completed,2)*100),'%'...
+    ))
+
+% add failed attention check
+% pID, userID, approved, failedCriteria
+p_ID_to_approve(:,4) = {0};
+for i = 1:size(to_exclude,1)
+    tmp_userID = to_exclude(i);
+    tmp_id = find([p_ID_to_approve{:,2}]==tmp_userID);
+    p_ID_to_approve(tmp_id,4) = {1};
+end
+
+p_ID_to_approve_passedChecks = p_ID_to_approve;
+index_ = find([p_ID_to_approve_passedChecks{:,4}] == 1);
+p_ID_to_approve_passedChecks(index_,:) = [];
+% disp(p_ID_to_approve_passedChecks) % Can be approved: completed task and passed checks
+list_ = p_ID_to_approve_passedChecks(:,1);
+
+fid = fopen('list_to_approve.txt','w');
+fprintf(fid,'%s\n', list_{:});
+fclose(fid);
 
 % TODO: add the to_exclude matrix to step 7
