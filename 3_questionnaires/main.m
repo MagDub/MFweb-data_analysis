@@ -25,6 +25,7 @@ CFS_all = nan(n,1);
 BIS11_all= nan(n,1);
 IUS_all = nan(n,3);
 IQscore_all= nan(n,1);
+IQpercentage_all= nan(n,1);
 CheckPassedPerc_all = nan(n,1);
 TotTimeSec_all = nan(n,1);
 Demo_all = nan(n,6);
@@ -89,6 +90,8 @@ for i=1:n
 
         % IQ
         [IQscore, IQpercentage] = concat_IQ(T);
+        IQ_mat=[IQscore, IQpercentage];
+        IQ_mat_desc={'score', 'percentage'};
 
         % Demo
         tmp_dem = strfind(p_ID, T.ProlificID);
@@ -181,6 +184,9 @@ for i=1:n
         save(strcat(user_fol,'/SDS_mat_desc.mat'), 'SDS_mat_desc')
         save(strcat(user_fol,'/SDS_mat.mat'), 'SDS_mat')
         
+        save(strcat(user_fol,'/IQ_mat_desc.mat'), 'IQ_mat_desc')
+        save(strcat(user_fol,'/IQ_mat.mat'), 'IQ_mat')
+        
         save(strcat(user_fol,'/TotTimeSec.mat'), 'TotTimeSec')
         
         save(strcat(user_fol,'/CheckPassedPerc.mat'), 'CheckPassedPerc')
@@ -197,6 +203,7 @@ for i=1:n
         BIS11_all(i,:) = BIS11_score;
         IUS_all(i,:) = IUS_score;
         IQscore_all(i,:) = IQscore;
+        IQpercentage_all(i,:) = IQpercentage;
         CheckPassedPerc_all(i,:) = CheckPassedPerc;
         TotTimeSec_all(i,:) = TotTimeSec;
         Demo_all(i,:) = Demo_mat;
@@ -213,6 +220,7 @@ save(strcat(fol_all,'/AQ10_all.mat'), 'AQ10_all')
 save(strcat(fol_all,'/BIS11_all.mat'), 'BIS11_all')
 save(strcat(fol_all,'/IUS_all.mat'), 'IUS_all')
 save(strcat(fol_all,'/IQscore_all.mat'), 'IQscore_all')
+save(strcat(fol_all,'/IQpercentage_all.mat'), 'IQpercentage_all')
 save(strcat(fol_all,'/CheckPassedPerc_all.mat'), 'CheckPassedPerc_all')
 save(strcat(fol_all,'/TotTimeSec_all.mat'), 'TotTimeSec_all')
 save(strcat(fol_all,'/Demo_all.mat'), 'Demo_all')

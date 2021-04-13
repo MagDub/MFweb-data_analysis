@@ -26,7 +26,7 @@ if (IQmat(4)==6)
     score = score + 1;
 end
 
-if (IQmat(5)==6)
+if (IQmat(5)==6) %
     score = score + 1;
 end
 

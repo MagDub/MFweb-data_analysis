@@ -5,8 +5,11 @@ tmp = dir('prolific_export_*.csv');
 filename = tmp.name;
 T=readtable(tmp.name);
 
-index = find(strcmp(T.participant_id, '56ce42d9465e580006846f57'));
-T.participant_id{index} = '556ce42d9465e580006846f57'; % unwanted additionial 5 when gave the link manually to participant
+index1 = find(strcmp(T.participant_id, '60072a91f1bbf51aed4f8e03'));
+T.participant_id{index1} = '60072a91f1bbf51aed4f803'; % manually remove the folder remaining with: 60072a91f1bbf51aed4f8e03
+
+index2 = find(strcmp(T.participant_id, '56ce42d9465e580006846f57'));
+T.participant_id{index2} = '556ce42d9465e580006846f57'; % unwanted additionial 5 when gave the link manually to participant
 
 %T = T(13:end,:); % remove the pre-pilot
 
@@ -110,9 +113,20 @@ for i=1:size(userID,1)
     oldName = strcat(folder_path,'prolific_id_',p_ID{i});
     newName = strcat(folder_path,'user_',int2str(userID(i)));
     if exist(oldName)
+        isFolder(i)=1;
         movefile(oldName,newName);
+    elseif exist(newName)
+        isFolder(i)=1;
+    else
+        isFolder(i)=0;
     end
+        
 end
+
+T.userID = userID;
+T.completedAll = completed_both';
+T.isFolder = isFolder';
+T2 = [T(:,2) T(:,end-2:end) T(:,3:end-3) T(:,1)];
 
 usermat_completed = usermat_completed_both;
 
@@ -131,6 +145,9 @@ save('../../data/questionnaire/demographics/raw/approved.mat','approved')
 save('../../data/questionnaire/demographics/raw/demo_desc.mat','demo_desc')
 save('../../data/questionnaire/demographics/raw/demo.mat','demo')
 
+
+filename = 'summary.xlsx';
+writetable(T2,filename,'Sheet',1)
 
 % save as users instead of prolific ID
 

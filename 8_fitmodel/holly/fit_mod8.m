@@ -1,6 +1,6 @@
 function fit_mod8(ID, data_fol)
 
-    algo = 'mod8_eta8';
+    algo = 'mod8';
     results_dir = strcat(data_fol, '/modelfit/',algo,'/results/');
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -32,7 +32,7 @@ function fit_mod8(ID, data_fol)
     [data,gameIDs] = aggregateData(ID,data_dir);
 
     % prior
-    load(strcat(data_fol,'/priors/mod8_eta8/empirical_prior.mat'),'prior')
+    load(strcat(data_fol,'/priors/mod8/empirical_prior.mat'),'prior')
     param_names = {'Q0', 'gamma', 'gamma','tau', 'tau', 'xi', 'xi', 'eta', 'eta'};
 
     % fit model

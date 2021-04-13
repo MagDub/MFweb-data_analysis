@@ -1,9 +1,9 @@
 #!/bin/bash
 
-#$ -N fit
+#$ -N fit_mod1
 #$ -e /data/mdubois/logs/
 #$ -o /data/mdubois/logs/
-#$ -t 1-65
+#$ -t 312
 #$ -S /bin/sh
 
 # where to find basic custom functions
@@ -14,3 +14,14 @@ model_path=/home/mdubois/scripts/modeling_web/webapp_data_analysis/8_fitmodel/ho
 # matlab_command="addpath('$model_path');global jobId;jobId=$SGE_TASK_ID;"
 matlab_command="addpath('$model_path');main_Holly_mod1($SGE_TASK_ID);"
 /share/apps/matlab -nojvm -nodesktop -nosplash -nodisplay -singleCompThread -r $matlab_command
+
+
+
+
+
+
+
+
+
+
+

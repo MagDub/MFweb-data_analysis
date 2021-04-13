@@ -1,9 +1,9 @@
 #!/bin/bash
 
-#$ -N fit
+#$ -N fit_mod9
 #$ -e /data/mdubois/logs/
 #$ -o /data/mdubois/logs/
-#$ -t 1-65
+#$ -t 312
 #$ -S /bin/sh
 
 # where to find basic custom functions
