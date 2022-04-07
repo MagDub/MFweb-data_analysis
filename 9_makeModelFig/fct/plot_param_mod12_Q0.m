@@ -2,8 +2,8 @@
 function [] = plot_param_mod12_Q0(to_del)
 
     % Data
-    load('../../data/data_for_figs/model_parameters.mat')
-    load('../../data/data_for_figs/model_parameters_desc.mat')
+    load('./data_for_figs_2/model_parameters.mat')
+    load('./data_for_figs_2/model_parameters_desc.mat')
     ind = find(contains(model_parameters_desc,'Q0'));
     param = model_parameters(:,ind);
 
@@ -29,11 +29,11 @@ function [] = plot_param_mod12_Q0(to_del)
     noise_plot = (rand(size(model_parameters,1),1)-0.5)/3;
 
     b2S = bar(x_ax(1),nanmean(param),'FaceColor',col_(1,:), 'FaceAlpha', 1, 'BarWidth',.5);
-    plot(x_ax(1)*ones(1,size(param,1))+noise_plot, param','.','MarkerEdgeColor',col_(2,:), 'MarkerSize',3);
+    plot(x_ax(1)*ones(1,size(param,1))+noise_plot, param','.','MarkerEdgeColor',col_(2,:), 'MarkerSize',4);
 
     h = errorbar(x_ax,[nanmean(param)], ...
         [nanstd(param)./sqrt(size(param,1))],'.','color','k');
-    set(h,'Marker','n
+    set(h,'Marker','none')
 
     xlim([x_ax(1)-0.75 x_ax(1)+0.75])   
     set(gca,'XTick',[mean(x_ax)])

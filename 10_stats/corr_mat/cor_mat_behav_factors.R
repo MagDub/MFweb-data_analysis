@@ -1,11 +1,11 @@
-
 library(Hmisc)
 library(corrplot)
 library(ggpubr)
 library(ggplot2)
 
+setwd("D:/MFweb/data_analysis/10_stats/corr_mat/")
 
-load(file = "~/MFweb/data_analysis/10_stats/FA/all_behav_and_FAscores.Rdata")
+load(file = "../FA/all_behav_and_FAscores.Rdata")
 
 # keep only mean per horizon
 data_tmp_all <- subset(data_tmp_all, select = -c(3:27))

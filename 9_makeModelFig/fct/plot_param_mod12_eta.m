@@ -2,10 +2,10 @@
 function [] = plot_param_mod12_eta(to_del)
 
     % Data
-    load('../../data/data_for_figs/model_parameters.mat')
-    load('../../data/data_for_figs/model_parameters_desc.mat')
+    load('./data_for_figs_2/model_parameters.mat')
+    load('./data_for_figs_2/model_parameters_desc.mat')
     ind_SH = find(contains(model_parameters_desc,'eta_short'));
-    ind_LH = find(contains(model_parameters_desc,'eta_long'));
+    ind_LH = find(contains(model_parameters_desc,'eta_lon'));
     param_SH = model_parameters(:,ind_SH);
     param_LH = model_parameters(:,ind_LH);
 
@@ -43,7 +43,7 @@ function [] = plot_param_mod12_eta(to_del)
 
     for n = 1:size(param_SH,1)
         lin2 = plot(x_ax([3 6])+noise_plot(n),[param_SH(n) param_LH(n)]); hold on;
-        lin2.Color = [col_(2,:) 0.1];
+        lin2.Color = [col_(2,:) 0.3];
     end
 
     h = errorbar(x_ax([3 6]),[nanmean(param_SH) nanmean(param_LH)], ...

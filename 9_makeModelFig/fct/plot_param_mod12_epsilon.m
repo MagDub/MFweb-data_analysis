@@ -2,8 +2,8 @@
 function [] = plot_param_mod12_epsilon(to_del)
 
     % Data
-    load('../../data/data_for_figs/model_parameters.mat')
-    load('../../data/data_for_figs/model_parameters_desc.mat')
+    load('./data_for_figs_2/model_parameters.mat')
+    load('./data_for_figs_2/model_parameters_desc.mat')
     ind_SH = find(contains(model_parameters_desc,'xi_short'));
     ind_LH = find(contains(model_parameters_desc,'xi_long'));
     param_SH = model_parameters(:,ind_SH);
@@ -43,7 +43,7 @@ function [] = plot_param_mod12_epsilon(to_del)
 
     for n = 1:size(param_SH,1)
         lin2 = plot(x_ax([3 6])+noise_plot(n),[param_SH(n) param_LH(n)]); hold on;
-        lin2.Color = [col_(2,:) 0.1];
+        lin2.Color = [col_(2,:) 0.3];
     end
 
     h = errorbar(x_ax([3 6]),[nanmean(param_SH) nanmean(param_LH)], ...
@@ -56,8 +56,8 @@ function [] = plot_param_mod12_epsilon(to_del)
     a.XTickLabel = {'Short horizon', 'Long horizon'};
 
     ylabel('Best-fit parameter value','FontName','Arial','Fontweight','bold','FontSize',12);
-    set(gca,'YTick',0:0.1:1)
-    ylim([0 0.6])
+    set(gca,'YTick',0:0.2:1)
+    ylim([0 1])
 
     % Export
     addpath('../../export_fig')

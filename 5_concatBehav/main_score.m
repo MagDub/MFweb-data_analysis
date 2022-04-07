@@ -17,6 +17,8 @@ average_first_apple_SH = nan(n,1);
 average_first_apple_LH = nan(n,1);
 average_all_apple_LH = nan(n,1);
 
+load(strcat(dir_data, 'user_1/logs/logdesc.mat'));
+
 for ID_i = 1:n
     
     ID = usermat_completed(ID_i);
@@ -36,20 +38,51 @@ for ID_i = 1:n
     score_LH(ID_i,1) = sum(tmp1.logABDlong(:,7)) + sum(tmp2.logABlong(:,7)) + sum(tmp3.logADlong(:,7)) + sum(tmp4.logBDlong(:,7));
        
     %%% Same for first apple only %%%
-    % All trials     
-    it1 = tmp1.logABDlong(:,7);
-    it1(tmp1.logABDlong(:,5)~=6) = []; %50
+    % All trials  
+
+    % logdesc{5} = sample
+    % logdesc{6} = tree
+    % logdesc{7} = size
+
+    it1_score = tmp1.logABDlong(:,7);
+    it1_score(tmp1.logABDlong(:,5)~=6) = []; %50
+
+    it1_trees = tmp1.logABDlong(:,6);
+    it1_trees(tmp1.logABDlong(:,5)~=6) = []; %50
     
-    it2 = tmp2.logABlong(:,7);
-    it2(tmp2.logABlong(:,5)~=5) = []; %50
+
+    it2_score = tmp2.logABlong(:,7);
+    it2_score(tmp2.logABlong(:,5)~=5) = []; %50
+
+    it2_trees = tmp2.logABlong(:,6);
+    it2_trees(tmp2.logABlong(:,5)~=5) = []; %50
+
     
-    it3 = tmp3.logADlong(:,7);
-    it3(tmp3.logADlong(:,5)~=5) = []; %50
+    it3_score = tmp3.logADlong(:,7);
+    it3_score(tmp3.logADlong(:,5)~=5) = []; %50
+
+    it3_trees = tmp3.logADlong(:,6);
+    it3_trees(tmp3.logADlong(:,5)~=5) = []; %50
         
-    it4 = tmp4.logBDlong(:,7);
-    it4(tmp4.logBDlong(:,5)~=3) = []; %50
+
+    it4_score = tmp4.logBDlong(:,7);
+    it4_score(tmp4.logBDlong(:,5)~=3) = []; %50
+
+    it4_trees = tmp4.logBDlong(:,6);
+    it4_trees(tmp4.logBDlong(:,5)~=3) = []; %50
+
     
-    first_apple_LH(ID_i,1) = sum(it1) + sum(it2) + sum(it3) + sum(it4); 
+    first_apple_LH(ID_i,1) = sum(it1_score) + sum(it2_score) + sum(it3_score) + sum(it4_score); % score
+  
+
+    % split depending on first tree selected
+    A_score_LH_1st = mean([it1_score(it1_trees==1); it2_score(it2_trees==1); it3_score(it3_trees==1); it4_score(it4_trees==1)]);
+    B_score_LH_1st = mean([it1_score(it1_trees==2); it2_score(it2_trees==2); it3_score(it3_trees==2); it4_score(it4_trees==2)]);
+    C_score_LH_1st = mean([it1_score(it1_trees==3); it2_score(it2_trees==3); it3_score(it3_trees==3); it4_score(it4_trees==3)]);
+    D_score_LH_1st = mean([it1_score(it1_trees==4); it2_score(it2_trees==4); it3_score(it3_trees==4); it4_score(it4_trees==4)]);
+
+
+
 
     score_LH_mean(ID_i,1) = score_LH(ID_i,1)/6;
     
@@ -67,7 +100,7 @@ for ID_i = 1:n
     % All trials
     score_SH(ID_i,1) = sum(tmp1.logABDshort(:,7)) + sum(tmp2.logABshort(:,7)) + sum(tmp3.logADshort(:,7)) + sum(tmp4.logBDshort(:,7));
 
-    trials_LH(ID_i,1) = (size(it1,1)+size(it2,1)+size(it3,1)+size(it4,1));
+    trials_LH(ID_i,1) = (size(it1_score,1)+size(it2_score,1)+size(it3_score,1)+size(it4_score,1));
     
     if trials_LH(ID_i,1) ~= 200
         disp(strcat('participant', 32, int2str(ID), 32, 'has less trials in LH:', 32, num2str(trials_LH(ID_i,1)), 32, 'instead of 200'));
